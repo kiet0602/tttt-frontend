@@ -68,3 +68,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+/_ ghi chú _/
+/_ lấy code ban đầu : git clone <đường link> _/
+/_ Code xong mở git bash tại file code
+lệnh: : git add.
+: git commit -m""
+: git push origin master
+_/
+/_ lấy code mới về mở --git bash--- tại file code
+lệnh : : git pull (code trước clone về sẽ tự cập nhật)
+_/

@@ -1,0 +1,41 @@
+.imgLogo {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 15px;
+}
+.text-logo {
+  font-size: 40px;
+  text-decoration: none;
+  font-family: fantasy;
+  color: #ff8200f2;
+  text-shadow: 2px 6px 6px black;
+}
+.text-logo span {
+  font-family: "Poppins";
+}
+.inputSearch {
+  width: 400px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border: none;
+  height: 33px;
+}
+.inputSearch:focus {
+  outline: none;
+}
+.buttonSearch {
+  border-radius: 5px;
+  background: #ff8200f2;
+  height: 34px;
+}
+.buttonSearch:hover {
+  color: #fff;
+}
+.text-link-header {
+  text-decoration: none;
+  color: #ff8200f2;
+  text-shadow: 1px 1px 0px black;
+}
+.text-link-header:hover {
+  text-shadow: 1px 1px 10px black;
+}

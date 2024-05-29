@@ -1,12 +1,30 @@
 import React from "react";
 import "./LoginPage.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import avatar from "../../../src/assets/img/1.png";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const LoginPage = () => {
-  const hadleSubmit = () => {};
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [navigate, setNavigate] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    /*     const response = await axios.post("", {
+      email,
+      password,
+    }); */
+    setNavigate(true);
+  };
+
+  if (navigate) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="row border rounded-5 p-3 bg-white shadow box-area">
@@ -34,12 +52,13 @@ const LoginPage = () => {
               <h2>Chào bạn!</h2>
               <p>Chúng tôi hạnh phúc khi bạn quay lại.</p>
             </div>
-            <form onSubmit={hadleSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="input-group mb-1">
                 <input
                   type="text"
                   className="form-control form-control-lg bg-light fs-6"
                   placeholder="Nhập gmail"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="input-group mb-3">
@@ -47,6 +66,7 @@ const LoginPage = () => {
                   type="password"
                   className="form-control form-control-lg bg-light fs-6"
                   placeholder="Mật khẩu"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="input-group mb-3">

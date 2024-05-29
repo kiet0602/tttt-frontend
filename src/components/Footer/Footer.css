@@ -1,0 +1,25 @@
+.title-service-small {
+  font-size: 12px;
+  color: #ab9f9f;
+}
+.title-service {
+  color: #ff8200f2;
+  text-shadow: -0.5px -1px black;
+}
+
+.text-Link-footer {
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+}
+.text-Link-footer:hover {
+  color: #ff8200f2;
+  font-size: 14px;
+}
+.text-bold-footer {
+  border-bottom: 1px solid;
+  width: 100px;
+}
+.footer {
+  background: #fff;
+}

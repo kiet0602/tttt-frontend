@@ -14,17 +14,31 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    /*     const response = await axios.post("", {
-      email,
-      password,
-    }); */
-    setNavigate(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/authentication/login-user",
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const { success, token, email, id } = response.data;
+
+      if (success) {
+        localStorage.setItem("auth-token", token);
+        localStorage.setItem("email", email);
+        localStorage.setItem("jsl", id);
+      } else {
+        alert(response.data.errors);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    }
   };
-
-  if (navigate) {
-    return <Navigate to="/" />;
-  }
-
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="row border rounded-5 p-3 bg-white shadow box-area">

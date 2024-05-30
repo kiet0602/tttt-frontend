@@ -14,19 +14,20 @@
   font-family: "Poppins";
 }
 .inputSearch {
-  width: 400px;
+  width: 600px;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border: none;
-  height: 33px;
+  height: 40px;
 }
 .inputSearch:focus {
   outline: none;
 }
 .buttonSearch {
+  border: none;
   border-radius: 5px;
   background: #ff8200f2;
-  height: 34px;
+  height: 42px;
 }
 .buttonSearch:hover {
   color: #fff;

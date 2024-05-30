@@ -18,8 +18,13 @@
 }
 .text-bold-footer {
   border-bottom: 1px solid;
-  width: 100px;
+  width: 300px;
 }
-.footer {
+.service {
   background: #fff;
+}
+.info-footer {
+}
+.img-footer {
+  width: 100px;
 }

@@ -1,0 +1,30 @@
+.box-nav-left {
+  background: #7f7a7a;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+}
+.box-nav-left2 {
+  border-radius: 5px;
+  background: #fff;
+  font-weight: 400;
+  padding-right: 36px;
+}
+.list-nav-left {
+  list-style: none;
+}
+.text-link-navLeft {
+  font-size: small;
+  color: #ff8200f2;
+  font-weight: 600;
+  text-decoration: none;
+}
+.text-link-navLeft:hover {
+  font-weight: 900;
+  color: black;
+  text-shadow: 1px 0.5px #ff8200f2;
+}
+.box-item-li-navLeft:not(:last-child) {
+  border-bottom: 2px solid #d9c4c4;
+}

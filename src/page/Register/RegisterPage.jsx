@@ -19,7 +19,7 @@ const RegisterPage = () => {
     const ressobj = { id, username, email, password, address };
 
     return axios
-      .post("http://localhost:8001/User", ressobj)
+      .post("http://localhost:8000/User", ressobj)
       .then((response) => {
         toast.success("register success");
         setNavigate(true);

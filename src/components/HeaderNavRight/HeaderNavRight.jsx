@@ -18,7 +18,7 @@ const HeaderNavRight = () => {
       <div className="mt-1  box-nav-right justify-content-between">
         <ul className="d-flex justify-content-between list-nav-right align-items-center  ">
           <li>
-            <Link className="text-Link-navRight">
+            <Link to={"/"} className="text-Link-navRight">
               <FontAwesomeIcon className="pe-1" icon={faHouse} />
               Trang chủ
             </Link>

@@ -6,11 +6,8 @@ import imgPC from "../../assets/img/pc.png";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import HeaderNav from "../../components/header_nav/HeaderNav";
-import HeaderNavLeft from "../../components/HeaderNavLeft/HeaderNavLeft";
-import HeaderNavRight from "../../components/HeaderNavRight/HeaderNavRight";
 
-const LapTopPage = () => {
+const CategoryPage = () => {
   const { categoryId } = useParams();
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -58,4 +55,4 @@ const LapTopPage = () => {
   );
 };
 
-export default LapTopPage;
+export default CategoryPage;

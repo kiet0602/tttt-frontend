@@ -1,7 +1,7 @@
 {
   "product": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Sagem my200x",
       "description": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.",
       "price": 3947901,
@@ -10,7 +10,7 @@
       "category_id": "PC"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Philips Fizz",
       "description": "Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.",
       "price": 5226430,
@@ -19,7 +19,7 @@
       "category_id": "MÀN HÌNH"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Yezz Andy 3.5EI2",
       "description": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.",
       "price": 1765676,
@@ -28,7 +28,7 @@
       "category_id": "CHUỘT"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Oppo R817 Real",
       "description": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
       "price": 1506489,
@@ -37,7 +37,7 @@
       "category_id": "BÀN PHÍM"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "BenQ-Siemens P51",
       "description": "Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.\n\nCras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.",
       "price": 9721046,
@@ -46,7 +46,7 @@
       "category_id": "PC"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "QMobile Noir LT600",
       "description": "Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
       "price": 4085647,
@@ -55,7 +55,7 @@
       "category_id": "CHUỘT"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "i-mobile TV 628",
       "description": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
       "price": 8811542,
@@ -64,7 +64,7 @@
       "category_id": "BÀN PHÍM"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Samsung Galaxy Ace Advance S6800",
       "description": "In congue. Etiam justo. Etiam pretium iaculis justo.\n\nIn hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.",
       "price": 9757515,
@@ -73,7 +73,7 @@
       "category_id": "MÀN HÌNH"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Oppo R811 Real",
       "description": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.",
       "price": 9698620,
@@ -82,7 +82,7 @@
       "category_id": "PC"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Micromax A78",
       "description": "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.",
       "price": 5221131,
@@ -91,7 +91,7 @@
       "category_id": "CHUỘT"
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "Micromax Canvas Spark 2 Q334",
       "description": "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
       "price": 3157720,
@@ -100,7 +100,7 @@
       "category_id": "PC"
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "alcatel Fire S",
       "description": "In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.",
       "price": 5698444,
@@ -109,7 +109,7 @@
       "category_id": "BÀN PHÍM"
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "Nokia 500",
       "description": "Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.\n\nInteger ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.",
       "price": 5558270,
@@ -118,7 +118,7 @@
       "category_id": "CHUỘT"
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Haier V160",
       "description": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
       "price": 7047800,
@@ -127,7 +127,7 @@
       "category_id": "PC"
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Coolpad Note 3 Plus",
       "description": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
       "price": 1384260,
@@ -136,7 +136,7 @@
       "category_id": "MÀN HÌNH"
     },
     {
-      "id": 16,
+      "id": "16",
       "name": "ZTE Blade V8",
       "description": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.",
       "price": 2489367,
@@ -145,7 +145,7 @@
       "category_id": "CAMMERA"
     },
     {
-      "id": 17,
+      "id": "17",
       "name": "Sharp Aquos C10",
       "description": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
       "price": 7184540,
@@ -154,7 +154,7 @@
       "category_id": "BÀN PHÍM"
     },
     {
-      "id": 18,
+      "id": "18",
       "name": "Icemobile G3",
       "description": "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
       "price": 9788858,
@@ -163,7 +163,7 @@
       "category_id": "CAMMERA"
     },
     {
-      "id": 19,
+      "id": "19",
       "name": "Apple iPhone 11 Pro",
       "description": "In congue. Etiam justo. Etiam pretium iaculis justo.\n\nIn hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.\n\nNulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.",
       "price": 8293051,
@@ -172,7 +172,7 @@
       "category_id": "CAMMERA"
     },
     {
-      "id": 20,
+      "id": "20",
       "name": "BLU Touchbook G7",
       "description": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
       "price": 5631596,
@@ -181,7 +181,7 @@
       "category_id": "CHUỘT"
     },
     {
-      "id": 21,
+      "id": "21",
       "name": "BLU Touchbook G7",
       "description": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
       "price": 5631596,
@@ -190,7 +190,7 @@
       "category_id": "CHUỘT"
     },
     {
-      "id": 22,
+      "id": "22",
       "name": "BLU Touchbook G7",
       "description": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
       "price": 5631596,
@@ -213,7 +213,13 @@
       "email": "kiet12@gmail.com",
       "password": "123",
       "address": "cantho"
+    },
+    {
+      "id": "1234",
+      "username": "kiet2",
+      "email": "kiet@gmail.com",
+      "password": "123",
+      "address": "cantho"
     }
   ]
-
 }

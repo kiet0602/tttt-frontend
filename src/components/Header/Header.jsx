@@ -37,7 +37,7 @@ const Header = () => {
         </div>
         <div className="col-3 d-flex justify-content-evenly ">
           <div className="">
-            <Link className="text-link-header">
+            <Link to={"/login"} className="text-link-header">
               <FontAwesomeIcon className="text-dark" icon={faUser} /> Đăng nhập
             </Link>
           </div>

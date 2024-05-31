@@ -8,11 +8,6 @@ const BlockTitle = ({ title }) => {
     <div className="container">
       <div className="d-flex justify-content-between box-title text-center ">
         <span className=" text-end   text-title-regorogy">{title}</span>
-        <div className="text-title">
-          <Link className="text-Link-tittle">
-            <p className="">Xem tất cả</p>
-          </Link>
-        </div>
       </div>
     </div>
   );

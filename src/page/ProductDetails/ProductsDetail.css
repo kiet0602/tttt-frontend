@@ -1,0 +1,34 @@
+.Details-Price-Quanlity {
+  border-bottom: 1px solid black;
+}
+.Details-Price-Quanlity p {
+}
+.price {
+  font-size: xx-large;
+  color: red;
+  font-weight: 900;
+}
+.Details-Products {
+  border-bottom: 1px solid black;
+}
+.quanlity {
+  color: blue;
+}
+.info {
+  font-size: large;
+  color: red;
+  font-weight: 600;
+}
+.btn-details-left {
+  background: red;
+  color: azure;
+  border-radius: 25px;
+}
+.btn-details-right {
+  background: blue;
+  color: azure;
+  border-radius: 25px;
+}
+.tel {
+  color: red;
+}

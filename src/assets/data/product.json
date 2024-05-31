@@ -1,0 +1,184 @@
+{
+  "product": [
+    {
+      "id": 1,
+      "name": "Sagem my200x",
+      "description": "Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.",
+      "price": 3947901,
+      "quantity": 72,
+      "image": "HKBM",
+      "category_id": "PC"
+    },
+    {
+      "id": 2,
+      "name": "Philips Fizz",
+      "description": "Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.",
+      "price": 5226430,
+      "quantity": 97,
+      "image": "HCMU",
+      "category_id": "MÀN HÌNH"
+    },
+    {
+      "id": 3,
+      "name": "Yezz Andy 3.5EI2",
+      "description": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.",
+      "price": 1765676,
+      "quantity": 90,
+      "image": "FEGE",
+      "category_id": "CHUỘT"
+    },
+    {
+      "id": 4,
+      "name": "Oppo R817 Real",
+      "description": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
+      "price": 1506489,
+      "quantity": 6,
+      "image": "KCLK",
+      "category_id": "BÀN PHÍM"
+    },
+    {
+      "id": 5,
+      "name": "BenQ-Siemens P51",
+      "description": "Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.\n\nCras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.",
+      "price": 9721046,
+      "quantity": 28,
+      "image": "MGCR",
+      "category_id": "PC"
+    },
+    {
+      "id": 6,
+      "name": "QMobile Noir LT600",
+      "description": "Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",
+      "price": 4085647,
+      "quantity": 60,
+      "image": "EDGE",
+      "category_id": "CHUỘT"
+    },
+    {
+      "id": 7,
+      "name": "i-mobile TV 628",
+      "description": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
+      "price": 8811542,
+      "quantity": 62,
+      "image": "KLWM",
+      "category_id": "BÀN PHÍM"
+    },
+    {
+      "id": 8,
+      "name": "Samsung Galaxy Ace Advance S6800",
+      "description": "In congue. Etiam justo. Etiam pretium iaculis justo.\n\nIn hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.",
+      "price": 9757515,
+      "quantity": 9,
+      "image": "PHNL",
+      "category_id": "MÀN HÌNH"
+    },
+    {
+      "id": 9,
+      "name": "Oppo R811 Real",
+      "description": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.",
+      "price": 9698620,
+      "quantity": 97,
+      "image": "FOGR",
+      "category_id": "PC"
+    },
+    {
+      "id": 10,
+      "name": "Micromax A78",
+      "description": "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.",
+      "price": 5221131,
+      "quantity": 13,
+      "image": "SA30",
+      "category_id": "CHUỘT"
+    },
+    {
+      "id": 11,
+      "name": "Micromax Canvas Spark 2 Q334",
+      "description": "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
+      "price": 3157720,
+      "quantity": 81,
+      "image": "GVMT",
+      "category_id": "PC"
+    },
+    {
+      "id": 12,
+      "name": "alcatel Fire S",
+      "description": "In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.",
+      "price": 5698444,
+      "quantity": 3,
+      "image": "KDYL",
+      "category_id": "BÀN PHÍM"
+    },
+    {
+      "id": 13,
+      "name": "Nokia 500",
+      "description": "Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.\n\nInteger ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.",
+      "price": 5558270,
+      "quantity": 23,
+      "image": "ZBXZ",
+      "category_id": "CHUỘT"
+    },
+    {
+      "id": 14,
+      "name": "Haier V160",
+      "description": "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.",
+      "price": 7047800,
+      "quantity": 50,
+      "image": null,
+      "category_id": "PC"
+    },
+    {
+      "id": 15,
+      "name": "Coolpad Note 3 Plus",
+      "description": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
+      "price": 1384260,
+      "quantity": 24,
+      "image": "FCPD",
+      "category_id": "MÀN HÌNH"
+    },
+    {
+      "id": 16,
+      "name": "ZTE Blade V8",
+      "description": "Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.",
+      "price": 2489367,
+      "quantity": 61,
+      "image": "FMMT",
+      "category_id": "CHUỘT"
+    },
+    {
+      "id": 17,
+      "name": "Sharp Aquos C10",
+      "description": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.",
+      "price": 7184540,
+      "quantity": 56,
+      "image": "ZMBU",
+      "category_id": "BÀN PHÍM"
+    },
+    {
+      "id": 18,
+      "name": "Icemobile G3",
+      "description": "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.",
+      "price": 9788858,
+      "quantity": 53,
+      "image": "LYTV",
+      "category_id": "MÀN HÌNH"
+    },
+    {
+      "id": 19,
+      "name": "Apple iPhone 11 Pro",
+      "description": "In congue. Etiam justo. Etiam pretium iaculis justo.\n\nIn hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.\n\nNulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.",
+      "price": 8293051,
+      "quantity": 62,
+      "image": "ZLDL",
+      "category_id": "MÀN HÌNH"
+    },
+    {
+      "id": 20,
+      "name": "BLU Touchbook G7",
+      "description": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
+      "price": 5631596,
+      "quantity": 98,
+      "image": "VADN",
+      "category_id": "CHUỘT"
+    }
+  ]
+}

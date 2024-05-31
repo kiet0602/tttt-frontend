@@ -9,6 +9,7 @@ import axios from "axios";
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [navigate, setNavigate] = useState(false);
 
   useEffect(() => {
     const getAllProducts = async () => {
@@ -26,7 +27,6 @@ const HomePage = () => {
         console.log(error);
       }
     };
-
     getAllProducts();
   }, []);
 

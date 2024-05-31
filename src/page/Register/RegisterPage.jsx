@@ -4,37 +4,37 @@ import avatar from "../../../src/assets/img/1.png";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const RegisterPage = () => {
+  const [id, setId] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
-  /*   const [avatar, setAvatar] = useState(null);
-  const [error, setError] = useState(""); */
-
   const [navigate, setNavigate] = useState(false);
 
-  const registerUser = async (ev) => {
-    ev.preventDefault();
-    try {
-      const response = await axios.post("", {
-        username,
-        email,
-        password,
-        address,
+  const registerUser = (e) => {
+    e.preventDefault();
+    const ressobj = { id, username, email, password, address };
+
+    return axios
+      .post("http://localhost:8001/User", ressobj)
+      .then((response) => {
+        toast.success("register success");
+        setNavigate(true);
+        return response;
+      })
+      .catch((error) => {
+        toast.error("register error");
+        throw error; // throw the error to be handled elsewhere
       });
-      console.log(response.data);
-      alert(`Successfully registered`);
-    } catch (error) {
-      alert(`Registered Fail`);
-      setNavigate(true);
-    }
   };
 
   if (navigate) {
     return <Navigate to="/login" />;
   }
+
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="row border rounded-5 p-3 bg-white shadow box-area">
@@ -74,6 +74,15 @@ const RegisterPage = () => {
               </div>
               <div className="input-group mb-1">
                 <input
+                  type="text"
+                  className="form-control form-control-lg bg-light fs-6"
+                  placeholder="Nhập id"
+                  value={id}
+                  onChange={(e) => setId(e.target.value)}
+                />
+              </div>
+              <div className="input-group mb-1">
+                <input
                   type="email"
                   className="form-control form-control-lg bg-light fs-6"
                   placeholder="Nhập gmail"
@@ -81,6 +90,7 @@ const RegisterPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+
               <div className="input-group mb-1">
                 <input
                   type="password"

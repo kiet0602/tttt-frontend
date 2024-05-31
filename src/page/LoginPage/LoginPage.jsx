@@ -6,39 +6,60 @@ import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import avatar from "../../../src/assets/img/1.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [navigate, setNavigate] = useState(false);
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/authentication/login-user",
-        { email, password },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const { success, token, email, id } = response.data;
-
-      if (success) {
-        localStorage.setItem("auth-token", token);
-        localStorage.setItem("email", email);
-        localStorage.setItem("jsl", id);
-      } else {
-        alert(response.data.errors);
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Đã xảy ra lỗi, vui lòng thử lại sau.");
+    if (validate()) {
+      //  console.log("sadas");
+      fetch("http://localhost:8001/User/" + id)
+        .then((res) => {
+          return res.json();
+        })
+        .then((resp) => {
+          if (Object.keys(resp).length === 0) {
+            toast.error("please enter a valid email address");
+          } else {
+            if (resp.password === password) {
+              toast.success("success");
+              sessionStorage.setItem("id", id);
+              setNavigate(true);
+            } else {
+              toast.error("please enter a valid");
+            }
+          }
+        })
+        .catch((err) => {
+          toast.error("Login failed" + err.message);
+        });
     }
   };
+
+  const validate = () => {
+    let result = true;
+    if (id === "" || id === null) {
+      result = false;
+      toast.warning("please enter a valid id");
+    }
+    if (password === "" || password === null) {
+      result = false;
+      toast.warning("please enter a valid password");
+    }
+    return result;
+  };
+
+  if (navigate) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="row border rounded-5 p-3 bg-white shadow box-area">
@@ -71,8 +92,8 @@ const LoginPage = () => {
                 <input
                   type="text"
                   className="form-control form-control-lg bg-light fs-6"
-                  placeholder="Nhập gmail"
-                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Nhập Id"
+                  onChange={(e) => setId(e.target.value)}
                 />
               </div>
               <div className="input-group mb-3">

@@ -1,6 +1,9 @@
 .box-product {
   background: #fff;
   border-radius: 20px;
+  cursor: pointer;
+  width: 322px;
+  margin: 4px;
 }
 .box-product:hover {
   box-shadow: 0px 0px 7px 0px black;

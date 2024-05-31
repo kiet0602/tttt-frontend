@@ -2,7 +2,8 @@
   border-bottom: 1px solid black;
 }
 .box-title span {
-  font-size: 50px;
+  margin-top: 12px;
+  font-size: 39px;
 }
 .text-title-regorogy {
   font-family: fantasy;

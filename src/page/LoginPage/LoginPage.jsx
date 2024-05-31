@@ -17,30 +17,27 @@ const LoginPage = () => {
     sessionStorage.clear();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      //  console.log("sadas");
-      fetch("http://localhost:8001/User/" + id)
-        .then((res) => {
-          return res.json();
-        })
-        .then((resp) => {
-          if (Object.keys(resp).length === 0) {
-            toast.error("please enter a valid email address");
+      try {
+        const response = await axios.get(`http://localhost:8000/User/${id}`);
+        const { data } = response;
+        if (Object.keys(data).length === 0) {
+          toast.error("Please enter a valid email address");
+        } else {
+          if (data.password === password) {
+            toast.success("Success");
+            sessionStorage.setItem("id", id);
+            sessionStorage.setItem("username", data.username);
+            setNavigate(true);
           } else {
-            if (resp.password === password) {
-              toast.success("success");
-              sessionStorage.setItem("id", id);
-              setNavigate(true);
-            } else {
-              toast.error("please enter a valid");
-            }
+            toast.error("Please enter a valid password");
           }
-        })
-        .catch((err) => {
-          toast.error("Login failed" + err.message);
-        });
+        }
+      } catch (error) {
+        toast.error(`Login failed: ${error.message}`);
+      }
     }
   };
 

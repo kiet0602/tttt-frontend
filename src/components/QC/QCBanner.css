@@ -1,0 +1,17 @@
+.box-slide {
+  margin-top: -14px;
+  width: 667px;
+  margin-left: -12px;
+}
+.img-slide {
+  border-radius: 5px;
+  height: 417px;
+}
+.box-banner {
+  margin-left: -17px;
+  margin-top: -15px;
+}
+.img-banner {
+  border-radius: 5px;
+  width: 327px;
+}

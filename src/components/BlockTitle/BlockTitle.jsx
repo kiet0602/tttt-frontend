@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./BlockTitle.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const BlockTitle = ({ title }) => {
   return (

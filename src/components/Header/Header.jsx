@@ -15,7 +15,7 @@ const Header = () => {
     <div className="container-lg mt-4">
       <div className="row align-items-center justify-content-between">
         <div className="col-2 text-center box-logo">
-          <Link className="text-logo">
+          <Link to={"/"} className="text-logo">
             <img className="imgLogo" src={imgLogo} alt="" />S
             <span className="">hop</span>
           </Link>

@@ -142,7 +142,7 @@
       "price": 2489367,
       "quantity": 61,
       "image": "FMMT",
-      "category_id": "CHUỘT"
+      "category_id": "CAMMERA"
     },
     {
       "id": 17,
@@ -160,7 +160,7 @@
       "price": 9788858,
       "quantity": 53,
       "image": "LYTV",
-      "category_id": "MÀN HÌNH"
+      "category_id": "CAMMERA"
     },
     {
       "id": 19,
@@ -169,7 +169,7 @@
       "price": 8293051,
       "quantity": 62,
       "image": "ZLDL",
-      "category_id": "MÀN HÌNH"
+      "category_id": "CAMMERA"
     },
     {
       "id": 20,
@@ -179,6 +179,41 @@
       "quantity": 98,
       "image": "VADN",
       "category_id": "CHUỘT"
+    },
+    {
+      "id": 21,
+      "name": "BLU Touchbook G7",
+      "description": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
+      "price": 5631596,
+      "quantity": 98,
+      "image": "VADN",
+      "category_id": "CHUỘT"
+    },
+    {
+      "id": 22,
+      "name": "BLU Touchbook G7",
+      "description": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
+      "price": 5631596,
+      "quantity": 98,
+      "image": "VADN",
+      "category_id": "TAI NGHE"
+    }
+  ],
+  "User": [
+    {
+      "id": "2819",
+      "username": "kiet",
+      "email": "kiet@gmail.com",
+      "password": "123",
+      "address": "cantho"
+    },
+    {
+      "id": "123",
+      "username": "kiet",
+      "email": "kiet12@gmail.com",
+      "password": "123",
+      "address": "cantho"
     }
   ]
+
 }

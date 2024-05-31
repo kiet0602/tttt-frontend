@@ -43,7 +43,12 @@ const HeaderNavLeft = () => {
               key={category}
             >
               <li>
-                <Link className="text-link-navLeft">{category}</Link>
+                <Link
+                  to={`/products/${category}`}
+                  className="text-link-navLeft"
+                >
+                  {category}
+                </Link>
               </li>
             </div>
           ))}

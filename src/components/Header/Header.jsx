@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import imgLogo from "../../assets/img/PNG-Van-Phong-Lam-Viec041.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +11,16 @@ import {
 import "./Header.css";
 
 const Header = () => {
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      setUserInfo(userInfo);
+    }
+  }, []);
+
   return (
     <div className="container-lg mt-4">
       <div className="row align-items-center justify-content-between">
@@ -36,17 +46,50 @@ const Header = () => {
           </div>
         </div>
         <div className="col-3 d-flex justify-content-evenly ">
-          <div className="">
-            <Link to={"/login"} className="text-link-header">
-              <FontAwesomeIcon className="text-dark" icon={faUser} /> Đăng nhập
-            </Link>
-          </div>
-          <div className="relative">
-            <Link className="text-link-header">
-              <FontAwesomeIcon className="text-dark" icon={faCartShopping} />
-              (1)Giỏ hàng
-            </Link>
-          </div>
+          {userInfo ? (
+            <>
+              <div className="d-flex align-items-center">
+                <Link
+                  to="/profile"
+                  className="text-link-header d-flex align-items-center"
+                >
+                  <img
+                    src={userInfo.avatar}
+                    className="rounded-circle me-2"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                  {userInfo.username}
+                </Link>
+              </div>
+              <div className="relative">
+                <Link to="/cart" className="text-link-header">
+                  <FontAwesomeIcon
+                    className="text-dark"
+                    icon={faCartShopping}
+                  />
+                  (1) Giỏ hàng
+                </Link>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="">
+                <Link to="/login" className="text-link-header">
+                  <FontAwesomeIcon className="text-dark" icon={faUser} /> Đăng
+                  nhập
+                </Link>
+              </div>
+              <div className="relative">
+                <Link to="/cart" className="text-link-header">
+                  <FontAwesomeIcon
+                    className="text-dark"
+                    icon={faCartShopping}
+                  />
+                  (1) Giỏ hàng
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

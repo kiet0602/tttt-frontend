@@ -55,11 +55,11 @@ const RegisterPage = () => {
   return (
     <>
       <div className="wrapper">
-        <h1>Hello Again!</h1>
-        <p>
-          Welcome back you've <br /> been missed!
+        <h1>Chào bạn!</h1>
+        <p className="title-register">
+          Hãy là 1 thành viên của chúng tôi! <br /> Xin chào!
         </p>
-        <form>
+        <form className="form-register">
           <div className="pb-2">
             {avatarFile && (
               <img
@@ -71,6 +71,7 @@ const RegisterPage = () => {
             )}
           </div>
           <input
+            className=""
             type="text"
             placeholder="Tên người dùng"
             value={username}
@@ -100,7 +101,9 @@ const RegisterPage = () => {
             onChange={handleAvatarChange}
           />
         </form>
-        <button onClick={handleRegister}>Đăng kí</button>
+        <button className="btn-register" onClick={handleRegister}>
+          Đăng kí
+        </button>
 
         <div className="not-member">
           Not a member? <Link to={"/login"}>Đăng nhập!</Link>

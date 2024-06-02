@@ -14,7 +14,7 @@ const HomePage = () => {
   useEffect(() => {
     const getAllProducts = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:8000/product`);
+        const { data } = await axios.get(`http://localhost:8003/product`);
         setProducts(data);
         console.log(data);
         // Extract unique categories

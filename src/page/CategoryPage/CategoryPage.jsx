@@ -20,7 +20,7 @@ const CategoryPage = () => {
     const getProductsByCategory = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8000/product?category_id=${categoryId}`
+          `http://localhost:8003/product?category_id=${categoryId}`
         );
         setProducts(data);
       } catch (error) {

@@ -9,6 +9,7 @@ import ProductDetails from "./page/ProductDetails/ProductDetails";
 import CategoryPage from "./page/CategoryPage/CategoryPage";
 import PCPage from "./page/PCPage/PCPage";
 import ProductAll from "./page/ProductAll/ProductAll";
+import Profile from "./page/Profile/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/ProductDetails/:id" element={<ProductDetails />} />
       <Route path="/products/:categoryId" element={<CategoryPage />} />
       <Route path="/productsAll" element={<ProductAll />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }

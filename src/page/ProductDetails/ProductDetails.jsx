@@ -13,7 +13,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const getProductById = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:8000/product/${id}`);
+        const { data } = await axios.get(`http://localhost:8003/product/${id}`);
         setProduct(data);
       } catch (error) {
         console.log(error);

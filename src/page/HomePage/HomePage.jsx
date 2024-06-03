@@ -12,32 +12,36 @@ const HomePage = () => {
   const [navigate, setNavigate] = useState(false);
 
   useEffect(() => {
-    const getAllProducts = async () => {
+    const getCategory = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:8003/product`);
-        setProducts(data);
+        const response = await axios.get(`http://localhost:8000/api/category`);
+        const { data } = response;
+        setCategories(data);
         console.log(data);
-        // Extract unique categories
-        const uniqueCategories = [
-          ...new Set(data.map((product) => product.category_id)),
-        ];
-        console.log(uniqueCategories);
-        setCategories(uniqueCategories);
+        console.log("tra ve", response);
       } catch (error) {
         console.log(error);
       }
     };
-    getAllProducts();
+    getCategory();
   }, []);
 
   return (
     <Layout>
       <HeaderNav />
-      {categories.map((category) => (
-        <div key={category}>
-          <BlockTitle title={category} />
+
+      {categories.slice(0, 6).map((category) => (
+        <div key={category._id}>
+          <BlockTitle title={category.name} />
+
           <ListCard
-            products={products.filter((p) => p.category_id === category)}
+            products={category.categories.map((product) => ({
+              ...product,
+              category: {
+                id: category._id,
+                name: category.name,
+              },
+            }))}
           />
         </div>
       ))}

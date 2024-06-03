@@ -28,3 +28,33 @@
 .box-item-li-navLeft:not(:last-child) {
   border-bottom: 2px solid #d9c4c4;
 }
+.box-nav-left {
+  position: relative;
+  cursor: pointer;
+}
+
+.child-div {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 313px;
+  z-index: 1;
+  height: auto;
+  margin-top: 5px;
+}
+
+.box-nav-left:hover > .child-div {
+  display: block;
+  position: relative;
+  padding: 5px;
+  border-bottom: 1px solid black;
+}
+
+.nav-item.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+.child-link {
+  margin-left: 200px;
+  margin-top: -37px;
+}

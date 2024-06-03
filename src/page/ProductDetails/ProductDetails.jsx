@@ -9,18 +9,21 @@ import HeaderNav from "../../components/header_nav/HeaderNav";
 const ProductDetails = () => {
   const [product, setProduct] = useState("");
 
-  const { id } = useParams();
+  const { _id } = useParams();
   useEffect(() => {
     const getProductById = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:8003/product/${id}`);
+        const { data } = await axios.get(
+          `http://localhost:8000/api/product/${_id}`
+        );
         setProduct(data);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
     };
     getProductById();
-  }, [id]);
+  }, [_id]);
 
   if (!product) {
     return <div>Loading...</div>;
@@ -55,7 +58,7 @@ const ProductDetails = () => {
                     </p>
                   </div>
                   <div className="Details-Products mt-3">
-                    <p>Mã sản phẩm: {product.id}</p>
+                    <p>Mã sản phẩm: {product._id}</p>
                     <p className="info">Thông tin cơ bản:</p>
                     <p>{product.description}</p>
                   </div>

@@ -18,6 +18,7 @@ const Header = () => {
     if (token) {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       setUserInfo(userInfo);
+      console.log(userInfo);
     }
   }, []);
 
@@ -54,7 +55,7 @@ const Header = () => {
                   className="text-link-header d-flex align-items-center"
                 >
                   <img
-                    src={userInfo.avatar}
+                    src={`http://localhost:8000/${userInfo.avatar}`}
                     className="rounded-circle me-2"
                     style={{ width: "30px", height: "30px" }}
                   />

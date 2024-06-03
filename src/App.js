@@ -10,6 +10,7 @@ import CategoryPage from "./page/CategoryPage/CategoryPage";
 import PCPage from "./page/PCPage/PCPage";
 import ProductAll from "./page/ProductAll/ProductAll";
 import Profile from "./page/Profile/Profile";
+import AccessoryPage from "./page/AccessoryPage/AccessoryPage";
 
 function App() {
   return (
@@ -17,9 +18,15 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+
       <Route path="/ProductDetails/:id" element={<ProductDetails />} />
-      <Route path="/products/:categoryId" element={<CategoryPage />} />
+
+      <Route path="/Accessory/:id" element={<AccessoryPage />} />
+
+      <Route path="/Category/:id" element={<CategoryPage />} />
+
       <Route path="/productsAll" element={<ProductAll />} />
+
       <Route path="/profile" element={<Profile />} />
     </Routes>
   );

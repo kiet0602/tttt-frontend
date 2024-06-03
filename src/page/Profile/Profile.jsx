@@ -29,7 +29,10 @@ const Profile = () => {
         <div className="container mt-5">
           <div className="box-info col-6">
             <div className="">
-              <img className="img-avatar-profile" src={userInfo.avatar} />{" "}
+              <img
+                className="img-avatar-profile"
+                src={`http://localhost:8000/${userInfo.avatar}`}
+              />{" "}
               <br />
               <p className="user-profile">
                 Tên khách hàng:{" "}

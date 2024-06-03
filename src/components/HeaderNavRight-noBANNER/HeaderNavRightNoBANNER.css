@@ -1,0 +1,21 @@
+.list-nav-right {
+  list-style: none;
+  padding-right: 35px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.text-Link-navRight {
+  text-decoration: none;
+  font-size: 15px;
+  color: #fff;
+}
+.text-Link-navRight:hover {
+  color: #ff8200f2;
+  text-decoration: underline;
+  text-shadow: 1.5px 1px black;
+}
+.box-nav-right {
+  background: #7f7a7aa8;
+  border-radius: 5px;
+  color: white;
+}

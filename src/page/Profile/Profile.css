@@ -1,4 +1,8 @@
 .img-avatar-profile {
+  width: 200px;
+  height: 167px;
+  border-radius: 100%;
+  margin-left: 60px;
 }
 .user-name-profile {
   color: #ff8200f2;

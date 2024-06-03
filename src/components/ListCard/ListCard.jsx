@@ -13,14 +13,18 @@ const ListCard = ({ products }) => {
   return (
     <div className="container">
       <div className="row">
-        {products.slice(0, 4).map((product) => (
+        {products.map((product) => (
           <div
             onClick={() => handleProductClick(product.id)}
             className="col-3 box-product mt-1"
             key={product.id}
           >
             <div className="text-center">
-              <img className="img-fluid" src={imgPC} alt="" />
+              <img
+                className="img-fluid"
+                src={`http://localhost:8000/${product.image}`}
+                alt=""
+              />
               <span className="text-center">{product.name}</span>
               <p>{product.price}</p>
             </div>

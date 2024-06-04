@@ -4,8 +4,14 @@ import Layout from "../../components/Layout/Layout";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
 import Header from "../../components/Header/Header";
 import BlockTitle from "../../components/BlockTitle/BlockTitle";
+import { useSelector, useDispatch } from "react-redux";
+import { AddProduct, DeleteProduct } from "../../redux/slice/CartSlice";
 
 const ProductAll = () => {
+  const CartProducts = useSelector((state) => state.cart.CartArr);
+  const dispatch = useDispatch();
+  console.log(CartProducts);
+
   const [productsData, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // State cho giá trị của input search
 
@@ -48,6 +54,9 @@ const ProductAll = () => {
                     Loại: {product.category_id.name}
                   </span>
                   <p>{product.price.toLocaleString()} VND</p>
+                  <button onClick={() => dispatch(AddProduct(product))}>
+                    Thêm vào giỏ hàng
+                  </button>
                 </div>
               </div>
             ))

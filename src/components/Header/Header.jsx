@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ searchTerm, setSearchTerm }) => {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
@@ -18,10 +18,8 @@ const Header = () => {
     if (token) {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       setUserInfo(userInfo);
-      console.log(userInfo);
     }
   }, []);
-
   return (
     <div className="container-lg mt-4">
       <div className="row align-items-center justify-content-between">
@@ -38,6 +36,8 @@ const Header = () => {
                 className="inputSearch"
                 type="search"
                 placeholder="Bạn đang tìm gì?"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button className="buttonSearch" type="submit">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />

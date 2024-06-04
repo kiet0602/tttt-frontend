@@ -1,35 +1,57 @@
 import React, { useEffect, useState } from "react";
-import "./HomePage.css";
+import axios from "axios";
 import Layout from "../../components/Layout/Layout";
 import HeaderNav from "../../components/header_nav/HeaderNav";
 import BlockTitle from "../../components/BlockTitle/BlockTitle";
 import ListCard from "../../components/ListCard/ListCard";
-import axios from "axios";
+import Header from "../../components/Header/Header";
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [navigate, setNavigate] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const getCategory = async () => {
+    const getData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/category`);
-        const { data } = response;
-        setCategories(data);
-        console.log(data);
-        console.log("tra ve", response);
+        // Lấy danh sách danh mục
+        const categoryResponse = await axios.get(
+          `http://localhost:8000/api/category`
+        );
+        const categoryData = categoryResponse.data;
+
+        // Lọc danh mục dựa trên searchTerm
+        const filteredCategories = categoryData.filter((category) =>
+          category.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        setCategories(filteredCategories);
+
+        // Lấy danh sách sản phẩm
+        const productResponse = await axios.get(
+          `http://localhost:8000/api/product`
+        );
+        const productData = productResponse.data;
+
+        // Lọc sản phẩm dựa trên searchTerm
+        const filteredProducts = productData.filter((product) =>
+          product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        setProducts(filteredProducts);
       } catch (error) {
         console.log(error);
       }
     };
-    getCategory();
-  }, []);
+
+    getData();
+  }, [searchTerm]);
 
   return (
-    <Layout>
+    <>
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <HeaderNav />
-
+      <BlockTitle title={`Từ khóa tìm kiếm: ${searchTerm}`} />
       {categories.slice(0, 6).map((category) => (
         <div key={category._id}>
           <BlockTitle title={category.name} />
@@ -45,7 +67,8 @@ const HomePage = () => {
           />
         </div>
       ))}
-    </Layout>
+      {/*   <ListCard products={products} /> */}
+    </>
   );
 };
 

@@ -61,7 +61,7 @@ const LoginPage = () => {
         }
       );
       const { data } = response;
-      console.log(data);
+
       setNavigate(true);
       toast.success("Đăng nhập thành công!");
       localStorage.setItem("token", data.accessToken);

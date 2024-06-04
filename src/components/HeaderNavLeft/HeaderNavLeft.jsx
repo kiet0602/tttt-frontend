@@ -13,7 +13,6 @@ const HeaderNavLeft = () => {
       try {
         const { data } = await axios.get(`http://localhost:8000/api/accessory`);
         setAccessories(data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }

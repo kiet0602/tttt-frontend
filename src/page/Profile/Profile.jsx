@@ -14,7 +14,6 @@ const Profile = () => {
       setUserInfo(userInfo);
     }
   }, []);
-  console.log(userInfo);
 
   const HandleLogout = () => {
     const token = localStorage.removeItem("token");

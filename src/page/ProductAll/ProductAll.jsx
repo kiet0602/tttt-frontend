@@ -1,44 +1,42 @@
-import Layout from "../../components/Layout/Layout";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import HeaderNav from "../../components/header_nav/HeaderNav";
-import "./ProductsAll.css";
+import Layout from "../../components/Layout/Layout";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
+import Header from "../../components/Header/Header";
+import BlockTitle from "../../components/BlockTitle/BlockTitle";
 
 const ProductAll = () => {
   const [productsData, setProducts] = useState([]);
-  const navigate = useNavigate();
-
-  const handleProductClick = (_id) => {
-    navigate(`/ProductDetails/${_id}`);
-  };
+  const [searchTerm, setSearchTerm] = useState(""); // State cho giá trị của input search
 
   useEffect(() => {
     const getProductsAll = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/api/product`);
-        setProducts(response.data.data);
+        let filteredProducts = response.data.data.filter((product) =>
+          product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setProducts(filteredProducts);
       } catch (error) {
         console.log(error);
       }
     };
     getProductsAll();
-  }, []);
+  }, [searchTerm]);
+
   return (
     <>
-      <Layout>
-        <HeadNavNoBanNer />
-        <div className="container mt-4">
-          <p className="title-allproducts">TẤT CẢ SẢN PHẨM</p>
-          <div className="row">
-            {productsData.map((product) => (
-              <div
-                onClick={() => handleProductClick(product.id)}
-                className="col-3 box-product mt-1"
-                key={product.id}
-              >
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      <HeadNavNoBanNer />
+      <BlockTitle title={`Từ khóa tìm kiếm: ${searchTerm}`} />
+      <div className="container mt-4">
+        <div className="row">
+          {productsData.length === 0 ? (
+            <p>Không có sản phẩm nào được tìm thấy.</p>
+          ) : (
+            productsData.map((product) => (
+              <div className="col-3 box-product mt-1" key={product.id}>
                 <div className="text-center">
                   <img
                     className="img-fluid"
@@ -52,10 +50,10 @@ const ProductAll = () => {
                   <p>{product.price.toLocaleString()} VND</p>
                 </div>
               </div>
-            ))}
-          </div>
+            ))
+          )}
         </div>
-      </Layout>
+      </div>
     </>
   );
 };

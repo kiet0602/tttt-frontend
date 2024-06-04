@@ -17,7 +17,6 @@ const ProductDetails = () => {
           `http://localhost:8000/api/product/${_id}`
         );
         setProduct(data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }

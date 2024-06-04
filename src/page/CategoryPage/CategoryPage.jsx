@@ -5,56 +5,42 @@ import BlockTitle from "../../components/BlockTitle/BlockTitle";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
 
 const CategoryPage = () => {
-  const { categoryId } = useParams();
-  const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
-
-  const handleProductClick = (id) => {
-    navigate(`/ProductDetails/${id}`);
-  };
-
+  const [categores, setCategores] = useState([]);
+  const { id } = useParams();
   useEffect(() => {
-    const getProductsAll = async () => {
+    const fetchProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/product`);
-        const filteredProducts = response.data.data.filter(
-          (product) => product.category_id._id === categoryId
+        const response = await axios.get(
+          `http://localhost:8000/api/category/${id}`
         );
-        setProducts(filteredProducts);
-        console.log(filteredProducts); // Debugging: Check the filtered products
+        setCategores(response.data.products);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching products:", error);
       }
     };
-    getProductsAll();
-  }, [categoryId]);
+    fetchProducts();
+  }, [id]);
 
   return (
     <div className="container">
       <Header />
-
+      <HeadNavNoBanNer />
       <div className="row">
-        <BlockTitle title={""} />
-        {products &&
-          products.map((product) => (
-            <div
-              onClick={() => handleProductClick(product._id)}
-              className="col-3 box-product mt-1"
-              key={product._id}
-            >
-              <div className="text-center">
-                <img
-                  className="img-fluid"
-                  src={`http://localhost:8000/${product.image}`}
-                  alt={product.name}
-                />
-                <span className="text-center">{product.name}</span>
-                <p>{product.price.toLocaleString()} VND</p>
-              </div>
+        {categores?.map((product) => (
+          <div className="col-3 box-product mt-1" key={product._id}>
+            <div className="text-center">
+              <img
+                className="img-fluid"
+                src={`http://localhost:8000/${product.image}`}
+                alt={product.name}
+              />
+              <span className="text-center">{product.name}</span>
             </div>
-          ))}
+          </div>
+        ))}
       </div>
       <Footer />
     </div>

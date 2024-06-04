@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import imgLogo from "../../assets/img/PNG-Van-Phong-Lam-Viec041.png";
@@ -55,7 +56,11 @@ const Header = ({ searchTerm, setSearchTerm }) => {
                   className="text-link-header d-flex align-items-center"
                 >
                   <img
-                    src={`http://localhost:8000/${userInfo.avatar}`}
+                    src={
+                      userInfo.avatar.startsWith("https")
+                        ? `${userInfo.avatar}`
+                        : `http://localhost:8000/${userInfo.avatar}`
+                    }
                     className="rounded-circle me-2"
                     style={{ width: "30px", height: "30px" }}
                   />

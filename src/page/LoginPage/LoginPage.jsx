@@ -1,78 +1,72 @@
-import React from "react";
-import "./LoginPage.css";
+import React, { useState, useEffect } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import avatar from "../../../src/assets/img/1.png";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import "./LoginPage.css";
 
 const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [navigate, setNavigate] = useState(false);
+  const [tokenProcessed, setTokenProcessed] = useState(false);
 
-  async function handleFacebookLogin() {
+  const handleFacebookLogin = async () => {
     try {
-      // Gửi yêu cầu GET đến endpoint /auth/facebook
       const response = await axios.get("http://localhost:8000/auth/facebook");
-      // Chuyển hướng người dùng đến trang Facebook để xác thực
       window.location.href = response.data.redirectUrl;
     } catch (error) {
       console.error("Error during Facebook login:", error);
     }
-  }
+  };
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const code = urlParams.get("code");
-  if (code) {
-    handleFacebookCallback(code);
-  }
-
-  async function handleFacebookCallback(code) {
+  const handleFacebookCallback = async (code) => {
     try {
-      // Gửi yêu cầu GET đến điểm cuối /auth/facebook/callback với tham số code
       await axios.get(
         `http://localhost:8000/auth/facebook/callback?code=${code}`
       );
-      // Chuyển hướng người dùng về trang chủ
       window.location.href = "/";
     } catch (error) {
       console.error("Error during Facebook callback:", error);
-      // Chuyển hướng người dùng về trang đăng nhập
       window.location.href = "/login";
     }
-  }
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+
+    if (code && !tokenProcessed) {
+      handleFacebookCallback(code);
+      setTokenProcessed(true);
+    }
+  }, [tokenProcessed]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
         `http://localhost:8000/api/authentication/login-user`,
-        {
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        { email, password },
+        { headers: { "Content-Type": "application/json" } }
       );
-      const { data } = response;
 
-      setNavigate(true);
-      toast.success("Đăng nhập thành công!");
+      const { data } = response;
       localStorage.setItem("token", data.accessToken);
       localStorage.setItem("userInfo", JSON.stringify(data.props));
+      toast.success("Đăng nhập thành công!");
+      setNavigate(true);
     } catch (error) {
-      toast.error(`Đăng nhập thất bại!`);
+      toast.error(error.message);
     }
   };
+
   if (navigate) {
     return <Navigate to="/" />;
   }
+
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="row border rounded-5 p-3 bg-white shadow box-area">
@@ -81,7 +75,12 @@ const LoginPage = () => {
           style={{ background: "#103cbe" }}
         >
           <div className="featured-image mb-3">
-            <img src={avatar} className="img-fluid" style={{ width: 250 }} />
+            <img
+              src={avatar}
+              className="img-fluid"
+              style={{ width: 250 }}
+              alt="avatar"
+            />
           </div>
           <small
             className="text-white text-wrap text-center"
@@ -126,33 +125,33 @@ const LoginPage = () => {
               </div>
             </form>
             <div className="input-group mb-3 ">
-              <button className="btn  btn-light w-100 fs-6">
-                <small>
+              <button className="btn btn-light w-100 fs-6">
+                <a href="http://localhost:8000/auth/google">
                   <FontAwesomeIcon
                     className="px-2"
                     icon={faGoogle}
                     style={{ color: "#fd0d0d" }}
                   />
                   Đăng nhập bằng Google
-                </small>
+                </a>
               </button>
               <button
                 onClick={handleFacebookLogin}
-                className="btn  btn-light w-100 fs-6 mt-2"
+                className="btn btn-light w-100 fs-6 mt-2"
               >
-                <small>
+                <a href="http://localhost:8000/auth/facebook">
                   <FontAwesomeIcon
                     className="px-2"
                     icon={faFacebook}
                     style={{ color: "#0a5ae6" }}
                   />
                   Đăng nhập bằng Facebook
-                </small>
+                </a>
               </button>
             </div>
             <div className="row">
               <small>
-                Chưa có tài khoảng? <Link to={"/register"}>Đăng kí</Link>
+                Chưa có tài khoản? <Link to={"/register"}>Đăng kí</Link>
               </small>
             </div>
           </div>

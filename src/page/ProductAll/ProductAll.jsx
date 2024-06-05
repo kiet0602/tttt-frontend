@@ -4,16 +4,26 @@ import Layout from "../../components/Layout/Layout";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
 import Header from "../../components/Header/Header";
 import BlockTitle from "../../components/BlockTitle/BlockTitle";
-import { useSelector, useDispatch } from "react-redux";
-import { AddProduct, DeleteProduct } from "../../redux/slice/CartSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 const ProductAll = () => {
-  const CartProducts = useSelector((state) => state.cart.CartArr);
-  const dispatch = useDispatch();
-  console.log(CartProducts);
-
   const [productsData, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // State cho giá trị của input search
+
+  const addCart = (productId) => {
+    try {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const userId = userInfo._id;
+      const res = axios.post("http://localhost:8000/api/cart", {
+        userId,
+        productId,
+        quantity: 1,
+      });
+      toast.success("Đã thêm sản phẩm vào giỏ hàng thành công!");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   useEffect(() => {
     const getProductsAll = async () => {
@@ -33,13 +43,16 @@ const ProductAll = () => {
   return (
     <>
       <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
       <HeadNavNoBanNer />
-      <BlockTitle title={`Từ khóa tìm kiếm: ${searchTerm}`} />
+
       <div className="container mt-4">
         <div className="row">
           {productsData.length === 0 ? (
-            <p>Không có sản phẩm nào được tìm thấy.</p>
+            <p className="text-center test-bold">
+              {" "}
+              <img src="" alt="" />
+              Không có sản phẩm nào được tìm thấy.
+            </p>
           ) : (
             productsData.map((product) => (
               <div className="col-3 box-product mt-1" key={product.id}>
@@ -49,12 +62,33 @@ const ProductAll = () => {
                     src={`http://localhost:8000/${product.image}`}
                     alt=""
                   />
-                  <span className="text-center">{product.name}</span> <br />
                   <span className="text-center">
-                    Loại: {product.category_id.name}
+                    {product.name.substring(0, 40)}...
                   </span>
-                  <p>{product.price.toLocaleString()} VND</p>
-                  <button onClick={() => dispatch(AddProduct(product))}>
+                  <br />
+                  {/*         <span className="text-center">
+                    Loại: {product.category_id?.name?.substring(0, 30)}
+                  </span> */}
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "20px",
+                      fontWeight: "bolder",
+                    }}
+                  >
+                    {product.price.toLocaleString()} VND
+                  </p>
+                  <button
+                    style={{
+                      border: "none",
+                      backgroundColor: "blue",
+                      borderRadius: "30px",
+                      marginBottom: "15px",
+                      color: "white",
+                      padding: "10px",
+                    }}
+                    onClick={() => addCart(product._id)}
+                  >
                     Thêm vào giỏ hàng
                   </button>
                 </div>
@@ -63,6 +97,7 @@ const ProductAll = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

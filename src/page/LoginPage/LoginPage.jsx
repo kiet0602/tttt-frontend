@@ -55,6 +55,7 @@ const LoginPage = () => {
 
       const { data } = response;
       localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("userId", data.props._id);
       localStorage.setItem("userInfo", JSON.stringify(data.props));
       toast.success("Đăng nhập thành công!");
       setNavigate(true);

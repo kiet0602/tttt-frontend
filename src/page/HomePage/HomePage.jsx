@@ -5,8 +5,15 @@ import HeaderNav from "../../components/header_nav/HeaderNav";
 import BlockTitle from "../../components/BlockTitle/BlockTitle";
 import ListCard from "../../components/ListCard/ListCard";
 import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+
+import { useSelector, useDispatch } from "react-redux";
+import { AddProduct, DeleteProduct } from "../../redux/slice/CartSlice";
 
 const HomePage = () => {
+  const CartProducts = useSelector((state) => state.cart.CartArr);
+  const dispatch = useDispatch();
+
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -51,7 +58,7 @@ const HomePage = () => {
     <>
       <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <HeaderNav />
-      <BlockTitle title={`Từ khóa tìm kiếm: ${searchTerm}`} />
+
       {categories.slice(0, 6).map((category) => (
         <div key={category._id}>
           <BlockTitle title={category.name} />
@@ -68,6 +75,7 @@ const HomePage = () => {
         </div>
       ))}
       {/*   <ListCard products={products} /> */}
+      <Footer />
     </>
   );
 };

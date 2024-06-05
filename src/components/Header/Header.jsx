@@ -10,9 +10,30 @@ import {
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
+import axios from "axios";
 
 const Header = ({ searchTerm, setSearchTerm }) => {
+  const [products, setProducts] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
+  const userInfo2 = JSON.parse(localStorage.getItem("userInfo"));
+  const UserID2 = userInfo2._id;
+
+  useEffect(() => {
+    const getProductsAll = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/cart/${UserID2}`
+        );
+        console.log(response.data.data.items);
+        setProducts(response.data.data.items);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProductsAll();
+  }, []);
+
+  const SumQuanlity = products.length;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,6 +42,7 @@ const Header = ({ searchTerm, setSearchTerm }) => {
       setUserInfo(userInfo);
     }
   }, []);
+
   return (
     <div className="container-lg mt-4">
       <div className="row align-items-center justify-content-between">
@@ -73,7 +95,7 @@ const Header = ({ searchTerm, setSearchTerm }) => {
                     className="text-dark"
                     icon={faCartShopping}
                   />
-                  (1) Giỏ hàng
+                  ({SumQuanlity}) Giỏ hàng
                 </Link>
               </div>
             </>
@@ -91,7 +113,7 @@ const Header = ({ searchTerm, setSearchTerm }) => {
                     className="text-dark"
                     icon={faCartShopping}
                   />
-                  (1) Giỏ hàng
+                  (0) Giỏ hàng
                 </Link>
               </div>
             </>

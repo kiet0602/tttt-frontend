@@ -79,7 +79,7 @@ const Header = ({ searchTerm, setSearchTerm }) => {
                 >
                   <img
                     src={
-                      userInfo.avatar.startsWith("https")
+                      userInfo?.avatar?.startsWith("https")
                         ? `${userInfo.avatar}`
                         : `http://localhost:8000/${userInfo.avatar}`
                     }

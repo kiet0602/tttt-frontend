@@ -5,13 +5,16 @@ import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import avatar from "../../../src/assets/img/1.png";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+
 import "./LoginPage.css";
 
 const LoginPage = () => {
+  const navigates = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [navigate, setNavigate] = useState(false);
   const [tokenProcessed, setTokenProcessed] = useState(false);
+  const token = localStorage.getItem("token");
 
   const handleFacebookLogin = async () => {
     try {
@@ -41,6 +44,9 @@ const LoginPage = () => {
     if (code && !tokenProcessed) {
       handleFacebookCallback(code);
       setTokenProcessed(true);
+    }
+    if (token) {
+      navigates("/");
     }
   }, [tokenProcessed]);
 

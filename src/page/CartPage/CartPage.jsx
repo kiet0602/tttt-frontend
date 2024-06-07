@@ -139,7 +139,7 @@ const CartPage = () => {
       const res = axios.post("http://localhost:8000/api/order", {
         userId,
         orderFromCart: false,
-        orderDetails: [],
+        orderDetails: [selectedItem],
       });
       toast.success("Bạn đã đặt hàng thành công!");
       fetchCartItems();
@@ -329,7 +329,6 @@ const CartPage = () => {
                 <>
                   <img
                     src={`http://localhost:8000/${selectedItem.product_id.image}`}
-                    alt={selectedItem.product_id.name}
                     style={{ width: "100px" }}
                   />
                   <h5>{selectedItem.product_id.name}</h5>

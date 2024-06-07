@@ -11,12 +11,35 @@ import { useSelector, useDispatch } from "react-redux";
 import { AddProduct, DeleteProduct } from "../../redux/slice/CartSlice";
 
 const HomePage = () => {
-  const CartProducts = useSelector((state) => state.cart.CartArr);
-  const dispatch = useDispatch();
-
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    // Gọi fetchCartItems khi component được render
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo) {
+      fetchCartItems(userInfo._id);
+    }
+  }, []); // [] để đảm bảo fetchCartItems chỉ được gọi một lần khi component được render
+
+  useEffect(() => {
+    // Cập nhật cartItemCount sau khi cartItems được cập nhật
+    const cartItemCount = cartItems.length;
+    // Cập nhật cartItemCount ở đây
+  }, [cartItems]);
+
+  const fetchCartItems = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/cart/${userId}`
+      );
+      setCartItems(response.data.data.items);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -38,8 +61,7 @@ const HomePage = () => {
         const productResponse = await axios.get(
           `http://localhost:8000/api/product`
         );
-        const productData = productResponse.data;
-
+        const productData = productResponse.data.data;
         // Lọc sản phẩm dựa trên searchTerm
         const filteredProducts = productData.filter((product) =>
           product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -56,7 +78,11 @@ const HomePage = () => {
 
   return (
     <>
-      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Header
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        cartItemCount={cartItems.length}
+      />
       <HeaderNav />
 
       {categories.slice(0, 6).map((category) => (

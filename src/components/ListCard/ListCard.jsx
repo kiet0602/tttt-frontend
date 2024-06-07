@@ -1,19 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./ListCard.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const ListCard = ({ products }) => {
   const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
 
-  const addCart = (productId) => {
+  const addCart = async (productId) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userInfo) {
+      alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.");
+      navigate("/login");
+      return;
+    }
     const userId = userInfo._id;
-    const res = axios.post("http://localhost:8000/api/cart", {
-      userId,
-      productId,
-      quantity: 1,
-    });
+    try {
+      await axios.post("http://localhost:8000/api/cart", {
+        userId,
+        productId,
+        quantity: 1,
+      });
+      alert("đã thêm sản phẩm thành công");
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      toast.error("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.");
+    }
+    const response = await axios.get(
+      `http://localhost:8000/api/cart/${userId}`
+    );
+    setCartItems(response.data.data.items);
   };
 
   return (
@@ -25,7 +42,7 @@ const ListCard = ({ products }) => {
               <img
                 className="img-fluid"
                 src={`http://localhost:8000/${product.image}`}
-                alt=""
+                alt={product.name}
               />
               <span className="text-center">
                 {product.name.substring(0, 40)}...
@@ -56,6 +73,7 @@ const ListCard = ({ products }) => {
           </div>
         ))}
       </div>
+      <ToastContainer />
     </div>
   );
 };

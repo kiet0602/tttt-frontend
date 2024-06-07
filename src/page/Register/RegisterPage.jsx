@@ -16,6 +16,33 @@ const RegisterPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    // Kiểm tra các trường không được để trống
+    if (!username || !email || !password || !address || !avatarFile) {
+      toast.error("Vui lòng điền đầy đủ thông tin.");
+      return;
+    }
+    if (username.length < 6) {
+      toast.error("Tên của bạn ít nhất 6 ký tự.");
+      return;
+    }
+
+    // Kiểm tra độ dài password
+    if (password.length < 6) {
+      toast.error("Mật khẩu cần ít nhất 6 ký tự.");
+      return;
+    }
+
+    // Kiểm tra độ dài password
+
+    // Kiểm tra định dạng email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      toast.error("Email không hợp lệ.");
+      return;
+    }
+
+    // Thực hiện đăng ký nếu thông tin hợp lệ
     try {
       const formData = new FormData();
       formData.append("username", username);
@@ -44,7 +71,7 @@ const RegisterPage = () => {
 
       toast.success("Đăng ký thành công!");
     } catch (error) {
-      toast.error("Đăng ký thất bại", error);
+      toast.error("Đăng ký thất bại email đã tồn tại", error);
     }
   };
 

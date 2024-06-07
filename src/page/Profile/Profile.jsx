@@ -15,11 +15,11 @@ const Profile = () => {
     }
   }, []);
 
-  const HandleLogout = () => {
-    const token = localStorage.removeItem("token");
-    if (!token) {
-      navigate(`/login`);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("userId");
+    navigate(`/login`);
   };
 
   return (
@@ -49,7 +49,7 @@ const Profile = () => {
               </p>
             </div>
             <div className="text-center">
-              <button onClick={HandleLogout} className="btn-logout">
+              <button onClick={handleLogout} className="btn-logout">
                 Đăng xuất
               </button>
             </div>

@@ -5,70 +5,97 @@ import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer"
 import Header from "../../components/Header/Header";
 import BlockTitle from "../../components/BlockTitle/BlockTitle";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ProductAll = () => {
   const [productsData, setProducts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // State cho giá trị của input search
+  const [searchTerm, setSearchTerm] = useState(""); // State for search input value
+  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
 
-  const addCart = (productId) => {
+  const addCart = async (productId) => {
     try {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      if (!userInfo) {
+        alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.");
+        navigate("/login");
+        return;
+      }
+
       const userId = userInfo._id;
-      const res = axios.post("http://localhost:8000/api/cart", {
+      await axios.post("http://localhost:8000/api/cart", {
         userId,
         productId,
         quantity: 1,
       });
       toast.success("Đã thêm sản phẩm vào giỏ hàng thành công!");
+      fetchCartItems(userId);
     } catch (error) {
-      toast.error(error.message);
+      toast.error("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.");
     }
   };
+
+  useEffect(() => {
+    // Fetch cart items when the component mounts
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo) {
+      fetchCartItems(userInfo._id);
+    }
+  }, []);
 
   useEffect(() => {
     const getProductsAll = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/api/product`);
-        let filteredProducts = response.data.data.filter((product) =>
+        const filteredProducts = response.data.data.filter((product) =>
           product.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setProducts(filteredProducts);
       } catch (error) {
-        console.log(error);
+        console.log("Error fetching products:", error);
       }
     };
     getProductsAll();
   }, [searchTerm]);
 
+  const fetchCartItems = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/cart/${userId}`
+      );
+      setCartItems(response.data.data.items);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
+
   return (
     <>
-      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Header
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        cartItemCount={cartItems.length}
+      />
       <HeadNavNoBanNer />
 
       <div className="container mt-4">
         <div className="row">
           {productsData.length === 0 ? (
-            <p className="text-center test-bold">
-              {" "}
-              <img src="" alt="" />
+            <p className="text-center font-bold">
               Không có sản phẩm nào được tìm thấy.
             </p>
           ) : (
             productsData.map((product) => (
-              <div className="col-3 box-product mt-1" key={product.id}>
+              <div className="col-3 box-product mt-1" key={product._id}>
                 <div className="text-center">
                   <img
                     className="img-fluid"
                     src={`http://localhost:8000/${product.image}`}
-                    alt=""
+                    alt={product.name}
                   />
                   <span className="text-center">
                     {product.name.substring(0, 40)}...
                   </span>
-                  <br />
-                  {/*         <span className="text-center">
-                    Loại: {product.category_id?.name?.substring(0, 30)}
-                  </span> */}
                   <p
                     style={{
                       color: "red",

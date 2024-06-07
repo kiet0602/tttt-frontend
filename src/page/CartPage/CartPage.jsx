@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./CartPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBasketShopping, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -11,13 +11,24 @@ import { ToastContainer, toast } from "react-toastify";
 
 const CartPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const userId = userInfo._id;
-
+  const [userId, setUserId] = useState(null);
   const [quantities, setQuantities] = useState({});
+  const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo) {
+      setUserId(userInfo._id);
+    }
+  }, []);
 
   const getProductsAll = async () => {
+    if (!userId) return;
+
     try {
       const response = await axios.get(
         `http://localhost:8000/api/cart/${userId}`
@@ -28,6 +39,11 @@ const CartPage = () => {
         return acc;
       }, {});
       setQuantities(newQuantities);
+      fetchCartItems(userId);
+      const total = response.data.data.items.reduce((total, product) => {
+        return total + product.product_id.price * product.quantity;
+      }, 0);
+      setTotalPrice(total);
     } catch (error) {
       console.log(error);
     }
@@ -35,7 +51,18 @@ const CartPage = () => {
 
   useEffect(() => {
     getProductsAll();
-  }, []);
+  }, [userId]);
+
+  const fetchCartItems = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/cart/${userId}`
+      );
+      setCartItems(response.data.data.items);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
 
   const updateProductItemCart = async (quantity, productId) => {
     try {
@@ -50,30 +77,37 @@ const CartPage = () => {
     }
   };
 
-  const inCrease = (productId) => {
+  const increase = (productId) => {
     setQuantities((prevQuantities) => {
       const newQuantities = {
         ...prevQuantities,
-        productId: prevQuantities[productId] + 1,
+        [productId]: prevQuantities[productId] + 1,
       };
-      updateProductItemCart(newQuantities.productId, productId);
+      updateProductItemCart(newQuantities[productId], productId);
+      toast.success("Tăng sản phẩm thành công!");
+
       return newQuantities;
     });
   };
 
-  const deCrease = (productId) => {
+  const decrease = (productId) => {
     setQuantities((prevQuantities) => {
+      const newQuantity = Math.max(prevQuantities[productId] - 1, 0);
+      if (newQuantity === 0) {
+        return prevQuantities;
+      }
+
       const newQuantities = {
         ...prevQuantities,
-        [productId]: Math.max(prevQuantities[productId] - 1, 0),
+        [productId]: newQuantity,
       };
       updateProductItemCart(newQuantities[productId], productId);
+      toast.success("Giảm sản phẩm thành công!");
       return newQuantities;
     });
   };
 
   const removeProductItemCart = async (productId) => {
-    console.log(productId, userId);
     try {
       await axios.delete("http://localhost:8000/api/cart", {
         data: {
@@ -82,24 +116,58 @@ const CartPage = () => {
         },
       });
       getProductsAll();
+      fetchCartItems(userId);
     } catch (error) {
       toast.error(error.message);
     }
   };
 
+  const handleContinueShopping = () => {
+    navigate("/productsAll");
+  };
+
+  const handleCheckout = () => {
+    navigate(`/checkout/${userId}`);
+  };
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+  };
+
+  const paymentSingle = () => {
+    try {
+      const res = axios.post("http://localhost:8000/api/order", {
+        userId,
+        orderFromCart: false,
+        orderDetails: [],
+      });
+      toast.success("Bạn đã đặt hàng thành công!");
+      fetchCartItems();
+    } catch (error) {}
+  };
+
   return (
     <>
-      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Header
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        cartItemCount={cartItems.length}
+      />
       <HeadNavNoBanNer />
       <div className="container">
         <p className="fs-1">Giỏ hàng</p>
         <div className="row">
-          <div className="col-8 ">
-            <table className="table table-white">
-              <thead
-                className="boxx"
-                style={{ textAlign: "center", textAlignLast: "center" }}
-              >
+          <div className="col-8">
+            <table
+              className="table table-white"
+              style={{
+                borderCollapse: "separate",
+                borderSpacing: 0,
+                borderRadius: "30px",
+                overflow: "hidden",
+              }}
+            >
+              <thead className="boxx" style={{ textAlign: "center" }}>
                 <tr>
                   <th scope="col">Hình</th>
                   <th scope="col">Tên sản phẩm</th>
@@ -113,15 +181,15 @@ const CartPage = () => {
               <tbody>
                 {products.map((product) => (
                   <tr
-                    className=""
-                    style={{ textAlign: "center", textAlignLast: "center" }}
                     key={product.product_id._id}
+                    style={{ textAlign: "center" }}
                   >
                     <td>
                       <Link to={`/product/${product.product_id._id}`}>
                         <img
                           style={{ width: "100px" }}
                           src={`http://localhost:8000/${product.product_id.image}`}
+                          alt={product.product_id.name}
                         />
                       </Link>
                     </td>
@@ -132,11 +200,44 @@ const CartPage = () => {
                       {product.product_id.price.toLocaleString()}đ
                     </td>
                     <td>
-                      <button onClick={() => deCrease(product.product_id._id)}>
+                      <button
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                          cursor: "pointer",
+                          padding: 20,
+                          margin: 0,
+                          fontSize: "30px",
+                          color: "black",
+                        }}
+                        onClick={() => decrease(product.product_id._id)}
+                        onMouseEnter={(e) => (e.target.style.color = "red")}
+                        onMouseLeave={(e) => (e.target.style.color = "black")}
+                      >
                         -
                       </button>
-                      {quantities[product.product_id._id]}
-                      <button onClick={() => inCrease(product.product_id._id)}>
+                      <span
+                        style={{
+                          fontSize: "30px",
+                          margin: "0 10px",
+                        }}
+                      >
+                        {quantities[product.product_id._id]}
+                      </span>
+                      <button
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                          cursor: "pointer",
+                          padding: 20,
+                          margin: 0,
+                          fontSize: "30px",
+                          color: "black",
+                        }}
+                        onClick={() => increase(product.product_id._id)}
+                        onMouseEnter={(e) => (e.target.style.color = "red")}
+                        onMouseLeave={(e) => (e.target.style.color = "black")}
+                      >
                         +
                       </button>
                     </td>
@@ -159,9 +260,12 @@ const CartPage = () => {
                     </td>
                     <td>
                       <FontAwesomeIcon
-                        className="payment-card"
                         style={{ cursor: "pointer" }}
+                        onClick={() => handleItemClick(product)}
                         icon={faBasketShopping}
+                        class="payment-card"
+                        data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop"
                       />
                     </td>
                   </tr>
@@ -172,42 +276,89 @@ const CartPage = () => {
           <div className="col-4">
             <div className="d-flex justify-content-between">
               <div>Tổng</div>
-              <div className="SumPayment-cart">10,999,999</div>
+              <div className="SumPayment-cart">
+                {totalPrice.toLocaleString()} VND
+              </div>
             </div>
             <div className="d-flex justify-content-between mt-4">
               <div>
-                <button className="btn-back-allProducts">
+                <button
+                  className="btn-back-allProducts"
+                  onClick={handleContinueShopping}
+                >
                   Tiếp tục mua sắm
                 </button>
               </div>
               <div>
-                <button className="btn-Payment">Thanh toán</button>
-              </div>
-            </div>
-            <div className=" justify-content-between">
-              <div className="mt-5">
-                <span>MUA TRẢ GÓP THEO THẺ TÍN DỤNG</span>
-              </div>
-              <div className="mt-2">
-                <ul>
-                  <li>Ấn Thanh Toán, nhập thông tin</li>
-                  <li>
-                    Chọn hình thức: Thanh toán thẻ - Trả góp. Lưu ý: LH nhân
-                    viên để kiểm tra tồn kho sản phẩm trước khi thanh toán
-                  </li>
-                  <li>
-                    Chọn loại thẻ phù hợp với nhu cầu, nhập thông tin, sau đó
-                    tiến hành thanh toán
-                  </li>
-                </ul>
+                <button className="btn-Payment" onClick={handleCheckout}>
+                  Thông tin đơn hàng
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <Footer />
       <ToastContainer />
+
+      {/* Modal */}
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Thông tin sản phẩm
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              {selectedItem && (
+                <>
+                  <img
+                    src={`http://localhost:8000/${selectedItem.product_id.image}`}
+                    alt={selectedItem.product_id.name}
+                    style={{ width: "100px" }}
+                  />
+                  <h5>{selectedItem.product_id.name}</h5>
+                  <p>Giá: {selectedItem.product_id.price.toLocaleString()}đ</p>
+                  <p>Số lượng: {quantities[selectedItem.product_id._id]}</p>
+                  <p>
+                    Tổng:{" "}
+                    {(
+                      selectedItem.product_id.price *
+                      quantities[selectedItem.product_id._id]
+                    ).toLocaleString()}
+                    đ
+                  </p>
+                </>
+              )}
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                onClick={paymentSingle}
+              >
+                Đặt hàng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

@@ -13,6 +13,7 @@ import Profile from "./page/Profile/Profile";
 import AccessoryPage from "./page/AccessoryPage/AccessoryPage";
 import OAuthCallback from "./page/OAuthCallback/OAuthCallback";
 import CartPage from "./page/CartPage/CartPage";
+import CheckoutPage from "./page/CheckoutPage/CheckoutPage";
 
 function App() {
   return (
@@ -31,7 +32,9 @@ function App() {
       <Route path="/productsAll" element={<ProductAll />} />
 
       <Route path="/profile" element={<Profile />} />
+
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/checkout/:id" element={<CheckoutPage />} />
     </Routes>
   );
 }

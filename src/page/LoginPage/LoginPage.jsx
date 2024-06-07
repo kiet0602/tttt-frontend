@@ -5,14 +5,14 @@ import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import avatar from "../../../src/assets/img/1.png";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-
+import "react-toastify/dist/ReactToastify.css";
 import "./LoginPage.css";
 
 const LoginPage = () => {
-  const navigates = useNavigate();
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [navigate, setNavigate] = useState(false);
+  const [navigateHome, setNavigateHome] = useState(false);
   const [tokenProcessed, setTokenProcessed] = useState(false);
   const token = localStorage.getItem("token");
 
@@ -46,12 +46,34 @@ const LoginPage = () => {
       setTokenProcessed(true);
     }
     if (token) {
-      navigates("/");
+      navigate("/");
     }
-  }, [tokenProcessed]);
+  }, [tokenProcessed, token, navigate]);
+
+  const validateEmail = (email) => {
+    // Basic email validation regex
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.[^<>()[\]\.,;:\s@"]{2,}))$/i;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validatePassword = (password) => {
+    // Password must be at least 6 characters
+    return password.length >= 6;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateEmail(email)) {
+      toast.error("Email không hợp lệ!");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      toast.error("Mật khẩu phải có ít nhất 6 ký tự!");
+      return;
+    }
+
     try {
       const response = await axios.post(
         `http://localhost:8000/api/authentication/login-user`,
@@ -64,13 +86,13 @@ const LoginPage = () => {
       localStorage.setItem("userId", data.props._id);
       localStorage.setItem("userInfo", JSON.stringify(data.props));
       toast.success("Đăng nhập thành công!");
-      setNavigate(true);
+      setNavigateHome(true);
     } catch (error) {
-      toast.error(error.message);
+      toast.error("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin!");
     }
   };
 
-  if (navigate) {
+  if (navigateHome) {
     return <Navigate to="/" />;
   }
 
@@ -146,14 +168,12 @@ const LoginPage = () => {
                 onClick={handleFacebookLogin}
                 className="btn btn-light w-100 fs-6 mt-2"
               >
-                <a href="http://localhost:8000/auth/facebook">
-                  <FontAwesomeIcon
-                    className="px-2"
-                    icon={faFacebook}
-                    style={{ color: "#0a5ae6" }}
-                  />
-                  Đăng nhập bằng Facebook
-                </a>
+                <FontAwesomeIcon
+                  className="px-2"
+                  icon={faFacebook}
+                  style={{ color: "#0a5ae6" }}
+                />
+                Đăng nhập bằng Facebook
               </button>
             </div>
             <div className="row">

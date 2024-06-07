@@ -53,12 +53,13 @@ const CartPage = () => {
     getProductsAll();
   }, [userId]);
 
-  const fetchCartItems = async (userId) => {
+  const fetchCartItems = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8000/api/cart/${userId}`
       );
       setCartItems(response.data.data.items);
+      console.log(response.data.data.items);
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }
@@ -138,9 +139,10 @@ const CartPage = () => {
     try {
       const res = axios.post("http://localhost:8000/api/order", {
         userId,
-        orderFromCart: false,
-        orderDetails: [selectedItem],
+        orderFromCart: true,
+        singleCartItem: { product_id: selectedItem.product_id._id },
       });
+
       toast.success("Bạn đã đặt hàng thành công!");
       fetchCartItems();
     } catch (error) {}

@@ -168,12 +168,14 @@ const LoginPage = () => {
                 onClick={handleFacebookLogin}
                 className="btn btn-light w-100 fs-6 mt-2"
               >
-                <FontAwesomeIcon
-                  className="px-2"
-                  icon={faFacebook}
-                  style={{ color: "#0a5ae6" }}
-                />
-                Đăng nhập bằng Facebook
+                <a href="http://localhost:8000/auth/facebook">
+                  <FontAwesomeIcon
+                    className="px-2"
+                    icon={faFacebook}
+                    style={{ color: "#0a5ae6" }}
+                  />
+                  Đăng nhập bằng Facebook
+                </a>
               </button>
             </div>
             <div className="row">

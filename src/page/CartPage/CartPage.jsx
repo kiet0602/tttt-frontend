@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBasketShopping, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import PayPal from "../../components/PayPal";
 
 const CartPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -53,7 +54,7 @@ const CartPage = () => {
     getProductsAll();
   }, [userId]);
 
-  const fetchCartItems = async (userId) => {
+  const fetchCartItems = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8000/api/cart/${userId}`
@@ -323,6 +324,7 @@ const CartPage = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
+              <PayPal cost={1} handleClickX={paymentSingle} />
             </div>
             <div class="modal-body">
               {selectedItem && (

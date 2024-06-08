@@ -38,9 +38,7 @@ function PayPalPayment({ cost, handleClickX }) {
         return response.json();
       })
       .then((data) => {
-        // handleClickX();
-        console.log(data);
-        alert("Pay successful...");
+        handleClickX();
       });
   };
   const initialOptions = {

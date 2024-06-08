@@ -24,10 +24,11 @@
 }
 .box-info {
   background: #fff;
-  width: 350px;
+
   padding: 10px;
   border-radius: 30px;
   box-shadow: 2px 3px 2px 0px #ff8200f2;
+  max-height: 400px;
 }
 .btn-logout {
   background: #ff8200f2;

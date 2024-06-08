@@ -11,6 +11,7 @@ const CheckoutPage = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchCartItems = async () => {
     try {
@@ -55,7 +56,11 @@ const CheckoutPage = () => {
 
   return (
     <>
-      <Header cartItemCount={cartItems.length} />
+      <Header
+        cartItemCount={cartItems.length}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       <HeadNavNoBanNer />
       <div className="container">
         <p className="fs-1">Thông tin đơn hàng</p>

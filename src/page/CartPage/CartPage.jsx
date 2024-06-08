@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
@@ -19,7 +19,7 @@ const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedItem, setSelectedItem] = useState(null);
-
+  const dismissButtonRef = useRef(null);
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
@@ -52,6 +52,7 @@ const CartPage = () => {
 
   useEffect(() => {
     getProductsAll();
+    fetchCartItems();
   }, [userId]);
 
   const fetchCartItems = async () => {
@@ -136,17 +137,23 @@ const CartPage = () => {
     setSelectedItem(item);
   };
 
-  const paymentSingle = () => {
+  const paymentSingle = async () => {
     try {
-      const res = axios.post("http://localhost:8000/api/order", {
+      const res = await axios.post("http://localhost:8000/api/order", {
         userId,
         orderFromCart: true,
         singleCartItem: { product_id: selectedItem.product_id._id },
       });
-
       toast.success("Bạn đã đặt hàng thành công!");
+      if (dismissButtonRef.current) {
+        dismissButtonRef.current.click();
+      }
+      // navigate("/profile");
       fetchCartItems();
-    } catch (error) {}
+      getProductsAll();
+    } catch (error) {
+      console.error("Error placing order:", error);
+    }
   };
 
   return (
@@ -256,8 +263,8 @@ const CartPage = () => {
                         onClick={() =>
                           removeProductItemCart(product.product_id._id)
                         }
+                        style={{ fontSize: "xx-large", cursor: "pointer" }}
                         className="delete-cart"
-                        style={{ cursor: "pointer" }}
                         icon={faTrash}
                       />
                     </td>
@@ -325,8 +332,8 @@ const CartPage = () => {
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                ref={dismissButtonRef}
               ></button>
-              <PayPal cost={1} handleClickX={paymentSingle} />
             </div>
             <div class="modal-body">
               {selectedItem && (
@@ -346,18 +353,27 @@ const CartPage = () => {
                     ).toLocaleString()}
                     đ
                   </p>
+                  <hr />
+                  <p>Thanh toán bằng PayPal</p>
+                  <PayPal
+                    cost={
+                      selectedItem?.product_id?.price *
+                      quantities[selectedItem?.product_id?._id]
+                    }
+                    handleClickX={paymentSingle}
+                  />
+                  <p>Thanh toán bằng tiền mặt</p>
+                  <button
+                    style={{ width: "100%", background: "red" }}
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    onClick={paymentSingle}
+                  >
+                    Thanh toán khi giao hàng
+                  </button>
                 </>
               )}
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-                onClick={paymentSingle}
-              >
-                Đặt hàng
-              </button>
             </div>
           </div>
         </div>

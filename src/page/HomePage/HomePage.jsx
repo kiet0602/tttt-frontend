@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Layout from "../../components/Layout/Layout";
 import HeaderNav from "../../components/header_nav/HeaderNav";
 import BlockTitle from "../../components/BlockTitle/BlockTitle";
 import ListCard from "../../components/ListCard/ListCard";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-
-import { useSelector, useDispatch } from "react-redux";
-import { AddProduct, DeleteProduct } from "../../redux/slice/CartSlice";
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
@@ -100,7 +96,6 @@ const HomePage = () => {
           />
         </div>
       ))}
-      {/*   <ListCard products={products} /> */}
       <Footer />
     </>
   );

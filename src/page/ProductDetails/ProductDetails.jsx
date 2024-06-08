@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import imgPC from "../../assets/img/pc.png";
-import HeaderNav from "../../components/header_nav/HeaderNav";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState("");

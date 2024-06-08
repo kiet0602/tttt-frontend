@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Layout from "../../components/Layout/Layout";
+
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
 import Header from "../../components/Header/Header";
-import BlockTitle from "../../components/BlockTitle/BlockTitle";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 

@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
     // Fetch cart items when the component mounts
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
-      fetchCartItems(userInfo._id);
+      fetchCartItems(userInfo?._id);
     }
   }, []);
 

@@ -29,7 +29,7 @@ const Header = ({ searchTerm, setSearchTerm, cartItemCount }) => {
           console.error("Error fetching cart items:", error);
         }
       };
-      fetchCartItems(userInfoFromStorage._id);
+      fetchCartItems(userInfoFromStorage?._id);
     }
   }, []);
 
@@ -76,15 +76,15 @@ const Header = ({ searchTerm, setSearchTerm, cartItemCount }) => {
                 >
                   <img
                     src={
-                      userInfo.avatar?.startsWith("https")
-                        ? userInfo.avatar
-                        : `http://localhost:8000/${userInfo.avatar}`
+                      userInfo?.avatar?.startsWith("https")
+                        ? userInfo?.avatar
+                        : `http://localhost:8000/${userInfo?.avatar}`
                     }
                     className="rounded-circle me-2"
                     style={{ width: "30px", height: "30px" }}
                     alt="User Avatar"
                   />
-                  {userInfo.username}
+                  {userInfo?.username}
                 </Link>
               </div>
               <div className="relative">

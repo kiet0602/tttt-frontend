@@ -16,7 +16,7 @@ const CategoryPage = () => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
-      fetchCartItems(userInfo._id);
+      fetchCartItems(userInfo?._id);
     }
   }, []);
 
@@ -40,7 +40,7 @@ const CategoryPage = () => {
         return;
       }
 
-      const userId = userInfo._id;
+      const userId = userInfo?._id;
       await axios.post("http://localhost:8000/api/cart", {
         userId,
         productId,

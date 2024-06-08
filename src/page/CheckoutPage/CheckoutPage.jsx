@@ -16,9 +16,9 @@ const CheckoutPage = () => {
   const fetchCartItems = async () => {
     try {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      if (userInfo && userInfo._id) {
+      if (userInfo && userInfo?._id) {
         const response = await axios.get(
-          `http://localhost:8000/api/cart/${userInfo._id}`
+          `http://localhost:8000/api/cart/${userInfo?._id}`
         );
         setCartItems(response.data.data.items);
         const total = response.data.data.items.reduce((total, product) => {
@@ -45,7 +45,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
-      setUserId(userInfo._id);
+      setUserId(userInfo?._id);
     }
     fetchCartItems();
   }, []);

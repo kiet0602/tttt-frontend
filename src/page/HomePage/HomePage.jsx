@@ -16,7 +16,7 @@ const HomePage = () => {
     // Gọi fetchCartItems khi component được render
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
-      fetchCartItems(userInfo._id);
+      fetchCartItems(userInfo?._id);
     }
   }, []); // [] để đảm bảo fetchCartItems chỉ được gọi một lần khi component được render
 

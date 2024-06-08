@@ -23,7 +23,7 @@ const CartPage = () => {
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
-      setUserId(userInfo._id);
+      setUserId(userInfo?._id);
     }
   }, []);
 

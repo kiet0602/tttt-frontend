@@ -15,7 +15,7 @@ const ListCard = ({ products }) => {
       navigate("/login");
       return;
     }
-    const userId = userInfo._id;
+    const userId = userInfo?._id;
     try {
       await axios.post("http://localhost:8000/api/cart", {
         userId,

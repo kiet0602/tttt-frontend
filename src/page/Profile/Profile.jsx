@@ -55,9 +55,9 @@ const Profile = () => {
                 <img
                   className="img-avatar-profile"
                   src={
-                    userInfo.avatar?.startsWith("https")
-                      ? userInfo.avatar
-                      : `http://localhost:8000/${userInfo.avatar}`
+                    userInfo?.avatar?.startsWith("https")
+                      ? userInfo?.avatar
+                      : `http://localhost:8000/${userInfo?.avatar}`
                   }
                 />{" "}
                 <br />
@@ -65,18 +65,18 @@ const Profile = () => {
                   Tên khách hàng:{" "}
                   <span className="user-name-profile">
                     {" "}
-                    {userInfo.username}{" "}
+                    {userInfo?.username}{" "}
                   </span>
                 </p>
               </div>
               <div>
                 <p className="email">
                   Gmail khách hàng:
-                  <span className="email-profile"> {userInfo.email}</span>
+                  <span className="email-profile"> {userInfo?.email}</span>
                 </p>
                 <p className="address">
                   Địa chỉ khách hàng:
-                  <span className="address-profile"> {userInfo.address}</span>
+                  <span className="address-profile"> {userInfo?.address}</span>
                 </p>
               </div>
               <div className="text-center">

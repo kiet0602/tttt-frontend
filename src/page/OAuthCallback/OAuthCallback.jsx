@@ -15,7 +15,6 @@ const OAuthCallback = () => {
           Authorization: token,
         },
       });
-      console.log(response);
       return response.data;
     } catch (error) {
       console.error("Error fetching user info:", error.message);
@@ -28,7 +27,6 @@ const OAuthCallback = () => {
       try {
         if (token) {
           const userInfo = await fetchUserInfo(token);
-          console.log(userInfo);
           localStorage.setItem("token", token);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           toast.success("Đăng nhập thành công!");

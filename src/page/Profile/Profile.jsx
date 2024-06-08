@@ -24,8 +24,8 @@ const Profile = () => {
         `http://localhost:8000/api/order/user/${userInfo?._id}`
       );
 
-      setAllOrderUser(res.data.data);
-      console.log(res.data.data);
+      setAllOrderUser(res?.data?.data);
+      console.log(res?.data?.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
     }

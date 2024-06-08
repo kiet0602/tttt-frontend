@@ -34,14 +34,17 @@ const CartPage = () => {
       const response = await axios.get(
         `http://localhost:8000/api/cart/${userId}`
       );
-      setProducts(response.data.data.items);
-      const newQuantities = response.data.data.items.reduce((acc, product) => {
-        acc[product.product_id._id] = product.quantity;
-        return acc;
-      }, {});
+      setProducts(response?.data?.data?.items);
+      const newQuantities = response?.data?.data?.items.reduce(
+        (acc, product) => {
+          acc[product.product_id._id] = product.quantity;
+          return acc;
+        },
+        {}
+      );
       setQuantities(newQuantities);
       fetchCartItems(userId);
-      const total = response.data.data.items.reduce((total, product) => {
+      const total = response?.data?.data?.items.reduce((total, product) => {
         return total + product.product_id.price * product.quantity;
       }, 0);
       setTotalPrice(total);
@@ -60,8 +63,8 @@ const CartPage = () => {
       const response = await axios.get(
         `http://localhost:8000/api/cart/${userId}`
       );
-      setCartItems(response.data.data.items);
-      console.log(response.data.data.items);
+      setCartItems(response?.data?.data?.items);
+      console.log(response?.data?.data?.items);
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }

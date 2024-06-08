@@ -20,8 +20,8 @@ const CheckoutPage = () => {
         const response = await axios.get(
           `http://localhost:8000/api/cart/${userInfo?._id}`
         );
-        setCartItems(response.data.data.items);
-        const total = response.data.data.items.reduce((total, product) => {
+        setCartItems(response?.data?.data?.items);
+        const total = response?.data?.data?.items.reduce((total, product) => {
           return total + product.product_id.price * product.quantity;
         }, 0);
         setTotalPrice(total);

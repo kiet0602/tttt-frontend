@@ -62,7 +62,7 @@ const ProductAll = () => {
       const response = await axios.get(
         `http://localhost:8000/api/cart/${userId}`
       );
-      setCartItems(response.data.data.items);
+      setCartItems(response?.data?.data?.items);
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }

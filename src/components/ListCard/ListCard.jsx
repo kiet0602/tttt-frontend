@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ListCard.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -22,7 +22,7 @@ const ListCard = ({ products }) => {
         productId,
         quantity: 1,
       });
-      alert("đã thêm sản phẩm thành công");
+      alert("Đã thêm sản phẩm thành công");
     } catch (error) {
       console.error("Error adding product to cart:", error);
       toast.error("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.");
@@ -56,19 +56,41 @@ const ListCard = ({ products }) => {
               >
                 {product.price.toLocaleString()} VND
               </p>
-              <button
-                style={{
-                  border: "none",
-                  backgroundColor: "blue",
-                  borderRadius: "30px",
-                  marginBottom: "15px",
-                  color: "white",
-                  padding: "10px",
-                }}
-                onClick={() => addCart(product._id)}
-              >
-                Thêm vào giỏ hàng
-              </button>
+              <div className="d-flex">
+                <div>
+                  <button
+                    style={{
+                      border: "none",
+                      backgroundColor: "blue",
+                      borderRadius: "30px",
+                      marginBottom: "15px",
+                      padding: "5px",
+                      color: "white",
+                    }}
+                    onClick={() => addCart(product._id)}
+                  >
+                    Thêm vào giỏ hàng
+                  </button>
+                </div>
+                <div>
+                  <button
+                    style={{
+                      border: "none",
+                      backgroundColor: "blue",
+                      borderRadius: "30px",
+                      marginBottom: "15px",
+                      marginLeft: "13px",
+                      padding: "5px",
+                      color: "white",
+                    }}
+                    onClick={(e) => {
+                      navigate(`/ProductDetails/${product._id}`);
+                    }}
+                  >
+                    Xem chi tiết
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         ))}

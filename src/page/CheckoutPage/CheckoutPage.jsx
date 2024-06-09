@@ -5,11 +5,13 @@ import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer"
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import PayPal from "../../components/PayPal";
 
 const CheckoutPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [userId, setUserId] = useState(null);
+  const [userINFO, SetuserINFO] = useState(null);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -42,14 +44,15 @@ const CheckoutPage = () => {
     } catch (error) {}
   };
 
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
       setUserId(userInfo?._id);
+      SetuserINFO(userInfo);
     }
     fetchCartItems();
-  }, []);
-
+  }, [userInfo]);
+  console.log(userINFO);
   const handleContinueShopping = () => {
     navigate("/productsAll"); // Navigate to home page
   };
@@ -63,7 +66,31 @@ const CheckoutPage = () => {
       />
       <HeadNavNoBanNer />
       <div className="container">
+        <p style={{ fontSize: "30px" }}>Thông tin khách hàng:</p>
+        {userINFO && (
+          <div>
+            <p>
+              Tên khách hàng:{" "}
+              <span style={{ color: "red", fontWeight: "bold" }}>
+                {userINFO.username}
+              </span>{" "}
+            </p>
+            <p>
+              Email khách hàng:{" "}
+              <span style={{ color: "red", fontWeight: "bold" }}>
+                {userINFO.email}
+              </span>{" "}
+            </p>
+            <p>
+              Địa chỉ khách hàng:{" "}
+              <span style={{ color: "red", fontWeight: "bold" }}>
+                {userINFO.address}
+              </span>{" "}
+            </p>
+          </div>
+        )}
         <p className="fs-1">Thông tin đơn hàng</p>
+
         <div className="row">
           <div className="col-8">
             <table
@@ -149,6 +176,8 @@ const CheckoutPage = () => {
                 </button>
               </div>
             </div>
+            <p>Thanh toán bằng PayPal</p>
+            <PayPal cost={totalPrice ?? 1} handleClickX={payment} />
           </div>
         </div>
       </div>

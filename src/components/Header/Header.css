@@ -19,6 +19,7 @@
   border-top-left-radius: 5px;
   border: none;
   height: 40px;
+  padding-left: 20px;
 }
 .inputSearch:focus {
   outline: none;

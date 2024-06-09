@@ -17,7 +17,7 @@ const HomePage = () => {
     if (userInfo) {
       fetchCartItems(userInfo?._id);
     }
-  }, []); // [] để đảm bảo fetchCartItems chỉ được gọi một lần khi component được render
+  }, []);
 
   const fetchCartItems = async (userId) => {
     try {

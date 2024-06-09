@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Layout = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     // Fetch cart items when the component mounts

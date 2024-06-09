@@ -37,3 +37,14 @@
   border: none;
   border-radius: 14px;
 }
+.IDhoverOder:hover {
+  color: red;
+}
+.btn-primary {
+  border: none;
+  background: #ff8200f2;
+}
+.btn-primary:hover {
+  background: #ececec;
+  color: black;
+}

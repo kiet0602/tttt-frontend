@@ -107,19 +107,41 @@ const CategoryPage = () => {
                 >
                   {product.price.toLocaleString()} VND
                 </p>
-                <button
-                  style={{
-                    border: "none",
-                    backgroundColor: "blue",
-                    borderRadius: "30px",
-                    marginBottom: "15px",
-                    color: "white",
-                    padding: "10px",
-                  }}
-                  onClick={() => addCart(product._id)}
-                >
-                  Thêm vào giỏ hàng
-                </button>
+                <div className="d-flex">
+                  <div>
+                    <button
+                      style={{
+                        border: "none",
+                        backgroundColor: "blue",
+                        borderRadius: "30px",
+                        marginBottom: "15px",
+                        padding: "5px",
+                        color: "white",
+                      }}
+                      onClick={() => addCart(product._id)}
+                    >
+                      Thêm vào giỏ hàng
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      style={{
+                        border: "none",
+                        backgroundColor: "blue",
+                        borderRadius: "30px",
+                        marginBottom: "15px",
+                        marginLeft: "13px",
+                        padding: "5px",
+                        color: "white",
+                      }}
+                      onClick={(e) => {
+                        navigate(`/ProductDetails/${product._id}`);
+                      }}
+                    >
+                      Xem chi tiết
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           ))

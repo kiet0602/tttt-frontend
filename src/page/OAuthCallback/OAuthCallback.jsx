@@ -29,7 +29,7 @@ const OAuthCallback = () => {
           const userInfo = await fetchUserInfo(token);
           localStorage.setItem("token", token);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          toast.success("Đăng nhập thành công!");
+          // toast.success("Đăng nhập thành công!");
           navigate("/");
         } else {
           toast.error("Không tìm thấy token trong URL!");

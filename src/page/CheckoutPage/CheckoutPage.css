@@ -1,0 +1,13 @@
+.btn-PaymentcheckOut {
+  background: blue;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+.btn-PaymentcheckOut:hover {
+  background: #ececec;
+  border: 1px solid black;
+  color: #ff8200f2;
+}

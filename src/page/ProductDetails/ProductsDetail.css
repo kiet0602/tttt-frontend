@@ -32,3 +32,13 @@
 .tel {
   color: red;
 }
+.btn-details-left:hover {
+  background: #ececec;
+  border: 1px solid black;
+  color: #ff8200f2;
+}
+.btn-details-right:hover {
+  background: #ececec;
+  border: 1px solid black;
+  color: #ff8200f2;
+}

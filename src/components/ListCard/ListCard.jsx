@@ -24,7 +24,6 @@ const ListCard = ({ products }) => {
       });
       alert("Đã thêm sản phẩm thành công");
     } catch (error) {
-      console.error("Error adding product to cart:", error);
       toast.error("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.");
     }
     const response = await axios.get(
@@ -59,14 +58,7 @@ const ListCard = ({ products }) => {
               <div className="d-flex">
                 <div>
                   <button
-                    style={{
-                      border: "none",
-                      backgroundColor: "blue",
-                      borderRadius: "30px",
-                      marginBottom: "15px",
-                      padding: "5px",
-                      color: "white",
-                    }}
+                    className="btnAddProduct"
                     onClick={() => addCart(product._id)}
                   >
                     Thêm vào giỏ hàng
@@ -74,15 +66,7 @@ const ListCard = ({ products }) => {
                 </div>
                 <div>
                   <button
-                    style={{
-                      border: "none",
-                      backgroundColor: "blue",
-                      borderRadius: "30px",
-                      marginBottom: "15px",
-                      marginLeft: "13px",
-                      padding: "5px",
-                      color: "white",
-                    }}
+                    className="btnProduct"
                     onClick={(e) => {
                       navigate(`/ProductDetails/${product._id}`);
                     }}

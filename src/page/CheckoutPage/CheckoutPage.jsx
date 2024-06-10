@@ -6,6 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import PayPal from "../../components/PayPal";
+import "./CheckoutPage.css";
 
 const CheckoutPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -52,7 +53,7 @@ const CheckoutPage = () => {
     }
     fetchCartItems();
   }, [userInfo]);
-  console.log(userINFO);
+
   const handleContinueShopping = () => {
     navigate("/productsAll"); // Navigate to home page
   };
@@ -66,7 +67,7 @@ const CheckoutPage = () => {
       />
       <HeadNavNoBanNer />
       <div className="container">
-        <p style={{ fontSize: "30px" }}>Thông tin khách hàng:</p>
+        <p className="fs-4">Thông tin khách hàng:</p>
         {userINFO && (
           <div>
             <p>
@@ -89,7 +90,7 @@ const CheckoutPage = () => {
             </p>
           </div>
         )}
-        <p className="fs-1">Thông tin đơn hàng</p>
+        <p className="fs-4">Thông tin đơn hàng:</p>
 
         <div className="row">
           <div className="col-8">
@@ -161,8 +162,8 @@ const CheckoutPage = () => {
                 {totalPrice.toLocaleString()} VND
               </div>
             </div>
-            <div className="d-flex justify-content-between mt-4">
-              <div>
+            <div className=" mt-4 ">
+              <div className="">
                 <button
                   onClick={handleContinueShopping}
                   className="btn-back-allProducts"
@@ -170,13 +171,15 @@ const CheckoutPage = () => {
                   Tiếp tục mua sắm
                 </button>
               </div>
-              <div>
-                <button onClick={payment} className="btn-Payment">
-                  khi giao hàng
+              <hr />
+              <div className="mt-2">
+                <p>Thanh toán bằng tiền mặt</p>
+                <button onClick={payment} className="btn-PaymentcheckOut fs-6">
+                  Thanh toán khi giao hàng
                 </button>
               </div>
             </div>
-            <p>Thanh toán bằng PayPal</p>
+            <p className="mt-3">Thanh toán bằng PayPal</p>
             <PayPal cost={totalPrice ?? 1} handleClickX={payment} />
           </div>
         </div>

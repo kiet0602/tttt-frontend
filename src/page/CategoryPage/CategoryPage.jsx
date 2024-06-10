@@ -5,7 +5,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
 import { ToastContainer, toast } from "react-toastify";
-
+import "./CategoryPage.css";
 const CategoryPage = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -110,14 +110,7 @@ const CategoryPage = () => {
                 <div className="d-flex">
                   <div>
                     <button
-                      style={{
-                        border: "none",
-                        backgroundColor: "blue",
-                        borderRadius: "30px",
-                        marginBottom: "15px",
-                        padding: "5px",
-                        color: "white",
-                      }}
+                      className="btnAddProduct3"
                       onClick={() => addCart(product._id)}
                     >
                       Thêm vào giỏ hàng
@@ -125,15 +118,7 @@ const CategoryPage = () => {
                   </div>
                   <div>
                     <button
-                      style={{
-                        border: "none",
-                        backgroundColor: "blue",
-                        borderRadius: "30px",
-                        marginBottom: "15px",
-                        marginLeft: "13px",
-                        padding: "5px",
-                        color: "white",
-                      }}
+                      className="btnProduct3"
                       onClick={(e) => {
                         navigate(`/ProductDetails/${product._id}`);
                       }}

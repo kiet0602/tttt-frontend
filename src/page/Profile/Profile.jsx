@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/Layout/Layout";
 import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,7 +15,6 @@ const Profile = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [cartItems, setCartItems] = useState([]);
-  const [userId, setUserId] = useState(null);
 
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
@@ -56,7 +54,6 @@ const Profile = () => {
 
       setAllOrderUser(res?.data?.data);
       setFilteredOrders(res?.data?.data);
-      console.log(res?.data?.data);
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
@@ -154,10 +151,7 @@ const Profile = () => {
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
                   />
-                  <button
-                    onClick={filterOrdersByDate}
-                    className="btn btn-primary"
-                  >
+                  <button onClick={filterOrdersByDate} className="btn">
                     Tìm kiếm
                   </button>
                 </div>
@@ -236,7 +230,7 @@ const Profile = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Order Details
+                Chi tiết đơn hàng
               </h1>
               <button
                 type="button"
@@ -261,22 +255,43 @@ const Profile = () => {
                         </div>
                         <div>
                           {" "}
-                          <p>Product Name: {detail.product_name}</p>
+                          <p>{detail.product_name}</p>
                         </div>
                       </div>
 
-                      <p>Quantity: {detail.quantity}</p>
-                      <p>Unit Price: {detail.unit_price.toLocaleString()}</p>
+                      <p>
+                        Quantity:{" "}
+                        <span style={{ color: "blue", fontWeight: "bold" }}>
+                          {detail.quantity}
+                        </span>{" "}
+                      </p>
+                      <p>
+                        Unit Price:{" "}
+                        <span style={{ color: "red", fontWeight: "bold" }}>
+                          {detail.unit_price.toLocaleString()}{" "}
+                        </span>{" "}
+                      </p>
                       <hr />
                     </div>
                   ))}
                   <p>
                     Order Date:{" "}
-                    {new Date(selectedOrder.order_date).toLocaleDateString()}
+                    <span style={{ fontWeight: "bold" }}>
+                      {" "}
+                      {new Date(selectedOrder.order_date).toLocaleDateString()}
+                    </span>
                   </p>
-                  <p>Status: {selectedOrder.status}</p>
                   <p>
-                    Total Price: {selectedOrder.total_price.toLocaleString()}
+                    Status:{" "}
+                    <span style={{ color: "blue", fontWeight: "bold" }}>
+                      {selectedOrder.status}
+                    </span>
+                  </p>
+                  <p>
+                    Total Price:
+                    <span style={{ color: "red", fontWeight: "bold" }}>
+                      {selectedOrder.total_price.toLocaleString()}
+                    </span>
                   </p>
                 </>
               )}

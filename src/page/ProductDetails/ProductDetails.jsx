@@ -50,7 +50,7 @@ const ProductDetails = () => {
         productId,
         quantity: 1,
       });
-      toast.success("Đã thêm sản phẩm vào giỏ hàng thành công!");
+      toast.success("Đã thêm sản phẩm vào giỏ hàng!");
       // Fetch updated cart items
       fetchCartItems(userId);
     } catch (error) {
@@ -93,7 +93,8 @@ const ProductDetails = () => {
             <div className="col-6">
               <div>
                 <img
-                  className="img-fluid rounded"
+                  className="img-fluid rounded mt-2"
+                  style={{ width: "700px", height: "450px" }}
                   src={`http://localhost:8000/${product.image}`}
                   alt=""
                 />
@@ -321,11 +322,8 @@ const ProductDetails = () => {
             <div className="modal-body">
               <form>
                 <div className="mb-3">
-                  <p>Chọn số ngôi sao bạn muốn!</p>
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
+                  <p>Nhập số ngôi sao bạn muốn!</p>
+                  <input type="text" style={{ width: "40px" }} min={0} />
                   <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
                 </div>
                 <div className="mb-3">

@@ -3,3 +3,30 @@
   font-weight: 600;
   font-size: 30px;
 }
+.btnAddProduct2:hover {
+  background: #ececec;
+  border: 1px solid black;
+  color: black;
+}
+.btnAddProduct2 {
+  border: none;
+  background: blue;
+  border-radius: 30px;
+  margin-bottom: 15px;
+  padding: 5px;
+  color: white;
+}
+.btnProduct2 {
+  border: none;
+  background: red;
+  border-radius: 30px;
+  margin-bottom: 15px;
+  padding: 5px;
+  color: white;
+  margin-left: 11px;
+}
+.btnProduct2:hover {
+  background: #ececec;
+  border: 1px solid black;
+  color: black;
+}

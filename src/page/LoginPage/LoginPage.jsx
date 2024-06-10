@@ -154,8 +154,18 @@ const LoginPage = () => {
               </div>
             </form>
             <div className="input-group mb-3 ">
-              <button className="btn btn-light w-100 fs-6">
-                <a href="http://localhost:8000/auth/google">
+              <button
+                style={{
+                  borderRadius: "10px",
+                  background: "white",
+                  border: "1px solid black",
+                }}
+                className="btn btn-light w-100 fs-6"
+              >
+                <a
+                  href="http://localhost:8000/auth/google"
+                  style={{ textDecorationLine: "none", color: "black" }}
+                >
                   <FontAwesomeIcon
                     className="px-2"
                     icon={faGoogle}
@@ -165,10 +175,18 @@ const LoginPage = () => {
                 </a>
               </button>
               <button
+                style={{
+                  borderRadius: "10px",
+                  background: "white",
+                  border: "1px solid black",
+                }}
                 onClick={handleFacebookLogin}
                 className="btn btn-light w-100 fs-6 mt-2"
               >
-                <a href="http://localhost:8000/auth/facebook">
+                <a
+                  href="http://localhost:8000/auth/facebook"
+                  style={{ textDecorationLine: "none", color: "black" }}
+                >
                   <FontAwesomeIcon
                     className="px-2"
                     icon={faFacebook}

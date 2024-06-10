@@ -4,6 +4,7 @@ import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer"
 import Header from "../../components/Header/Header";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import "./ProductsAll.css";
 
 const ProductAll = () => {
   const [productsData, setProducts] = useState([]);
@@ -106,14 +107,7 @@ const ProductAll = () => {
                   <div className="d-flex">
                     <div>
                       <button
-                        style={{
-                          border: "none",
-                          backgroundColor: "blue",
-                          borderRadius: "30px",
-                          marginBottom: "15px",
-                          padding: "5px",
-                          color: "white",
-                        }}
+                        className="btnAddProduct2"
                         onClick={() => addCart(product._id)}
                       >
                         Thêm vào giỏ hàng
@@ -121,15 +115,7 @@ const ProductAll = () => {
                     </div>
                     <div>
                       <button
-                        style={{
-                          border: "none",
-                          backgroundColor: "blue",
-                          borderRadius: "30px",
-                          marginBottom: "15px",
-                          marginLeft: "13px",
-                          padding: "5px",
-                          color: "white",
-                        }}
+                        className="btnProduct2"
                         onClick={(e) => {
                           navigate(`/ProductDetails/${product._id}`);
                         }}

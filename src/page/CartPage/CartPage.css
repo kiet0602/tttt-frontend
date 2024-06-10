@@ -20,7 +20,11 @@
 }
 .payment-card {
   color: blue !important;
+  margin-top: 22px;
+  height: 40px;
+  width: 25px;
 }
+
 .delete-cart:hover {
   color: black !important;
 }

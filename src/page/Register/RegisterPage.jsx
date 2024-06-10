@@ -2,7 +2,7 @@ import React from "react";
 import "./RegisterPage.css";
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,7 +12,6 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [avatarFile, setAvatarFile] = useState(null);
-  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -60,7 +59,6 @@ const RegisterPage = () => {
           },
         }
       );
-      console.log(response.data.message);
 
       // Reset form fields after successful registration
       setUsername("");

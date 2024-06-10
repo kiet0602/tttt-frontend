@@ -40,11 +40,11 @@
 .IDhoverOder:hover {
   color: red;
 }
-.btn-primary {
+.btn {
   border: none;
   background: #ff8200f2;
 }
-.btn-primary:hover {
+.btn:hover {
   background: #ececec;
   color: black;
 }

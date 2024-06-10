@@ -64,7 +64,6 @@ const CartPage = () => {
         `http://localhost:8000/api/cart/${userId}`
       );
       setCartItems(response?.data?.data?.items);
-      console.log(response?.data?.data?.items);
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }
@@ -91,7 +90,6 @@ const CartPage = () => {
       };
       updateProductItemCart(newQuantities[productId], productId);
       toast.success("Tăng sản phẩm thành công!");
-
       return newQuantities;
     });
   };
@@ -123,6 +121,7 @@ const CartPage = () => {
       });
       getProductsAll();
       fetchCartItems(userId);
+      toast.success("Sản phẩm đã xóa khỏi giỏ hàng!");
     } catch (error) {
       toast.error(error.message);
     }
@@ -168,7 +167,7 @@ const CartPage = () => {
       />
       <HeadNavNoBanNer />
       <div className="container">
-        <p className="fs-1">Giỏ hàng</p>
+        <p className="fs-4">Giỏ hàng</p>
         <div className="row">
           <div className="col-8">
             <table
@@ -266,20 +265,27 @@ const CartPage = () => {
                         onClick={() =>
                           removeProductItemCart(product.product_id._id)
                         }
-                        style={{ fontSize: "xx-large", cursor: "pointer" }}
+                        style={{
+                          fontSize: "20px",
+                          cursor: "pointer",
+                          marginTop: "32px",
+                        }}
                         className="delete-cart"
                         icon={faTrash}
                       />
                     </td>
                     <td>
-                      <FontAwesomeIcon
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleItemClick(product)}
-                        icon={faBasketShopping}
-                        class="payment-card"
-                        data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop"
-                      />
+                      <p>
+                        {" "}
+                        <FontAwesomeIcon
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleItemClick(product)}
+                          icon={faBasketShopping}
+                          class="payment-card"
+                          data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop"
+                        />
+                      </p>
                     </td>
                   </tr>
                 ))}
@@ -327,7 +333,7 @@ const CartPage = () => {
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">
+              <h5 class="modal-title " id="staticBackdropLabel">
                 Thông tin sản phẩm
               </h5>
               <button
@@ -346,15 +352,28 @@ const CartPage = () => {
                     style={{ width: "100px" }}
                   />
                   <h5>{selectedItem.product_id.name}</h5>
-                  <p>Giá: {selectedItem.product_id.price.toLocaleString()}đ</p>
-                  <p>Số lượng: {quantities[selectedItem.product_id._id]}</p>
                   <p>
-                    Tổng:{" "}
-                    {(
-                      selectedItem.product_id.price *
-                      quantities[selectedItem.product_id._id]
-                    ).toLocaleString()}
-                    đ
+                    Giá:{" "}
+                    <span style={{ color: "red", fontWeight: "bold" }}>
+                      {" "}
+                      {selectedItem.product_id.price.toLocaleString()}VND
+                    </span>{" "}
+                  </p>
+                  <p>
+                    Số lượng:{" "}
+                    <span style={{ color: "blue", fontWeight: "bold" }}>
+                      {quantities[selectedItem.product_id._id]}
+                    </span>
+                  </p>
+                  <p>
+                    Tổng:
+                    <span style={{ color: "red", fontWeight: "bold" }}>
+                      {(
+                        selectedItem.product_id.price *
+                        quantities[selectedItem.product_id._id]
+                      ).toLocaleString()}
+                      VND
+                    </span>{" "}
                   </p>
                   <hr />
                   <p>Thanh toán bằng PayPal</p>

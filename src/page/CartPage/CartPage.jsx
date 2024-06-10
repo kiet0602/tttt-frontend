@@ -209,7 +209,7 @@ const CartPage = () => {
                       {product.product_id.name}
                     </td>
                     <td className="priceProducts-cart">
-                      {product.product_id.price.toLocaleString()}đ
+                      {product.product_id.price.toLocaleString()}VND
                     </td>
                     <td>
                       <button

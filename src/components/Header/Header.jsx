@@ -78,12 +78,15 @@ const Header = ({ searchTerm, setSearchTerm, cartItemCount }) => {
                     src={
                       userInfo.avatar?.startsWith("https")
                         ? userInfo.avatar
-                        : `http://localhost:8000/${userInfo.avatar}`
+                        : userInfo.avatar
+                        ? `http://localhost:8000/${userInfo.avatar}`
+                        : "https://i.pinimg.com/736x/b6/bb/1f/b6bb1f98d48a1402a1b33c6a6da0c276.jpg" // Default fallback image URL
                     }
                     className="rounded-circle me-2"
                     style={{ width: "30px", height: "30px" }}
                     alt="User Avatar"
                   />
+
                   {userInfo.username}
                 </Link>
               </div>

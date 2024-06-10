@@ -20,6 +20,8 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [isComment, setIsComment] = useState(false);
   const [Usercomment, Setusercomment] = useState([]);
+  const [hasReviewed, setHasReviewed] = useState(false);
+  const [currentUserComment, setCurrentUserComment] = useState(null);
 
   const checkProductIdExists = (data, productId) => {
     return data.some((order) =>
@@ -84,12 +86,13 @@ const ProductDetails = () => {
           `http://localhost:8000/api/product/${id}`
         );
         setProduct(data.data);
+        console.log(data.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getProductById();
     comment();
+    getProductById();
   }, [id]);
 
   const handleRatingChange = (e) => {
@@ -115,25 +118,50 @@ const ProductDetails = () => {
         star,
         content,
       });
-      // toast.success("Đã gửi đánh giá");
-      console.log(userId, id, star, content);
+      toast.success("Đã gửi đánh giá");
+      comment();
     } catch (error) {
       toast.error(error.message);
     }
   };
   const comment = async (userId) => {
     try {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       const { data } = await axios.get(
         `http://localhost:8000/api/comment/${id}`
       );
       Setusercomment(data);
+
+      // Check if the current user has reviewed the product
+      const userReview = data.find(
+        (comment) => comment.user_id._id === userInfo?._id
+      );
+      if (userReview) {
+        setHasReviewed(true);
+        setCurrentUserComment(userReview);
+      } else {
+        setHasReviewed(false);
+        setCurrentUserComment(null);
+      }
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }
   };
+
   if (!product) {
     return <div>Loading...</div>;
   }
+  const handleDeleteComment = async () => {
+    try {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const userId = userInfo?._id;
+      await axios.delete(`http://localhost:8000/api/comment/${userId}/${id}`);
+      toast.success("Đã xóa đánh giá");
+      comment(); // Refresh comments
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <>
@@ -161,57 +189,101 @@ const ProductDetails = () => {
               <div className="mt-5 d-flex justify-content-between">
                 <div>
                   <p>Đánh giá sản phẩm</p>
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
-                  <p>Dựa trên (0) đánh giá</p>
-                  <hr />
-                  {Usercomment.map((commentuser) => (
-                    <div>
-                      <img
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          borderRadius: "100%",
-                        }}
-                        src={imgPC}
-                        alt=""
-                      />{" "}
-                      <span className="px-4" style={{ fontWeight: "bold" }}>
-                        Nguyễn Văn A
-                      </span>
-                      <p className="px-5">
-                        {[...Array(commentuser.star)].map((_, index) => (
-                          <FontAwesomeIcon
-                            key={index}
-                            icon={faStar}
-                            style={{ color: "#FFD43B" }}
-                          />
-                        ))}
-                      </p>
-                      <p style={{ width: "500px" }}>{commentuser.content}</p>
-                    </div>
+                  {[...Array(product.average_star)].map((_, index) => (
+                    <FontAwesomeIcon
+                      key={index}
+                      icon={faStar}
+                      style={{ color: "#FFD43B" }}
+                    />
                   ))}
-                </div>
-                <div>
-                  {isComment && (
-                    <button
-                      type="button"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      data-bs-whatever="@mdo"
-                      className="p-1"
-                      style={{ fontSize: "15px", borderRadius: "10px" }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faComment}
-                        style={{ color: "#FFD43B" }}
-                      />
-                      Viết đánh giá
-                    </button>
-                  )}
+                  <p>Dựa trên {product.comment_count} đánh giá</p>
+                  <hr />
+                  <div>
+                    {Usercomment.map((commentuser) => (
+                      <div key={commentuser._id}>
+                        <img
+                          style={{
+                            width: "30px",
+                            height: "30px",
+                            borderRadius: "100%",
+                          }}
+                          src={
+                            commentuser?.user_id?.avatar?.startsWith("https")
+                              ? commentuser?.user_id?.avatar
+                              : commentuser?.user_id?.avatar
+                              ? `http://localhost:8000/${commentuser?.user_id?.avatar}`
+                              : "https://i.pinimg.com/736x/b6/bb/1f/b6bb1f98d48a1402a1b33c6a6da0c276.jpg" // Default fallback image URL
+                          }
+                          alt=""
+                        />
+                        <span className="px-4" style={{ fontWeight: "bold" }}>
+                          {commentuser?.user_id?.username}
+                        </span>
+                        <p className="px-5">
+                          {[...Array(commentuser.star)].map((_, index) => (
+                            <FontAwesomeIcon
+                              key={index}
+                              icon={faStar}
+                              style={{ color: "#FFD43B" }}
+                            />
+                          ))}
+                        </p>
+                        <p style={{ width: "500px" }}>{commentuser.content}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div>
+                    {isComment && (
+                      <>
+                        {hasReviewed ? (
+                          <>
+                            <button
+                              type="button"
+                              data-bs-toggle="modal"
+                              data-bs-target="#exampleModal"
+                              data-bs-whatever="@mdo"
+                              className="p-1"
+                              style={{ fontSize: "15px", borderRadius: "10px" }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faComment}
+                                style={{ color: "#FFD43B" }}
+                              />
+                              Cập nhật
+                            </button>
+                            <button
+                              type="button"
+                              className="p-1 mt-1 mx-2"
+                              style={{
+                                fontSize: "15px",
+                                borderRadius: "10px",
+                                marginLeft: "",
+                              }}
+                              onClick={handleDeleteComment}
+                            >
+                              Xóa đánh giá
+                            </button>
+                          </>
+                        ) : (
+                          <button
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            data-bs-whatever="@mdo"
+                            className="p-1"
+                            style={{ fontSize: "15px", borderRadius: "10px" }}
+                          >
+                            <FontAwesomeIcon
+                              icon={faComment}
+                              style={{ color: "#FFD43B" }}
+                            />
+                            Viết đánh giá
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -219,7 +291,10 @@ const ProductDetails = () => {
               <div>
                 <div className="Details-Price-Quanlity mt-3">
                   <p>
-                    Giá bán: <span className="price">{product.price}đ</span>
+                    Giá bán:{" "}
+                    <span className="price">
+                      {product.price.toLocaleString()}VND
+                    </span>
                   </p>
                   <p>
                     Số lượng còn lại:{" "}

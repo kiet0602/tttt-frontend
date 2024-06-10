@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ProductsDetail.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
 import axios from "axios";
 import imgPC from "../../assets/img/pc.png";
 import Header from "../../components/Header/Header";
@@ -13,17 +12,33 @@ import { faComment, faStar } from "@fortawesome/free-solid-svg-icons";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
-  const navigate = useNavigate();
-  const { id } = useParams();
   const [cartItems, setCartItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [star, setStar] = useState(0);
+  const [content, setContent] = useState("");
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [isComment, setIsComment] = useState(false);
+  const [Usercomment, Setusercomment] = useState([]);
 
-  useEffect(() => {
+  const checkProductIdExists = (data, productId) => {
+    return data.some((order) =>
+      order.orderDetails.some((detail) => detail.product_id === productId)
+    );
+  };
+
+  const getAllproductsOrder = async () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (userInfo) {
-      fetchCartItems(userInfo?._id);
+    const userId = userInfo?._id;
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/order/user/${userId}`
+      );
+      setIsComment(checkProductIdExists(res.data.data, id));
+    } catch (error) {
+      console.error("Error fetching orders:", error);
     }
-  }, []);
+  };
 
   const fetchCartItems = async (userId) => {
     try {
@@ -51,14 +66,18 @@ const ProductDetails = () => {
         quantity: 1,
       });
       toast.success("Đã thêm sản phẩm vào giỏ hàng!");
-      // Fetch updated cart items
-      fetchCartItems(userId);
+      fetchCartItems(userId); // Fetch updated cart items
     } catch (error) {
       toast.error(error.message);
     }
   };
 
   useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo) {
+      fetchCartItems(userInfo?._id);
+    }
+    getAllproductsOrder();
     const getProductById = async () => {
       try {
         const { data } = await axios.get(
@@ -70,8 +89,48 @@ const ProductDetails = () => {
       }
     };
     getProductById();
+    comment();
   }, [id]);
 
+  const handleRatingChange = (e) => {
+    setStar(e.target.value);
+  };
+
+  const handleContentChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleSubmitComment = async () => {
+    try {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      if (!userInfo) {
+        alert("Vui lòng đăng nhập để viết đánh giá.");
+        navigate("/login");
+        return;
+      }
+      const userId = userInfo?._id;
+      const res = await axios.post(`http://localhost:8000/api/comment`, {
+        user_id: userId,
+        product_id: id,
+        star,
+        content,
+      });
+      // toast.success("Đã gửi đánh giá");
+      console.log(userId, id, star, content);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  const comment = async (userId) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:8000/api/comment/${id}`
+      );
+      Setusercomment(data);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -109,66 +168,50 @@ const ProductDetails = () => {
                   <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
                   <p>Dựa trên (0) đánh giá</p>
                   <hr />
-                  <div>
-                    <img
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "100%",
-                      }}
-                      src={imgPC}
-                      alt=""
-                    />{" "}
-                    <span className="px-4" style={{ fontWeight: "bold" }}>
-                      Nguyễn Văn A
-                    </span>
-                    <p className="px-5">
-                      {" "}
-                      <FontAwesomeIcon
-                        icon={faStar}
-                        style={{ color: "#FFD43B" }}
-                      />
-                      <FontAwesomeIcon
-                        icon={faStar}
-                        style={{ color: "#FFD43B" }}
-                      />
-                      <FontAwesomeIcon
-                        icon={faStar}
-                        style={{ color: "#FFD43B" }}
-                      />
-                      <FontAwesomeIcon
-                        icon={faStar}
-                        style={{ color: "#FFD43B" }}
-                      />
-                      <FontAwesomeIcon
-                        icon={faStar}
-                        style={{ color: "#FFD43B" }}
-                      />
-                    </p>
-                    <p style={{ width: "500px" }}>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Hic, voluptates nobis. Ipsam vero eveniet alias ut ipsa
-                      recusandae possimus esse, nesciunt, beatae necessitatibus
-                      nam dolores libero eligendi dolore? Quia, sequi?
-                    </p>
-                  </div>
+                  {Usercomment.map((commentuser) => (
+                    <div>
+                      <img
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "100%",
+                        }}
+                        src={imgPC}
+                        alt=""
+                      />{" "}
+                      <span className="px-4" style={{ fontWeight: "bold" }}>
+                        Nguyễn Văn A
+                      </span>
+                      <p className="px-5">
+                        {[...Array(commentuser.star)].map((_, index) => (
+                          <FontAwesomeIcon
+                            key={index}
+                            icon={faStar}
+                            style={{ color: "#FFD43B" }}
+                          />
+                        ))}
+                      </p>
+                      <p style={{ width: "500px" }}>{commentuser.content}</p>
+                    </div>
+                  ))}
                 </div>
-
                 <div>
-                  <button
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo"
-                    className="p-1"
-                    style={{ fontSize: "15px", borderRadius: "10px" }}
-                  >
-                    <FontAwesomeIcon
-                      icon={faComment}
-                      style={{ color: "#FFD43B" }}
-                    />
-                    Viết đánh giá
-                  </button>
+                  {isComment && (
+                    <button
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      data-bs-whatever="@mdo"
+                      className="p-1"
+                      style={{ fontSize: "15px", borderRadius: "10px" }}
+                    >
+                      <FontAwesomeIcon
+                        icon={faComment}
+                        style={{ color: "#FFD43B" }}
+                      />
+                      Viết đánh giá
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -290,15 +333,6 @@ const ProductDetails = () => {
       )}
       <Footer />
       <ToastContainer />
-      <button
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-        data-bs-whatever="@mdo"
-      >
-        Open modal for @mdo
-      </button>
       <div
         className="modal fade"
         id="exampleModal"
@@ -323,8 +357,43 @@ const ProductDetails = () => {
               <form>
                 <div className="mb-3">
                   <p>Nhập số ngôi sao bạn muốn!</p>
-                  <input type="text" style={{ width: "40px" }} min={0} />
-                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
+                  <fieldset className="rating" onChange={handleRatingChange}>
+                    <input type="radio" id="star5" name="rating" value={5} />
+                    <label
+                      className="full"
+                      htmlFor="star5"
+                      title="Awesome - 5 stars"
+                    ></label>
+
+                    <input type="radio" id="star4" name="rating" value={4} />
+                    <label
+                      className="full"
+                      htmlFor="star4"
+                      title="Pretty good - 4 stars"
+                    ></label>
+
+                    <input type="radio" id="star3" name="rating" value={3} />
+                    <label
+                      className="full"
+                      htmlFor="star3"
+                      title="Meh - 3 stars"
+                    ></label>
+
+                    <input type="radio" id="star2" name="rating" value={2} />
+                    <label
+                      className="full"
+                      htmlFor="star2"
+                      title="Kinda bad - 2 stars"
+                    ></label>
+
+                    <input type="radio" id="star1" name="rating" value={1} />
+                    <label
+                      className="full"
+                      htmlFor="star1"
+                      title="Sucks big time - 1 star"
+                    ></label>
+                  </fieldset>
+                  <br />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="message-text" className="col-form-label">
@@ -333,14 +402,20 @@ const ProductDetails = () => {
                   <textarea
                     className="form-control"
                     id="message-text"
-                    defaultValue={""}
+                    value={content}
+                    onChange={handleContentChange}
                   />
                 </div>
               </form>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-primary">
-                Send message
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleSubmitComment}
+                data-bs-dismiss="modal"
+              >
+                Gửi đánh giá
               </button>
             </div>
           </div>

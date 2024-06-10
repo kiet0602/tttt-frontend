@@ -154,7 +154,7 @@ const CartPage = () => {
       fetchCartItems();
       getProductsAll();
     } catch (error) {
-      console.error("Error placing order:", error);
+      toast.error("Sản phẩm bạn mua vượt quá số lượng trong kho!");
     }
   };
 

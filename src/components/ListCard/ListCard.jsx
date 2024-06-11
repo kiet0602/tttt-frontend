@@ -53,7 +53,7 @@ const ListCard = ({ products }) => {
                   fontWeight: "bolder",
                 }}
               >
-                {product.price.toLocaleString()} VND
+                {product.price.toLocaleString()} đ
               </p>
               <div className="d-flex">
                 <div>

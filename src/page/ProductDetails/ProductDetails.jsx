@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./ProductsDetail.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import imgPC from "../../assets/img/pc.png";
 import Header from "../../components/Header/Header";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
 import Footer from "../../components/Footer/Footer";
@@ -86,7 +85,6 @@ const ProductDetails = () => {
           `http://localhost:8000/api/product/${id}`
         );
         setProduct(data.data);
-        console.log(data.data);
       } catch (error) {
         console.log(error);
       }
@@ -131,7 +129,6 @@ const ProductDetails = () => {
         `http://localhost:8000/api/comment/${id}`
       );
       Setusercomment(data);
-
       // Check if the current user has reviewed the product
       const userReview = data.find(
         (comment) => comment.user_id._id === userInfo?._id
@@ -175,6 +172,12 @@ const ProductDetails = () => {
         <div className="container">
           <div className="d-flex justify-content-between box-title text-center ">
             <span className="text-end text-title-regorogy">{product.name}</span>
+            <span className="text-start" style={{ fontSize: "13px" }}>
+              {" "}
+              {product.average_star}{" "}
+              <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
+              <p>Dựa trên ({product.comment_count}) đánh giá</p>
+            </span>
           </div>
           <div className="row">
             <div className="col-6">
@@ -188,19 +191,10 @@ const ProductDetails = () => {
               </div>
               <div className="mt-5 d-flex justify-content-between">
                 <div>
-                  <p>Đánh giá sản phẩm</p>
-                  {[...Array(product.average_star)].map((_, index) => (
-                    <FontAwesomeIcon
-                      key={index}
-                      icon={faStar}
-                      style={{ color: "#FFD43B" }}
-                    />
-                  ))}
-                  <p>Dựa trên {product.comment_count} đánh giá</p>
-                  <hr />
                   <div>
                     {Usercomment.map((commentuser) => (
                       <div key={commentuser._id}>
+                        <hr />
                         <img
                           style={{
                             width: "30px",
@@ -293,7 +287,7 @@ const ProductDetails = () => {
                   <p>
                     Giá bán:{" "}
                     <span className="price">
-                      {product.price.toLocaleString()}VND
+                      {product.price.toLocaleString()}đ
                     </span>
                   </p>
                   <p>

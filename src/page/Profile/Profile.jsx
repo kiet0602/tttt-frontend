@@ -199,7 +199,7 @@ const Profile = () => {
                               fontWeight: "bolder",
                             }}
                           >
-                            {order.total_price.toLocaleString()}
+                            {order.total_price.toLocaleString()}đ
                           </td>
                           <td>{order.status}</td>
                         </tr>
@@ -270,7 +270,7 @@ const Profile = () => {
                       <p>
                         Unit Price:{" "}
                         <span style={{ color: "red", fontWeight: "bold" }}>
-                          {detail.unit_price.toLocaleString()}{" "}
+                          {detail.unit_price.toLocaleString()}đ
                         </span>{" "}
                       </p>
                       <hr />
@@ -292,7 +292,7 @@ const Profile = () => {
                   <p>
                     Total Price:
                     <span style={{ color: "red", fontWeight: "bold" }}>
-                      {selectedOrder.total_price.toLocaleString()}
+                      {selectedOrder.total_price.toLocaleString()}đ
                     </span>
                   </p>
                 </>

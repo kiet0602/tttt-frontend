@@ -49,7 +49,7 @@ const CategoryPage = () => {
                 alt={product.name}
               />
               <span className="text-center">{product.name}</span>
-              <p>{product.price.toLocaleString()} VND</p>
+              <p>{product.price.toLocaleString()} đ</p>
             </div>
           </div>
         ))}

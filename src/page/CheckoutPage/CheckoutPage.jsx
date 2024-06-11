@@ -159,7 +159,7 @@ const CheckoutPage = () => {
             <div className="d-flex justify-content-between">
               <div>Tổng</div>
               <div className="SumPayment-cart">
-                {totalPrice.toLocaleString()} VND
+                {totalPrice.toLocaleString()} đ
               </div>
             </div>
             <div className=" mt-4 ">

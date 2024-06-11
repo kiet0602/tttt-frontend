@@ -17,7 +17,7 @@ const RegisterPage = () => {
     e.preventDefault();
 
     // Kiểm tra các trường không được để trống
-    if (!username || !email || !password || !address || !avatarFile) {
+    if (!username || !email || !password || !address) {
       toast.error("Vui lòng điền đầy đủ thông tin.");
       return;
     }

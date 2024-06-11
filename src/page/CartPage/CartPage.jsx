@@ -209,7 +209,7 @@ const CartPage = () => {
                       {product.product_id.name}
                     </td>
                     <td className="priceProducts-cart">
-                      {product.product_id.price.toLocaleString()}VND
+                      {product.product_id.price.toLocaleString()}đ
                     </td>
                     <td>
                       <button
@@ -296,7 +296,7 @@ const CartPage = () => {
             <div className="d-flex justify-content-between">
               <div>Tổng</div>
               <div className="SumPayment-cart">
-                {totalPrice.toLocaleString()} VND
+                {totalPrice.toLocaleString()} đ
               </div>
             </div>
             <div className="d-flex justify-content-between mt-4">
@@ -356,7 +356,7 @@ const CartPage = () => {
                     Giá:{" "}
                     <span style={{ color: "red", fontWeight: "bold" }}>
                       {" "}
-                      {selectedItem.product_id.price.toLocaleString()}VND
+                      {selectedItem.product_id.price.toLocaleString()}đ
                     </span>{" "}
                   </p>
                   <p>
@@ -372,7 +372,7 @@ const CartPage = () => {
                         selectedItem.product_id.price *
                         quantities[selectedItem.product_id._id]
                       ).toLocaleString()}
-                      VND
+                      đ
                     </span>{" "}
                   </p>
                   <hr />

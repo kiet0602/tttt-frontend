@@ -276,7 +276,6 @@ const CartPage = () => {
                     </td>
                     <td>
                       <p>
-                        {" "}
                         <FontAwesomeIcon
                           style={{ cursor: "pointer" }}
                           onClick={() => handleItemClick(product)}
@@ -353,14 +352,13 @@ const CartPage = () => {
                   />
                   <h5>{selectedItem.product_id.name}</h5>
                   <p>
-                    Giá:{" "}
+                    Giá:
                     <span style={{ color: "red", fontWeight: "bold" }}>
-                      {" "}
                       {selectedItem.product_id.price.toLocaleString()}đ
-                    </span>{" "}
+                    </span>
                   </p>
                   <p>
-                    Số lượng:{" "}
+                    Số lượng:
                     <span style={{ color: "blue", fontWeight: "bold" }}>
                       {quantities[selectedItem.product_id._id]}
                     </span>
@@ -373,7 +371,7 @@ const CartPage = () => {
                         quantities[selectedItem.product_id._id]
                       ).toLocaleString()}
                       đ
-                    </span>{" "}
+                    </span>
                   </p>
                   <hr />
                   <p>Thanh toán bằng PayPal</p>

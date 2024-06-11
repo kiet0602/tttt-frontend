@@ -173,8 +173,7 @@ const ProductDetails = () => {
           <div className="d-flex justify-content-between box-title text-center ">
             <span className="text-end text-title-regorogy">{product.name}</span>
             <span className="text-start" style={{ fontSize: "13px" }}>
-              {" "}
-              {product.average_star}{" "}
+              {product.average_star.toFixed(1)}
               <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
               <p>Dựa trên ({product.comment_count}) đánh giá</p>
             </span>
@@ -285,13 +284,13 @@ const ProductDetails = () => {
               <div>
                 <div className="Details-Price-Quanlity mt-3">
                   <p>
-                    Giá bán:{" "}
+                    Giá bán:
                     <span className="price">
                       {product.price.toLocaleString()}đ
                     </span>
                   </p>
                   <p>
-                    Số lượng còn lại:{" "}
+                    Số lượng còn lại:
                     <span className="quanlity"> {product.quantity}</span>
                   </p>
                 </div>
@@ -347,7 +346,6 @@ const ProductDetails = () => {
                   {product.ram && <p> Ram: {product.ram}</p>}
                   {product.recommendedResolution && (
                     <p>
-                      {" "}
                       Độ phân giải khuyến nghị: {product.recommendedResolution}
                     </p>
                   )}

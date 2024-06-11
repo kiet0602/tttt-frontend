@@ -38,7 +38,7 @@ const Footer = () => {
                 icon={faBox}
               />
               <div>
-                <span className="fw-bold title-service">ĐỔI TRẢ DỄ DÀNG</span>{" "}
+                <span className="fw-bold title-service">ĐỔI TRẢ DỄ DÀNG</span>
                 <br />
                 <p className="text-footer title-service-small">
                   1 đổi 1 trong 7 ngày
@@ -53,7 +53,7 @@ const Footer = () => {
               <div>
                 <span className="fw-bold title-service">
                   THANH TOÁN THUẬN TIỆN
-                </span>{" "}
+                </span>
                 <br />
                 <p className="text-footer title-service-small">
                   Trả tiền mặt, chuyển khoảng, Trả góp 0%
@@ -66,7 +66,7 @@ const Footer = () => {
                 icon={faHeadset}
               />
               <div>
-                <span className="fw-bold title-service">HỖ TRỢ NHIỆT TÌNH</span>{" "}
+                <span className="fw-bold title-service">HỖ TRỢ NHIỆT TÌNH</span>
                 <br />
                 <p className="text-footer title-service-small">
                   Tư vấn, giải đáp mọi thắc mắc

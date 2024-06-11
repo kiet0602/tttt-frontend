@@ -71,22 +71,22 @@ const CheckoutPage = () => {
         {userINFO && (
           <div>
             <p>
-              Tên khách hàng:{" "}
+              Tên khách hàng:
               <span style={{ color: "red", fontWeight: "bold" }}>
                 {userINFO.username}
-              </span>{" "}
+              </span>
             </p>
             <p>
-              Email khách hàng:{" "}
+              Email khách hàng:
               <span style={{ color: "red", fontWeight: "bold" }}>
                 {userINFO.email}
-              </span>{" "}
+              </span>
             </p>
             <p>
-              Địa chỉ khách hàng:{" "}
+              Địa chỉ khách hàng:
               <span style={{ color: "red", fontWeight: "bold" }}>
                 {userINFO.address}
-              </span>{" "}
+              </span>
             </p>
           </div>
         )}

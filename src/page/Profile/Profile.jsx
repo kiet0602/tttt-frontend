@@ -248,7 +248,6 @@ const Profile = () => {
                     <div key={detail._id}>
                       <div className="d-flex">
                         <div className="pe-4">
-                          {" "}
                           <img
                             src={`http://localhost:8000/${detail.product_image}`}
                             alt=""
@@ -256,41 +255,39 @@ const Profile = () => {
                           />
                         </div>
                         <div>
-                          {" "}
                           <p>{detail.product_name}</p>
                         </div>
                       </div>
 
                       <p>
-                        Quantity:{" "}
+                        Số lượng:
                         <span style={{ color: "blue", fontWeight: "bold" }}>
                           {detail.quantity}
-                        </span>{" "}
+                        </span>
                       </p>
                       <p>
-                        Unit Price:{" "}
+                        Giá sản phẩm:
                         <span style={{ color: "red", fontWeight: "bold" }}>
                           {detail.unit_price.toLocaleString()}đ
-                        </span>{" "}
+                        </span>
                       </p>
                       <hr />
                     </div>
                   ))}
                   <p>
-                    Order Date:{" "}
+                    Ngày đặt hàng:
                     <span style={{ fontWeight: "bold" }}>
-                      {" "}
                       {new Date(selectedOrder.order_date).toLocaleDateString()}
                     </span>
                   </p>
                   <p>
-                    Status:{" "}
+                    Trạng thái:
                     <span style={{ color: "blue", fontWeight: "bold" }}>
                       {selectedOrder.status}
                     </span>
                   </p>
                   <p>
-                    Total Price:
+                    Tổng tiền:
                     <span style={{ color: "red", fontWeight: "bold" }}>
                       {selectedOrder.total_price.toLocaleString()}đ
                     </span>

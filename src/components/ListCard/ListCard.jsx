@@ -39,6 +39,7 @@ const ListCard = ({ products }) => {
           <div className="col-3 box-product mt-1" key={product._id}>
             <div className="text-center">
               <img
+                style={{ width: "300px", height: "150px" }}
                 className="img-fluid"
                 src={`http://localhost:8000/${product.image}`}
                 alt={product.name}

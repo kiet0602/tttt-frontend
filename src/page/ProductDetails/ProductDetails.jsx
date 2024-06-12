@@ -237,12 +237,13 @@ const ProductDetails = () => {
                               data-bs-target="#exampleModal"
                               data-bs-whatever="@mdo"
                               className="p-1"
-                              style={{ fontSize: "15px", borderRadius: "10px" }}
+                              style={{
+                                fontSize: "15px",
+                                borderRadius: "10px",
+                                background: "#ff8200f2",
+                                color: "white",
+                              }}
                             >
-                              <FontAwesomeIcon
-                                icon={faComment}
-                                style={{ color: "#FFD43B" }}
-                              />
                               Cập nhật
                             </button>
                             <button
@@ -252,6 +253,8 @@ const ProductDetails = () => {
                                 fontSize: "15px",
                                 borderRadius: "10px",
                                 marginLeft: "",
+                                background: "#ff8200f2",
+                                color: "white",
                               }}
                               onClick={handleDeleteComment}
                             >
@@ -267,10 +270,6 @@ const ProductDetails = () => {
                             className="p-1"
                             style={{ fontSize: "15px", borderRadius: "10px" }}
                           >
-                            <FontAwesomeIcon
-                              icon={faComment}
-                              style={{ color: "#FFD43B" }}
-                            />
                             Viết đánh giá
                           </button>
                         )}

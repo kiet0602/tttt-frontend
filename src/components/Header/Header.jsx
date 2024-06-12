@@ -51,7 +51,7 @@ const Header = ({ searchTerm, setSearchTerm, cartItemCount }) => {
             <span>hop</span>
           </Link>
         </div>
-        <div className="col-7 text-end">
+        <div className="col-6 text-end">
           <form className="formSearch" onSubmit={handleSearchSubmit}>
             <input
               className="inputSearch"
@@ -66,7 +66,7 @@ const Header = ({ searchTerm, setSearchTerm, cartItemCount }) => {
             </button>
           </form>
         </div>
-        <div className="col-3 d-flex justify-content-evenly">
+        <div className="col-4 d-flex justify-content-evenly">
           {userInfo ? (
             <>
               <div className="d-flex align-items-center">
@@ -82,12 +82,14 @@ const Header = ({ searchTerm, setSearchTerm, cartItemCount }) => {
                         ? `http://localhost:8000/${userInfo.avatar}`
                         : "https://i.pinimg.com/736x/b6/bb/1f/b6bb1f98d48a1402a1b33c6a6da0c276.jpg" // Default fallback image URL
                     }
-                    className="rounded-circle me-2"
+                    className="rounded-circle "
                     style={{ width: "30px", height: "30px" }}
                     alt="User Avatar"
                   />
-
-                  {userInfo.username}
+                  <div style={{ width: "200px", marginLeft: "20px" }}>
+                    {" "}
+                    {userInfo.username}
+                  </div>
                 </Link>
               </div>
               <div className="relative">

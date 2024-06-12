@@ -129,7 +129,7 @@ const CheckoutPage = () => {
                     }}
                   >
                     <td>
-                      <Link to={`/product/${item.product_id._id}`}>
+                      <Link to={`/ProductDetails/${item.product_id._id}`}>
                         <img
                           style={{ width: "100px" }}
                           src={`http://localhost:8000/${item.product_id.image}`}

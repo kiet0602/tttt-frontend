@@ -5,10 +5,12 @@ import Header from "../../components/Header/Header";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "./ProductsAll.css";
+import BlockTitle from "../../components/BlockTitle/BlockTitle";
 
 const ProductAll = () => {
   const [productsData, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // State for search input value
+  const [sortCriteria, setSortCriteria] = useState(""); // State for sorting criteria
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
 
@@ -57,6 +59,26 @@ const ProductAll = () => {
     getProductsAll();
   }, [searchTerm]);
 
+  useEffect(() => {
+    if (sortCriteria) {
+      const sortedProducts = [...productsData].sort((a, b) => {
+        switch (sortCriteria) {
+          case "price-asc":
+            return a.price - b.price;
+          case "price-desc":
+            return b.price - a.price;
+          case "name-asc":
+            return a.name.localeCompare(b.name);
+          case "name-desc":
+            return b.name.localeCompare(a.name);
+          default:
+            return 0;
+        }
+      });
+      setProducts(sortedProducts);
+    }
+  }, [sortCriteria, productsData]);
+
   const fetchCartItems = async (userId) => {
     try {
       const response = await axios.get(
@@ -76,8 +98,23 @@ const ProductAll = () => {
         cartItemCount={cartItems.length}
       />
       <HeadNavNoBanNer />
-
+      <BlockTitle title={"TẤT CẢ SẢN PHẨM"} />
       <div className="container mt-4">
+        <div className="sort-dropdown text-end my-2">
+          <label htmlFor="sort">Sắp xếp theo: </label>
+          <select
+            id="sort"
+            value={sortCriteria}
+            onChange={(e) => setSortCriteria(e.target.value)}
+          >
+            <option value="">Mặc định</option>
+            <option value="price-asc">Giá tăng dần</option>
+            <option value="price-desc">Giá giảm dần</option>
+            <option value="name-asc">Tên A-Z</option>
+            <option value="name-desc">Tên Z-A</option>
+          </select>
+        </div>
+
         <div className="row">
           {productsData.length === 0 ? (
             <p className="text-center font-bold">
@@ -88,6 +125,7 @@ const ProductAll = () => {
               <div className="col-3 box-product mt-1" key={product._id}>
                 <div className="text-center">
                   <img
+                    style={{ width: "300px", height: "150px" }}
                     className="img-fluid"
                     src={`http://localhost:8000/${product.image}`}
                     alt={product.name}

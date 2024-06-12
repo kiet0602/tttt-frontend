@@ -6,12 +6,16 @@ import Footer from "../../components/Footer/Footer";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
 import { ToastContainer, toast } from "react-toastify";
 import "./CategoryPage.css";
+import BlockTitle from "../../components/BlockTitle/BlockTitle";
+
 const CategoryPage = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
+  const [category, setCategory] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState("");
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -66,12 +70,33 @@ const CategoryPage = () => {
           product.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setProducts(filteredProducts);
+        setCategory(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
     getProductsCategory();
   }, [id, searchTerm]);
+
+  useEffect(() => {
+    if (sortCriteria) {
+      const sortedProducts = [...products].sort((a, b) => {
+        switch (sortCriteria) {
+          case "price-asc":
+            return a.price - b.price;
+          case "price-desc":
+            return b.price - a.price;
+          case "name-asc":
+            return a.name.localeCompare(b.name);
+          case "name-desc":
+            return b.name.localeCompare(a.name);
+          default:
+            return 0;
+        }
+      });
+      setProducts(sortedProducts);
+    }
+  }, [sortCriteria, products]);
 
   return (
     <div className="container">
@@ -81,6 +106,23 @@ const CategoryPage = () => {
         cartItemCount={cartItems.length}
       />
       <HeadNavNoBanNer />
+      <div className="sort-dropdown mx-3 text-end">
+        <label htmlFor="sort">Sắp xếp theo: </label>
+        <select
+          id="sort"
+          value={sortCriteria}
+          onChange={(e) => setSortCriteria(e.target.value)}
+        >
+          <option value="">Mặc định</option>
+          <option value="price-asc">Giá tăng dần</option>
+          <option value="price-desc">Giá giảm dần</option>
+          <option value="name-asc">Tên A-Z</option>
+          <option value="name-desc">Tên Z-A</option>
+        </select>
+      </div>
+
+      {category && <BlockTitle title={category.name} />}
+
       <div className="row">
         {products.length === 0 ? (
           <p className="text-center font-bold">
@@ -91,6 +133,7 @@ const CategoryPage = () => {
             <div className="col-3 box-product mt-1" key={product._id}>
               <div className="text-center">
                 <img
+                  style={{ width: "300px", height: "150px" }}
                   className="img-fluid"
                   src={`http://localhost:8000/${product.image}`}
                   alt={product.name}

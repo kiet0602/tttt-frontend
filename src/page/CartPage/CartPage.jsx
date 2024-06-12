@@ -89,7 +89,6 @@ const CartPage = () => {
         [productId]: prevQuantities[productId] + 1,
       };
       updateProductItemCart(newQuantities[productId], productId);
-      toast.success("Tăng sản phẩm thành công!");
       return newQuantities;
     });
   };
@@ -106,7 +105,6 @@ const CartPage = () => {
         [productId]: newQuantity,
       };
       updateProductItemCart(newQuantities[productId], productId);
-      toast.success("Giảm sản phẩm thành công!");
       return newQuantities;
     });
   };
@@ -125,6 +123,24 @@ const CartPage = () => {
     } catch (error) {
       toast.error(error.message);
     }
+  };
+
+  const handleQuantityChange = (productId, value) => {
+    let quantity = parseInt(value, 10);
+
+    // If quantity is not a number or less than 1, set it to 1
+    if (isNaN(quantity) || quantity < 1) {
+      quantity = 1;
+    }
+
+    setQuantities((prevQuantities) => {
+      const newQuantities = {
+        ...prevQuantities,
+        [productId]: quantity,
+      };
+      updateProductItemCart(quantity, productId);
+      return newQuantities;
+    });
   };
 
   const handleContinueShopping = () => {
@@ -197,7 +213,7 @@ const CartPage = () => {
                     style={{ textAlign: "center" }}
                   >
                     <td>
-                      <Link to={`/product/${product.product_id._id}`}>
+                      <Link to={`/ProductDetails/${product.product_id._id}`}>
                         <img
                           style={{ width: "100px" }}
                           src={`http://localhost:8000/${product.product_id.image}`}
@@ -234,7 +250,22 @@ const CartPage = () => {
                           margin: "0 10px",
                         }}
                       >
-                        {quantities[product.product_id._id]}
+                        <input
+                          type="number"
+                          style={{
+                            width: "50px",
+                            textAlign: "center",
+                            fontSize: "20px",
+                            margin: "0 10px",
+                          }}
+                          value={quantities[product.product_id._id]}
+                          onChange={(e) =>
+                            handleQuantityChange(
+                              product.product_id._id,
+                              e.target.value
+                            )
+                          }
+                        />
                       </span>
                       <button
                         style={{

@@ -35,9 +35,9 @@ const HeaderNavRightNoBANNER = () => {
             </Link>
           </li>
           <li>
-            <Link className="text-Link-navRight">
+            <Link to="/xdch" className="text-Link-navRight">
               <FontAwesomeIcon className="pe-1" icon={faNewspaper} />
-              Tin tức
+              Xây dựng cấu hình
             </Link>
           </li>
           <li>

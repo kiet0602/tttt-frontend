@@ -1,13 +1,11 @@
 .box-title {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #00000029;
 }
 .box-title span {
   margin-top: 12px;
-  font-size: 30px;
+  font-size: 25px;
 }
 .text-title-regorogy {
-  font-family: fantasy;
-  text-shadow: -1px 0px 3px black;
 }
 .text-title {
   margin-top: 33px;

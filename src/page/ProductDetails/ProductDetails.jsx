@@ -190,10 +190,21 @@ const ProductDetails = () => {
               </div>
               <div className="mt-5 d-flex justify-content-between">
                 <div>
+                  <div
+                    className="my-3"
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "20px",
+                      borderBottom: "1px solid #00000029",
+                      width: "635px",
+                    }}
+                  >
+                    Đánh giá:
+                  </div>
+
                   <div>
                     {Usercomment.map((commentuser) => (
                       <div key={commentuser._id}>
-                        <hr />
                         <img
                           style={{
                             width: "30px",
@@ -221,7 +232,10 @@ const ProductDetails = () => {
                             />
                           ))}
                         </p>
-                        <p style={{ width: "500px" }}>{commentuser.content}</p>
+                        <p style={{ marginTop: "-20px", marginLeft: "50px" }}>
+                          {" "}
+                          {commentuser.content}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -268,7 +282,13 @@ const ProductDetails = () => {
                             data-bs-target="#exampleModal"
                             data-bs-whatever="@mdo"
                             className="p-1"
-                            style={{ fontSize: "15px", borderRadius: "10px" }}
+                            style={{
+                              fontSize: "15px",
+                              borderRadius: "10px",
+                              marginLeft: "",
+                              background: "#ff8200f2",
+                              color: "white",
+                            }}
                           >
                             Viết đánh giá
                           </button>
@@ -283,92 +303,110 @@ const ProductDetails = () => {
               <div>
                 <div className="Details-Price-Quanlity mt-3">
                   <p>
-                    Giá bán:
                     <span className="price">
                       {product.price.toLocaleString()}đ
                     </span>
                   </p>
                   <p>
-                    Số lượng còn lại:
-                    <span className="quanlity"> {product.quantity}</span>
+                    {product.quantity > 0 ? (
+                      <span className="quanlity"> Sản phẩm còn hàng </span>
+                    ) : (
+                      <span className="quanlity"> Hết hàng </span>
+                    )}
                   </p>
                 </div>
                 <div className="Details-Products mt-3">
-                  <p>Mã sản phẩm: {product._id}</p>
-                  <p className="info">Thông tin cơ bản:</p>
-                  {product.description && <p>{product.description}</p>}
-                  {product.aspectRatio && (
-                    <p>Tỷ lệ khung hình: {product.aspectRatio}</p>
-                  )}
-                  {product.brightness && <p> Độ sáng: {product.brightness}</p>}
-                  {product.card && <p> Card đồ họa: {product.card}</p>}
-                  {product.caseTower && (
-                    <p> Vỏ máy tính: {product.caseTower}</p>
-                  )}
-                  {product.color && <p> Màu sắc: {product.color}</p>}
-                  {product.connectivity && (
-                    <p> Kết nối: {product.connectivity}</p>
-                  )}
-                  {product.contrastRatio && (
-                    <p> Tỷ lệ tương phản: {product.contrastRatio}</p>
-                  )}
-                  {product.cpu_type && <p> Loại cpu: {product.cpu_type}</p>}
-                  {product.ergonomics && (
-                    <p> Ergonomics: {product.ergonomics}</p>
-                  )}
-                  {product.graphics && <p> Đồ họa: {product.graphics}</p>}
-                  {product.guarantee && <p> Bảo hành: {product.guarantee}</p>}
-                  {product.hardDrive && <p> Ổ cứng: {product.hardDrive}</p>}
-                  {product.hearType && <p>Loại tai nghe: {product.hearType}</p>}
-                  {product.high && <p> Chiều cao: {product.high}</p>}
-                  {product.keyboardType && (
-                    <p> Loại bàn phím: {product.keyboardType}</p>
-                  )}
-                  {product.mainboard && <p> Mainboard: {product.mainboard}</p>}
-                  {product.manufacturer && (
-                    <p> Nhà sản xuất: {product.manufacturer}</p>
-                  )}
-                  {product.material && <p> Chất liệu: {product.material}</p>}
-                  {product.model && <p> Model: {product.model}</p>}
-                  {product.mouseType && <p> Loại chuột: {product.mouseType}</p>}
-                  {product.mouse_keyboard && (
-                    <p> Chuột bàn phím: {product.mouse_keyboard}</p>
-                  )}
-                  {product.other_features && (
-                    <p> Tính năng khác: {product.other_features}</p>
-                  )}
-                  {product.psu && <p> Nguồn điện: {product.psu}</p>}
-                  {product.panelType && <p> Loại panel: {product.panelType}</p>}
-                  {product.radiators && (
-                    <p> Bộ tản nhiệt: {product.radiators}</p>
-                  )}
-                  {product.ram && <p> Ram: {product.ram}</p>}
-                  {product.recommendedResolution && (
-                    <p>
-                      Độ phân giải khuyến nghị: {product.recommendedResolution}
-                    </p>
-                  )}
-                  {product.refreshRate && (
-                    <p> Tần số quét: {product.refreshRate}</p>
-                  )}
-                  {product.responseTime && (
-                    <p> Thời gian phản hồi: {product.responseTime}</p>
-                  )}
-                  {product.screenSize && (
-                    <p> Kích thước màn hình: {product.screenSize}</p>
-                  )}
-                  {product.screenType && (
-                    <p> Loại màn hình: {product.screenType}</p>
-                  )}
-                  {product.size && <p> Kích thước : {product.size}</p>}
-                  {product.specifications && (
-                    <p>Thông số kỹ thuật: {product.specifications}</p>
-                  )}
-                  {product.viewingAngle && (
-                    <p> Góc nhìn: {product.viewingAngle}</p>
-                  )}
-                  {product.warranty && <p> Bảo hành: {product.warranty}</p>}
-                  {product.weight && <p> Trọng lượng: {product.weight}</p>}
+                  <span style={{ fontWeight: "bold" }}> Mã sản phẩm:</span>
+                  <span style={{ fontWeight: "0px" }}> {product._id}</span>
+                  <p className="info mt-4">Thông tin cơ bản:</p>
+                  <ul style={{ listStyleType: "circle" }}>
+                    {product.description && <li>{product.description}</li>}
+                    {product.aspectRatio && (
+                      <li>Tỷ lệ khung hình: {product.aspectRatio}</li>
+                    )}
+                    {product.brightness && (
+                      <li>Độ sáng: {product.brightness}</li>
+                    )}
+                    {product.card && <li>Card đồ họa: {product.card}</li>}
+                    {product.caseTower && (
+                      <li>Vỏ máy tính: {product.caseTower}</li>
+                    )}
+                    {product.color && <li>Màu sắc: {product.color}</li>}
+                    {product.connectivity && (
+                      <li>Kết nối: {product.connectivity}</li>
+                    )}
+                    {product.contrastRatio && (
+                      <li>Tỷ lệ tương phản: {product.contrastRatio}</li>
+                    )}
+                    {product.cpu_type && <li>Loại cpu: {product.cpu_type}</li>}
+                    {product.ergonomics && (
+                      <li>Ergonomics: {product.ergonomics}</li>
+                    )}
+                    {product.graphics && <li>Đồ họa: {product.graphics}</li>}
+                    {product.guarantee && (
+                      <li>Bảo hành: {product.guarantee}</li>
+                    )}
+                    {product.hardDrive && <li>Ổ cứng: {product.hardDrive}</li>}
+                    {product.hearType && (
+                      <li>Loại tai nghe: {product.hearType}</li>
+                    )}
+                    {product.high && <li>Chiều cao: {product.high}</li>}
+                    {product.keyboardType && (
+                      <li>Loại bàn phím: {product.keyboardType}</li>
+                    )}
+                    {product.mainboard && (
+                      <li>Mainboard: {product.mainboard}</li>
+                    )}
+                    {product.manufacturer && (
+                      <li>Nhà sản xuất: {product.manufacturer}</li>
+                    )}
+                    {product.material && <li>Chất liệu: {product.material}</li>}
+                    {product.model && <li>Model: {product.model}</li>}
+                    {product.mouseType && (
+                      <li>Loại chuột: {product.mouseType}</li>
+                    )}
+                    {product.mouse_keyboard && (
+                      <li>Chuột bàn phím: {product.mouse_keyboard}</li>
+                    )}
+                    {product.other_features && (
+                      <li>Tính năng khác: {product.other_features}</li>
+                    )}
+                    {product.psu && <li>Nguồn điện: {product.psu}</li>}
+                    {product.panelType && (
+                      <li>Loại panel: {product.panelType}</li>
+                    )}
+                    {product.radiators && (
+                      <li>Bộ tản nhiệt: {product.radiators}</li>
+                    )}
+                    {product.ram && <li>Ram: {product.ram}</li>}
+                    {product.recommendedResolution && (
+                      <li>
+                        Độ phân giải khuyến nghị:{" "}
+                        {product.recommendedResolution}
+                      </li>
+                    )}
+                    {product.refreshRate && (
+                      <li>Tần số quét: {product.refreshRate}</li>
+                    )}
+                    {product.responseTime && (
+                      <li>Thời gian phản hồi: {product.responseTime}</li>
+                    )}
+                    {product.screenSize && (
+                      <li>Kích thước màn hình: {product.screenSize}</li>
+                    )}
+                    {product.screenType && (
+                      <li>Loại màn hình: {product.screenType}</li>
+                    )}
+                    {product.size && <li>Kích thước: {product.size}</li>}
+                    {product.specifications && (
+                      <li>Thông số kỹ thuật: {product.specifications}</li>
+                    )}
+                    {product.viewingAngle && (
+                      <li>Góc nhìn: {product.viewingAngle}</li>
+                    )}
+                    {product.warranty && <li>Bảo hành: {product.warranty}</li>}
+                    {product.weight && <li>Trọng lượng: {product.weight}</li>}
+                  </ul>
                 </div>
                 <div className="row text-center mt-4">
                   <div className="col-6">

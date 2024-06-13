@@ -43,7 +43,6 @@ const CategoryPage = () => {
         navigate("/login");
         return;
       }
-
       const userId = userInfo?._id;
       await axios.post("http://localhost:8000/api/cart", {
         userId,
@@ -51,7 +50,6 @@ const CategoryPage = () => {
         quantity: 1,
       });
       toast.success("Đã thêm sản phẩm vào giỏ hàng thành công!");
-
       // Fetch updated cart items
       fetchCartItems(userId);
     } catch (error) {
@@ -106,7 +104,8 @@ const CategoryPage = () => {
         cartItemCount={cartItems.length}
       />
       <HeadNavNoBanNer />
-      <div className="sort-dropdown mx-3 text-end">
+      {category && <BlockTitle title={category.name} />}
+      <div className="sort-dropdown m-3 text-end">
         <label htmlFor="sort">Sắp xếp theo: </label>
         <select
           id="sort"
@@ -120,8 +119,6 @@ const CategoryPage = () => {
           <option value="name-desc">Tên Z-A</option>
         </select>
       </div>
-
-      {category && <BlockTitle title={category.name} />}
 
       <div className="row">
         {products.length === 0 ? (

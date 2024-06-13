@@ -1,33 +1,33 @@
 .Details-Price-Quanlity {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #00000024;
 }
 .Details-Price-Quanlity p {
 }
 .price {
-  font-size: xx-large;
   color: red;
-  font-weight: 900;
+  font-size: 30px;
+  font-weight: bold;
 }
 .Details-Products {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #00000024;
 }
 .quanlity {
   color: blue;
 }
 .info {
-  font-size: large;
   color: red;
-  font-weight: 600;
 }
 .btn-details-left {
   background: red;
   color: azure;
-  border-radius: 25px;
+  border: none;
+  width: 100%;
 }
 .btn-details-right {
   background: blue;
   color: azure;
-  border-radius: 25px;
+  border: none;
+  width: 100%;
 }
 .tel {
   color: red;

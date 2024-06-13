@@ -5,10 +5,15 @@ import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer"
 import { Link, useNavigate } from "react-router-dom";
 import "./CartPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBasketShopping, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBasketShopping,
+  faFaceFrown,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import PayPal from "../../components/PayPal";
+import imgGiohang from "../../assets/img/Remove-bg.ai_1718257572075.png";
 
 const CartPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,12 +25,18 @@ const CartPage = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedItem, setSelectedItem] = useState(null);
   const dismissButtonRef = useRef(null);
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
       setUserId(userInfo?._id);
     }
   }, []);
+
+  useEffect(() => {
+    getProductsAll();
+    fetchCartItems();
+  }, [userId]);
 
   const getProductsAll = async () => {
     if (!userId) return;
@@ -43,7 +54,6 @@ const CartPage = () => {
         {}
       );
       setQuantities(newQuantities);
-      fetchCartItems(userId);
       const total = response?.data?.data?.items.reduce((total, product) => {
         return total + product.product_id.price * product.quantity;
       }, 0);
@@ -52,11 +62,6 @@ const CartPage = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    getProductsAll();
-    fetchCartItems();
-  }, [userId]);
 
   const fetchCartItems = async () => {
     try {
@@ -183,169 +188,186 @@ const CartPage = () => {
       />
       <HeadNavNoBanNer />
       <div className="container">
-        <p className="fs-4">Giỏ hàng</p>
-        <div className="row">
-          <div className="col-8">
-            <table
-              className="table table-white"
-              style={{
-                borderCollapse: "separate",
-                borderSpacing: 0,
-                borderRadius: "30px",
-                overflow: "hidden",
-              }}
-            >
-              <thead className="boxx" style={{ textAlign: "center" }}>
-                <tr>
-                  <th scope="col">Hình</th>
-                  <th scope="col">Tên sản phẩm</th>
-                  <th scope="col">Giá</th>
-                  <th scope="col">Số lượng</th>
-                  <th scope="col">Tổng</th>
-                  <th scope="col">Xóa</th>
-                  <th scope="col">Mua</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((product) => (
-                  <tr
-                    key={product.product_id._id}
-                    style={{ textAlign: "center" }}
-                  >
-                    <td>
-                      <Link to={`/ProductDetails/${product.product_id._id}`}>
-                        <img
-                          style={{ width: "100px" }}
-                          src={`http://localhost:8000/${product.product_id.image}`}
-                          alt={product.product_id.name}
-                        />
-                      </Link>
-                    </td>
-                    <td className="nameProducts-cart">
-                      {product.product_id.name}
-                    </td>
-                    <td className="priceProducts-cart">
-                      {product.product_id.price.toLocaleString()}đ
-                    </td>
-                    <td>
-                      <button
-                        style={{
-                          border: "none",
-                          backgroundColor: "transparent",
-                          cursor: "pointer",
-                          padding: 20,
-                          margin: 0,
-                          fontSize: "30px",
-                          color: "black",
-                        }}
-                        onClick={() => decrease(product.product_id._id)}
-                        onMouseEnter={(e) => (e.target.style.color = "red")}
-                        onMouseLeave={(e) => (e.target.style.color = "black")}
-                      >
-                        -
-                      </button>
-                      <span
-                        style={{
-                          fontSize: "30px",
-                          margin: "0 10px",
-                        }}
-                      >
-                        <input
-                          type="number"
+        {products.length === 0 ? (
+          <div className="text-center d-flex flex-column align-items-center">
+            <img
+              style={{ width: "400px" }}
+              src={imgGiohang}
+              alt="Giỏ hàng trống"
+            />
+            <p style={{ fontSize: "20px" }}>
+              Không có sản phẩm nào trong giỏ hàng của bạn.
+            </p>
+            <FontAwesomeIcon
+              icon={faFaceFrown}
+              style={{ color: "#FFD43B", fontSize: "40px", marginTop: "20px" }}
+            />
+          </div>
+        ) : (
+          <div className="row">
+            <p className="fs-4">Giỏ hàng</p>
+            <div className="col-8">
+              <table
+                className="table table-white"
+                style={{
+                  borderCollapse: "separate",
+                  borderSpacing: 0,
+                  borderRadius: "30px",
+                  overflow: "hidden",
+                }}
+              >
+                <thead className="boxx" style={{ textAlign: "center" }}>
+                  <tr>
+                    <th scope="col">Hình</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Tổng</th>
+                    <th scope="col">Xóa</th>
+                    <th scope="col">Mua</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.map((product) => (
+                    <tr
+                      key={product.product_id._id}
+                      style={{ textAlign: "center" }}
+                    >
+                      <td>
+                        <Link to={`/ProductDetails/${product.product_id._id}`}>
+                          <img
+                            style={{ width: "100px" }}
+                            src={`http://localhost:8000/${product.product_id.image}`}
+                            alt={product.product_id.name}
+                          />
+                        </Link>
+                      </td>
+                      <td className="nameProducts-cart">
+                        {product.product_id.name}
+                      </td>
+                      <td className="priceProducts-cart">
+                        {product.product_id.price.toLocaleString()}đ
+                      </td>
+                      <td>
+                        <button
                           style={{
-                            width: "50px",
-                            textAlign: "center",
-                            fontSize: "20px",
+                            border: "none",
+                            backgroundColor: "transparent",
+                            cursor: "pointer",
+                            padding: 10,
+                            margin: 0,
+                            fontSize: "30px",
+                            color: "black",
+                          }}
+                          onClick={() => decrease(product.product_id._id)}
+                          onMouseEnter={(e) => (e.target.style.color = "red")}
+                          onMouseLeave={(e) => (e.target.style.color = "black")}
+                        >
+                          -
+                        </button>
+                        <span
+                          style={{
+                            fontSize: "30px",
                             margin: "0 10px",
                           }}
-                          value={quantities[product.product_id._id]}
-                          onChange={(e) =>
-                            handleQuantityChange(
-                              product.product_id._id,
-                              e.target.value
-                            )
-                          }
-                        />
-                      </span>
-                      <button
-                        style={{
-                          border: "none",
-                          backgroundColor: "transparent",
-                          cursor: "pointer",
-                          padding: 20,
-                          margin: 0,
-                          fontSize: "30px",
-                          color: "black",
-                        }}
-                        onClick={() => increase(product.product_id._id)}
-                        onMouseEnter={(e) => (e.target.style.color = "red")}
-                        onMouseLeave={(e) => (e.target.style.color = "black")}
-                      >
-                        +
-                      </button>
-                    </td>
-                    <td className="SumPrice-cart">
-                      {(
-                        product.product_id.price *
-                        quantities[product.product_id._id]
-                      ).toLocaleString()}
-                      đ
-                    </td>
-                    <td>
-                      <FontAwesomeIcon
-                        onClick={() =>
-                          removeProductItemCart(product.product_id._id)
-                        }
-                        style={{
-                          fontSize: "20px",
-                          cursor: "pointer",
-                          marginTop: "32px",
-                        }}
-                        className="delete-cart"
-                        icon={faTrash}
-                      />
-                    </td>
-                    <td>
-                      <p>
+                        >
+                          <input
+                            type="number"
+                            style={{
+                              width: "50px",
+                              textAlign: "center",
+                              fontSize: "20px",
+                              margin: "0 10px",
+                            }}
+                            value={quantities[product.product_id._id]}
+                            onChange={(e) =>
+                              handleQuantityChange(
+                                product.product_id._id,
+                                e.target.value
+                              )
+                            }
+                          />
+                        </span>
+                        <button
+                          style={{
+                            border: "none",
+                            backgroundColor: "transparent",
+                            cursor: "pointer",
+                            padding: 10,
+                            margin: 0,
+                            fontSize: "30px",
+                            color: "black",
+                          }}
+                          onClick={() => increase(product.product_id._id)}
+                          onMouseEnter={(e) => (e.target.style.color = "red")}
+                          onMouseLeave={(e) => (e.target.style.color = "black")}
+                        >
+                          +
+                        </button>
+                      </td>
+                      <td className="SumPrice-cart">
+                        {(
+                          product.product_id.price *
+                          quantities[product.product_id._id]
+                        ).toLocaleString()}
+                        đ
+                      </td>
+                      <td>
                         <FontAwesomeIcon
-                          style={{ cursor: "pointer" }}
-                          onClick={() => handleItemClick(product)}
-                          icon={faBasketShopping}
-                          class="payment-card"
-                          data-bs-toggle="modal"
-                          data-bs-target="#staticBackdrop"
+                          onClick={() =>
+                            removeProductItemCart(product.product_id._id)
+                          }
+                          style={{
+                            fontSize: "20px",
+                            cursor: "pointer",
+                            marginTop: "32px",
+                          }}
+                          className="delete-cart"
+                          icon={faTrash}
                         />
-                      </p>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="col-4">
-            <div className="d-flex justify-content-between">
-              <div>Tổng</div>
-              <div className="SumPayment-cart">
-                {totalPrice.toLocaleString()} đ
+                      </td>
+                      <td>
+                        <p>
+                          <FontAwesomeIcon
+                            style={{ cursor: "pointer" }}
+                            onClick={() => handleItemClick(product)}
+                            icon={faBasketShopping}
+                            class="payment-card"
+                            data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop"
+                          />
+                        </p>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="col-4">
+              <div className="d-flex justify-content-between">
+                <div>Tổng</div>
+                <div className="SumPayment-cart">
+                  {totalPrice.toLocaleString()} đ
+                </div>
+              </div>
+              <div className="d-flex justify-content-between mt-4">
+                <div>
+                  <button
+                    className="btn-back-allProducts"
+                    onClick={handleContinueShopping}
+                  >
+                    Tiếp tục mua sắm
+                  </button>
+                </div>
+                <div>
+                  <button className="btn-Payment" onClick={handleCheckout}>
+                    Thông tin đơn hàng
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="d-flex justify-content-between mt-4">
-              <div>
-                <button
-                  className="btn-back-allProducts"
-                  onClick={handleContinueShopping}
-                >
-                  Tiếp tục mua sắm
-                </button>
-              </div>
-              <div>
-                <button className="btn-Payment" onClick={handleCheckout}>
-                  Thông tin đơn hàng
-                </button>
-              </div>
-            </div>
           </div>
-        </div>
+        )}
       </div>
       <Footer />
       <ToastContainer />

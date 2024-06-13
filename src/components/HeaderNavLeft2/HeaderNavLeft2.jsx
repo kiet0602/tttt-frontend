@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./HeaderNavLeft.css";
+import "./HeaderNavLeft2.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faList,
@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const HeaderNavLeft = () => {
+const HeaderNavLeft2 = () => {
   const [accessories, setAccessories] = useState([]);
 
   useEffect(() => {
@@ -27,28 +27,34 @@ const HeaderNavLeft = () => {
   return (
     <div className="nav-left">
       <div className="text-center py-1 box-nav-left text-white">
-        <span className="dropdown-hover">
-          <FontAwesomeIcon className="px-2" icon={faList} />
+        <FontAwesomeIcon className="px-2" icon={faList} />
+        <span>
           DANH MỤC SẢN PHẨM <FontAwesomeIcon icon={faArrowDownLong} />
         </span>
-        <ul className="list-unstyled mb-0 child-div dropdown-menu dropdown-menu-left">
-          {accessories?.map((accessory) => (
+        <ul
+          className="list-unstyled mb-0 mt-2 text-start"
+          style={{ background: "white", zIndex: "1" }}
+        >
+          {accessories?.map((accessory, index) => (
             <li key={accessory?._id} className="nav-item ">
-              <Link
-                to={"/"}
-                className="nav-link text-link-navLeft py-2 px-3"
+              <span
+                className="nav-link dropdown-toggle text-link-navLeft py-2 px-3"
+                role="button"
+                id={`dropdown-${index}`}
                 data-bs-toggle="dropdown"
-                aria-haspopup="true"
                 aria-expanded="false"
               >
-                {accessory.name} <FontAwesomeIcon icon={faAngleDown} />
-              </Link>
-              <ul className="dropdown-menu child-link">
+                {accessory.name}
+              </span>
+              <ul
+                className="dropdown-menu child-link"
+                aria-labelledby={`dropdown-${index}`}
+              >
                 {accessory?.categories?.map((category) => (
                   <li key={category?.category_id}>
                     <Link
                       to={`/Category/${category?._id}`}
-                      className="dropdown-item"
+                      className="dropdown-item text-link-navLeft"
                     >
                       {category?.name}
                     </Link>
@@ -64,4 +70,4 @@ const HeaderNavLeft = () => {
   );
 };
 
-export default HeaderNavLeft;
+export default HeaderNavLeft2;

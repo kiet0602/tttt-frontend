@@ -4,29 +4,27 @@
   font-size: 30px;
 }
 .btnAddProduct2:hover {
-  background: #ececec;
-  border: 1px solid black;
-  color: black;
+  color: blue;
 }
 .btnAddProduct2 {
-  border: none;
-  background: blue;
-  border-radius: 30px;
-  margin-bottom: 15px;
-  padding: 5px;
-  color: white;
+  color: #000000;
+  padding: 1px;
+  margin-left: 14px;
+  padding: 1px 3px;
+  margin-bottom: 5px;
+  border: 1px solid black;
+  border-radius: 6px;
+  font-size: 16px;
 }
 .btnProduct2 {
-  border: none;
-  background: red;
-  border-radius: 30px;
-  margin-bottom: 15px;
-  padding: 5px;
-  color: white;
-  margin-left: 11px;
+  font-size: 16px;
+  color: #000000;
+  padding: 1px 3px;
+  margin-left: 14px;
+  margin-bottom: 5px;
+  border: 1px solid black;
+  border-radius: 6px;
 }
 .btnProduct2:hover {
-  background: #ececec;
-  border: 1px solid black;
-  color: black;
+  color: red;
 }

@@ -7,17 +7,24 @@ import { ToastContainer, toast } from "react-toastify";
 import "./HomePage.css";
 import HeaderNav2 from "../../components/HeaderNav2/HeaderNav2";
 import BannerNgang from "../../components/BannerNgang/BannerNgang";
+import BlockTitle from "../../components/BlockTitle/BlockTitle";
+import Imgnohu from "../../assets/img/Remove-bg.ai_1718353271598.png";
+import ImgReview from "../../assets/img/Remove-bg.ai_1718353933691.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
+  const [topSellingProducts, setTopSellingProducts] = useState([]);
+  const [highlyRatedProducts, setHighlyRatedProducts] = useState([]);
+
   useEffect(() => {
-    // Gọi fetchCartItems khi component được render
+    // Fetch cart items when the component mounts
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
-      fetchCartItems(userInfo?._id);
+      fetchCartItems(userInfo._id);
     }
   }, []);
 
@@ -31,36 +38,30 @@ const HomePage = () => {
       console.error("Error fetching cart items:", error);
     }
   };
+
   const getData = async () => {
     try {
-      // Lấy danh sách danh mục
-      const categoryResponse = await axios.get(
-        `http://localhost:8000/api/category`
+      // Fetch top 8 products by sold quantity
+      const topSellingResponse = await axios.get(
+        `http://localhost:8000/api/product/criteria?sortBy=sold_quantity&order=desc&limit=8`
       );
-      const categoryData = categoryResponse.data;
+      setTopSellingProducts(topSellingResponse?.data?.data);
+      console.log(topSellingResponse?.data?.data);
 
-      // Lọc danh mục dựa trên searchTerm
-      const filteredCategories = categoryData.filter((category) =>
-        category.name.toLowerCase().includes(searchTerm.toLowerCase())
+      // Fetch top 8 products by average rating
+      const highlyRatedResponse = await axios.get(
+        `http://localhost:8000/api/product/criteria?sortBy=average_star&order=desc&limit=8`
       );
-
-      // Lấy danh sách sản phẩm
-      const productResponse = await axios.get(
-        `http://localhost:8000/api/product`
-      );
-      const productData = productResponse?.data?.data;
-      // Lọc sản phẩm dựa trên searchTerm
-      const filteredProducts = productData.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setProducts(filteredProducts);
+      setHighlyRatedProducts(highlyRatedResponse?.data?.data);
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching top products:", error);
     }
   };
+
   useEffect(() => {
     getData();
-  }, [searchTerm]);
+  }, []);
+
   const addCart = async (productId) => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (!userInfo) {
@@ -75,14 +76,11 @@ const HomePage = () => {
         productId,
         quantity: 1,
       });
-      alert("Đã thêm sản phẩm thành công");
+      toast.success("Đã thêm sản phẩm vào giỏ hàng thành công!");
+      fetchCartItems(userId);
     } catch (error) {
       toast.error("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.");
     }
-    const response = await axios.get(
-      `http://localhost:8000/api/cart/${userId}`
-    );
-    setCartItems(response?.data?.data?.items);
   };
 
   return (
@@ -94,9 +92,82 @@ const HomePage = () => {
       />
       <HeaderNav2 />
       <BannerNgang />
+      <div className="d-flex align-items-center mx-5">
+        <img
+          src={Imgnohu}
+          alt=""
+          style={{ width: "100px", marginRight: "5px" }} // Adjusted margin for spacing
+        />
+        <span style={{ fontWeight: "bold", fontSize: "30px" }}>
+          Sản phẩm bán chạy nhất
+        </span>
+      </div>
       <div className="container">
         <div className="row">
-          {products.map((product) => (
+          {topSellingProducts.slice(0, 8).map((product) => (
+            <div className="col-3 box-product mt-1" key={product._id}>
+              <div className="text-center">
+                <img
+                  style={{ width: "300px", height: "150px" }}
+                  className="img-fluid"
+                  src={`http://localhost:8000/${product.image}`}
+                  alt={product.name}
+                />
+                <span className="text-center">
+                  {product.name.substring(0, 40)}...
+                </span>
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "20px",
+                    fontWeight: "bolder",
+                  }}
+                >
+                  {product.price.toLocaleString()} đ
+                </p>{" "}
+                <span style={{ fontSize: "15px", color: "#544e4ed4" }}>
+                  {" "}
+                  Đã bán ({product.sold_quantity})
+                </span>
+                <div className="d-flex">
+                  <div>
+                    <button
+                      className="btnAddProduct"
+                      onClick={() => addCart(product._id)}
+                    >
+                      Thêm vào giỏ hàng
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      className="btnProduct"
+                      onClick={() => {
+                        navigate(`/ProductDetails/${product._id}`);
+                      }}
+                    >
+                      Xem chi tiết
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="d-flex align-items-center mx-5">
+        <img
+          src={ImgReview}
+          alt=""
+          style={{ width: "100px", marginRight: "5px" }} // Adjusted margin for spacing
+        />
+        <span style={{ fontWeight: "bold", fontSize: "30px" }}>
+          Sản phẩm được đánh giá cao
+        </span>
+      </div>
+      <div className="container">
+        <div className="row">
+          {highlyRatedProducts.slice(0, 8).map((product) => (
             <div className="col-3 box-product mt-1" key={product._id}>
               <div className="text-center">
                 <img
@@ -117,6 +188,11 @@ const HomePage = () => {
                 >
                   {product.price.toLocaleString()} đ
                 </p>
+                <span style={{ fontSize: "15px" }}>
+                  {" "}
+                  ({product.average_star}){" "}
+                  <FontAwesomeIcon icon={faStar} style={{ color: "#FFD43B" }} />
+                </span>
                 <div className="d-flex">
                   <div>
                     <button
@@ -129,7 +205,7 @@ const HomePage = () => {
                   <div>
                     <button
                       className="btnProduct"
-                      onClick={(e) => {
+                      onClick={() => {
                         navigate(`/ProductDetails/${product._id}`);
                       }}
                     >
@@ -141,10 +217,10 @@ const HomePage = () => {
             </div>
           ))}
         </div>
-        <ToastContainer />
       </div>
 
       <Footer />
+      <ToastContainer />
     </>
   );
 };

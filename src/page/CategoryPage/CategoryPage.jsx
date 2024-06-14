@@ -57,6 +57,17 @@ const CategoryPage = () => {
     }
   };
 
+  const fetchProductsByCriteria = async (sortBy, order) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/product/criteria?sortBy=${sortBy}&order=${order}`
+      );
+      setProducts(response.data.data);
+    } catch (error) {
+      console.log("Error fetching products by criteria:", error);
+    }
+  };
+
   useEffect(() => {
     const getProductsCategory = async () => {
       try {
@@ -88,6 +99,10 @@ const CategoryPage = () => {
             return a.name.localeCompare(b.name);
           case "name-desc":
             return b.name.localeCompare(a.name);
+          case "sold_quantity-desc":
+            return b.sold_quantity - a.sold_quantity;
+          case "average_star-asc":
+            return a.average_star - b.average_star;
           default:
             return 0;
         }
@@ -117,9 +132,10 @@ const CategoryPage = () => {
           <option value="price-desc">Giá giảm dần</option>
           <option value="name-asc">Tên A-Z</option>
           <option value="name-desc">Tên Z-A</option>
+          <option value="sold_quantity-desc">Số lượng bán</option>
+          <option value="average_star-asc">Đánh giá tăng dần</option>
         </select>
       </div>
-
       <div className="row">
         {products.length === 0 ? (
           <p className="text-center font-bold">

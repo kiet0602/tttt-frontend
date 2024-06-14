@@ -3,12 +3,11 @@
   border: 1px solid black;
   border-radius: 5px;
   color: white;
-  font-weight: 600;
 }
 .box-nav-left2 {
   border-radius: 5px;
   background: #fff;
-  font-weight: 400;
+
   padding-right: 36px;
 }
 .list-nav-left {
@@ -16,7 +15,7 @@
 }
 .text-link-navLeft {
   font-size: small;
-  color: #ff8200f2;
+  color: black;
   font-weight: 600;
   text-decoration: none;
 }
@@ -37,7 +36,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 313px;
+  min-width: 310px;
   z-index: 1;
   height: auto;
   margin-top: 5px;

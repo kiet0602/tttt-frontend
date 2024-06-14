@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "./ProductsAll.css";
 import BlockTitle from "../../components/BlockTitle/BlockTitle";
+import debounce from "lodash.debounce";
 
 const ProductAll = () => {
   const [productsData, setProducts] = useState([]);
@@ -48,36 +49,45 @@ const ProductAll = () => {
     const getProductsAll = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/api/product`);
-        const filteredProducts = response.data.data.filter((product) =>
-          product.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setProducts(filteredProducts);
+        let products = response.data.data;
+
+        // Apply filtering
+        if (searchTerm) {
+          products = products.filter((product) =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+
+        // Apply sorting
+        if (sortCriteria) {
+          products = products.sort((a, b) => {
+            switch (sortCriteria) {
+              case "price-asc":
+                return a.price - b.price;
+              case "price-desc":
+                return b.price - a.price;
+              case "name-asc":
+                return a.name.localeCompare(b.name);
+              case "name-desc":
+                return b.name.localeCompare(a.name);
+              case "sold_quantity-desc":
+                return b.sold_quantity - a.sold_quantity;
+              case "average_star-asc":
+                return a.average_star - b.average_star;
+              default:
+                return 0;
+            }
+          });
+        }
+
+        setProducts(products);
       } catch (error) {
         console.log("Error fetching products:", error);
       }
     };
-    getProductsAll();
-  }, [searchTerm]);
 
-  useEffect(() => {
-    if (sortCriteria) {
-      const sortedProducts = [...productsData].sort((a, b) => {
-        switch (sortCriteria) {
-          case "price-asc":
-            return a.price - b.price;
-          case "price-desc":
-            return b.price - a.price;
-          case "name-asc":
-            return a.name.localeCompare(b.name);
-          case "name-desc":
-            return b.name.localeCompare(a.name);
-          default:
-            return 0;
-        }
-      });
-      setProducts(sortedProducts);
-    }
-  }, [sortCriteria, productsData]);
+    getProductsAll();
+  }, [searchTerm, sortCriteria]);
 
   const fetchCartItems = async (userId) => {
     try {
@@ -90,11 +100,24 @@ const ProductAll = () => {
     }
   };
 
+  const fetchProductsByCriteria = async (sortBy, order) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/product/criteria?sortBy=${sortBy}&order=${order}`
+      );
+      setProducts(response.data.data);
+    } catch (error) {
+      console.log("Error fetching products by criteria:", error);
+    }
+  };
+
+  const debouncedSetSearchTerm = debounce(setSearchTerm, 300);
+
   return (
     <>
       <Header
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        setSearchTerm={debouncedSetSearchTerm}
         cartItemCount={cartItems.length}
       />
       <HeadNavNoBanNer />
@@ -112,6 +135,8 @@ const ProductAll = () => {
             <option value="price-desc">Giá giảm dần</option>
             <option value="name-asc">Tên A-Z</option>
             <option value="name-desc">Tên Z-A</option>
+            <option value="sold_quantity-desc">Số lượng bán</option>
+            <option value="average_star-asc">Đánh giá tăng dần</option>
           </select>
         </div>
 

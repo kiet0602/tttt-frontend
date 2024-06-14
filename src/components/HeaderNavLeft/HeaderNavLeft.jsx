@@ -43,10 +43,14 @@ const HeaderNavLeft = () => {
               >
                 {accessory.name} <FontAwesomeIcon icon={faAngleDown} />
               </Link>
-              <ul className="dropdown-menu child-link">
+              <ul
+                className="dropdown-menu child-link"
+                style={{ width: "305px" }}
+              >
                 {accessory?.categories?.map((category) => (
                   <li key={category?.category_id}>
                     <Link
+                      style={{ color: "black" }}
                       to={`/Category/${category?._id}`}
                       className="dropdown-item"
                     >

@@ -3,14 +3,17 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
 import axios from "axios";
-import Img1 from "../../assets/img/1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faRotate } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faRotate, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Configuration = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [cartItems, setCartItems] = useState([]);
-  const [id, setId] = useState(""); // Khởi tạo state id
+  const [id, setId] = useState("");
+  const [category, setCategory] = useState([]);
+  const [catProducts, setCatProducts] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [userId, setUserId] = useState("");
 
   const fetchCartItems = async (userId) => {
     try {
@@ -23,12 +26,77 @@ const Configuration = () => {
     }
   };
 
+  const getCategory = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/category");
+      setCategory(response.data);
+    } catch (error) {}
+  };
+
+  const handelGetAllProductById = async (categoryId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/category/${categoryId}`
+      );
+      setCatProducts(response.data.products);
+    } catch (error) {}
+  };
+
+  const handleSelectProduct = (product) => {
+    setSelectedProducts((prevSelectedProducts) => [
+      ...prevSelectedProducts,
+      { ...product, quantity: 1 }, // Thêm trường quantity với giá trị mặc định là 1
+    ]);
+  };
+
+  const handleDeleteProduct = (productId) => {
+    const updatedSelectedProducts = selectedProducts.filter(
+      (product) => product._id !== productId
+    );
+    setSelectedProducts(updatedSelectedProducts);
+  };
+  console.log(selectedProducts);
+
+  const handleQuantityChange = (productId, newQuantity) => {
+    const updatedSelectedProducts = selectedProducts.map((product) => {
+      if (product._id === productId) {
+        return { ...product, quantity: newQuantity };
+      }
+      return product;
+    });
+    setSelectedProducts(updatedSelectedProducts);
+  };
+
+  const handleAddProductCart = async () => {
+    try {
+      const res = await axios.post("http://localhost:8000/api/cart/products", {
+        userId,
+        products: selectedProducts.map((product) => ({
+          productId: product._id,
+          quantity: product.quantity,
+        })),
+      });
+      console.log(res);
+    } catch (error) {
+      console.error("Error adding products to cart:", error);
+    }
+  };
+  const calculateTotal = () => {
+    let total = 0;
+    selectedProducts.forEach((product) => {
+      total += product.price * product.quantity;
+    });
+    return total.toLocaleString(); // Format lại số tiền để đẹp
+  };
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo && userInfo._id) {
       fetchCartItems(userInfo._id);
+      setUserId(userInfo._id);
     }
-  }, [id, searchTerm]); // Thêm id và searchTerm vào dependency array để useEffect được gọi lại khi có thay đổi
+    getCategory();
+  }, [id, searchTerm]);
 
   return (
     <>
@@ -48,6 +116,7 @@ const Configuration = () => {
               padding: " 10px",
               borderRadius: "10px",
             }}
+            onClick={() => window.location.reload()}
           >
             <FontAwesomeIcon icon={faRotate} style={{ color: "#ffffff" }} />
             <span style={{ color: "white", cursor: "pointer" }}>
@@ -55,111 +124,122 @@ const Configuration = () => {
               Xây dựng lại
             </span>
           </div>
+
           <div>
-            <span>Tiền tạm tính 0đ</span>
+            <button
+              onClick={handleAddProductCart}
+              className="mx-4"
+              style={{
+                background: "red",
+                padding: " 10px",
+                borderRadius: "10px",
+                color: "white",
+                border: "none",
+              }}
+            >
+              Thêm vào giỏ hàng
+            </button>
+            <span>
+              Tiền tạm tính{" "}
+              <span style={{ color: "red", fontWeight: "bold" }}>
+                {calculateTotal()}đ
+              </span>
+            </span>
           </div>
         </div>
 
-        <div className="row m-4">
-          <div
-            className="col-2"
-            style={{
-              borderRight: "1px solid black",
-              borderBottom: "1px solid black",
-            }}
-          >
-            <span>1.Chọn main boarch</span>
-          </div>
-          <div
-            className="col-10 py-2"
-            style={{ borderBottom: "1px solid black" }}
-          >
-            <button
-              className="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
+        {category.map((categori, index) => (
+          <div className="row m-4" key={index}>
+            <div
+              className="col-2"
               style={{
-                width: "100px",
-                borderRadius: "10px",
-                background: "red",
-                color: "white",
+                borderRight: "1px solid black",
+                borderBottom: "1px solid black",
               }}
             >
-              <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff" }} />
-              Chọn
-            </button>
-            {/*   <div className="d-flex">
-            <div>
-              <img style={{ width: "150px" }} src={Img1} alt="" />
+              <span>{categori.name}</span>
             </div>
-            <div className="text-center">
-              <p>Tên</p>
-              <p>Mã</p>
-              <p>Giá</p>
-              <input type="number" /> <button>Xóa</button>
-            </div>
-          </div> */}
-          </div>
-        </div>
-        <div className="row m-4">
-          <div
-            className="col-2"
-            style={{
-              borderRight: "1px solid black",
-              borderBottom: "1px solid black",
-            }}
-          >
-            <span>1.Chọn main boarch</span>
-          </div>
-          <div
-            className="col-10 py-2"
-            style={{ borderBottom: "1px solid black" }}
-          >
-            {/*     <button
-              className="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              style={{
-                width: "100px",
-                borderRadius: "10px",
-                background: "red",
-                color: "white",
-              }}
+            <div
+              className="col-10 py-2"
+              style={{ borderBottom: "1px solid black" }}
             >
-              <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff" }} />
-              Chọn
-            </button> */}
-            <div className="d-flex">
-              <div>
-                <img style={{ width: "150px" }} src={Img1} alt="" />
-              </div>
-              <div className="text-start">
-                <p style={{ fontWeight: "bold" }}>LapTop</p>
-                <p>ID:3247832947234</p>
-                <p style={{ color: "red" }}>300,000,000d</p>
-                <input
-                  className="text-center"
-                  style={{ width: "100px", borderRadius: "10px" }}
-                  type="Number"
-                  value={0}
-                />{" "}
-                <p className="my-1">
-                  {" "}
-                  <button
-                    style={{
-                      width: "100px",
-                      borderRadius: "10px",
-                      background: "red",
-                      color: "white",
-                    }}
-                  >
-                    Xóa
-                  </button>
-                </p>
-              </div>
+              {selectedProducts.some(
+                (product) => product.category_id === categori._id
+              ) ? (
+                <div className="row m-4">
+                  {selectedProducts.map((selectedProduct, idx) => {
+                    if (selectedProduct.category_id === categori._id) {
+                      return (
+                        <div className="col-12 my-2" key={idx}>
+                          <div className="row">
+                            <div className="col-2">
+                              <img
+                                style={{ width: "150px" }}
+                                src={`http://localhost:8000/${selectedProduct.image}`}
+                                alt={selectedProduct.name}
+                              />
+                            </div>
+                            <div className="col-10 py-2">
+                              <p style={{ fontWeight: "bold" }}>
+                                Tên sản phẩm: {selectedProduct.name}
+                              </p>
+                              <p style={{ color: "red" }}>
+                                Giá: {selectedProduct.price.toLocaleString()}đ
+                              </p>
+                              <p>Mã sản phẩm: {selectedProduct._id}</p>
+                              <div className="d-flex align-items-center">
+                                <input
+                                  type="number"
+                                  value={selectedProduct.quantity}
+                                  onChange={(e) =>
+                                    handleQuantityChange(
+                                      selectedProduct._id,
+                                      parseInt(e.target.value)
+                                    )
+                                  }
+                                  className="form-control text-center"
+                                  style={{ width: "80px", marginRight: "10px" }}
+                                  min={1}
+                                />
+                                <FontAwesomeIcon
+                                  icon={faTrash}
+                                  style={{
+                                    color: "red",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() =>
+                                    handleDeleteProduct(selectedProduct._id)
+                                  }
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  onClick={() => handelGetAllProductById(categori._id)}
+                  style={{
+                    width: "250px",
+                    borderRadius: "10px",
+                    background: "red",
+                    color: "white",
+                  }}
+                >
+                  <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff" }} />
+                  Chọn {categori.name}
+                </button>
+              )}
             </div>
           </div>
-        </div>
+        ))}
 
         {/* Modal */}
         <div>
@@ -176,9 +256,6 @@ const Configuration = () => {
                   <h1 className="modal-title fs-5" id="exampleModalLabel">
                     Chọn linh kiện!
                   </h1>
-                  {/*   <div>
-                    <input type="text" placeholder="Bạn muốn tìm gì ?" />
-                  </div> */}
                   <button
                     type="button"
                     className="btn-close"
@@ -187,85 +264,43 @@ const Configuration = () => {
                   />
                 </div>
                 <div className="modal-body">
-                  <div
-                    className="d-flex my-3 "
-                    style={{ borderBottom: "1px solid black" }}
-                  >
-                    <div className="py-2">
-                      {" "}
-                      <img style={{ width: "150px" }} src={Img1} alt="" />
+                  {catProducts.map((catProduct, index) => (
+                    <div
+                      className="d-flex my-3"
+                      key={index}
+                      style={{ borderBottom: "1px solid black" }}
+                    >
+                      <div className="py-2">
+                        <img
+                          style={{ width: "150px" }}
+                          src={`http://localhost:8000/${catProduct.image}`}
+                          alt={catProduct.name}
+                        />
+                      </div>
+                      <div className="py-2 px-4">
+                        <p style={{ fontWeight: "bold" }}>
+                          Tên sản phẩm: {catProduct?.name}
+                        </p>
+                        <p style={{ color: "red" }}>
+                          Giá: {catProduct?.price.toLocaleString()}đ
+                        </p>
+                        <p>Mã sản phẩm: {catProduct?._id}</p>
+                        <button
+                          className="btn btn-primary"
+                          data-bs-dismiss="modal"
+                          onClick={() => handleSelectProduct(catProduct)}
+                          style={{
+                            width: "100px",
+                            borderRadius: "10px",
+                            background: "red",
+                            color: "white",
+                          }}
+                        >
+                          Chọn
+                        </button>
+                      </div>
                     </div>
-                    <div className="py-2">
-                      <p style={{ fontWeight: "bold" }}>Laptop</p>
-                      <p style={{ color: "red" }}>300.000.000d</p>
-                      <p>ID: 3423432432</p>
-                      <button
-                        className=""
-                        style={{
-                          width: "100px",
-                          borderRadius: "10px",
-                          background: "red",
-                          color: "white",
-                        }}
-                      >
-                        Chọn
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="modal-body">
-                  <div
-                    className="d-flex my-3 "
-                    style={{ borderBottom: "1px solid black" }}
-                  >
-                    <div className="py-2">
-                      {" "}
-                      <img style={{ width: "150px" }} src={Img1} alt="" />
-                    </div>
-                    <div className="py-2">
-                      <p>Tên</p>
-                      <p>Giá</p>
-                      <p>Mã sản phẩm</p>
-                      <button
-                        className=""
-                        style={{
-                          width: "100px",
-                          borderRadius: "10px",
-                          background: "red",
-                          color: "white",
-                        }}
-                      >
-                        Chọn
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="modal-body">
-                  <div
-                    className="d-flex"
-                    style={{ borderBottom: "1px solid black" }}
-                  >
-                    <div className="py-1">
-                      {" "}
-                      <img style={{ width: "150px" }} src={Img1} alt="" />
-                    </div>
-                    <div className="py-1">
-                      <p>Tên</p>
-                      <p>Giá</p>
-                      <p>Mã sản phẩm</p>
-                      <button
-                        className=""
-                        style={{
-                          width: "100px",
-                          borderRadius: "10px",
-                          background: "red",
-                          color: "white",
-                        }}
-                      >
-                        Chọn
-                      </button>
-                    </div>
-                  </div>
+                  ))}
                 </div>
                 <div className="modal-footer"></div>
               </div>

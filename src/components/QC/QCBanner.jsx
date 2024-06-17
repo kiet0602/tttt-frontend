@@ -10,7 +10,12 @@ const QCBanner = () => {
     <div className="container">
       <div className="row">
         <div className="col-8 box-slide">
-          <div id="carouselExample" className="carousel slide">
+          <div
+            id="carouselExample"
+            className="carousel slide"
+            data-bs-ride="carousel"
+            data-bs-interval="3000"
+          >
             <div className="carousel-inner">
               <div className="carousel-item active">
                 <Link>
@@ -60,6 +65,7 @@ const QCBanner = () => {
             </button>
           </div>
         </div>
+
         <div className="col-4 box-banner ">
           <div className="pb-1">
             <Link>

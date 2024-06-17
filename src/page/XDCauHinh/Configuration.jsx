@@ -40,6 +40,7 @@ const Configuration = () => {
         />
 
         <HeadNavNoBanNer />
+
         <div className="d-flex justify-content-between">
           <div
             style={{
@@ -49,12 +50,16 @@ const Configuration = () => {
             }}
           >
             <FontAwesomeIcon icon={faRotate} style={{ color: "#ffffff" }} />
-            <span style={{ color: "white" }}> Xây dựng lại</span>
+            <span style={{ color: "white", cursor: "pointer" }}>
+              {" "}
+              Xây dựng lại
+            </span>
           </div>
           <div>
             <span>Tiền tạm tính 0đ</span>
           </div>
         </div>
+
         <div className="row m-4">
           <div
             className="col-2"
@@ -110,7 +115,7 @@ const Configuration = () => {
             className="col-10 py-2"
             style={{ borderBottom: "1px solid black" }}
           >
-            <button
+            {/*     <button
               className="btn btn-primary"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
@@ -123,19 +128,20 @@ const Configuration = () => {
             >
               <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff" }} />
               Chọn
-            </button>
+            </button> */}
             <div className="d-flex">
               <div>
                 <img style={{ width: "150px" }} src={Img1} alt="" />
               </div>
-              <div className="text-center">
-                <p>Tên</p>
-                <p>Mã</p>
-                <p>Giá</p>
+              <div className="text-start">
+                <p style={{ fontWeight: "bold" }}>LapTop</p>
+                <p>ID:3247832947234</p>
+                <p style={{ color: "red" }}>300,000,000d</p>
                 <input
                   className="text-center"
                   style={{ width: "100px", borderRadius: "10px" }}
                   type="Number"
+                  value={0}
                 />{" "}
                 <p className="my-1">
                   {" "}
@@ -155,6 +161,7 @@ const Configuration = () => {
           </div>
         </div>
 
+        {/* Modal */}
         <div>
           <div
             className="modal fade"
@@ -189,9 +196,9 @@ const Configuration = () => {
                       <img style={{ width: "150px" }} src={Img1} alt="" />
                     </div>
                     <div className="py-2">
-                      <p>Tên</p>
-                      <p>Giá</p>
-                      <p>Mã sản phẩm</p>
+                      <p style={{ fontWeight: "bold" }}>Laptop</p>
+                      <p style={{ color: "red" }}>300.000.000d</p>
+                      <p>ID: 3423432432</p>
                       <button
                         className=""
                         style={{

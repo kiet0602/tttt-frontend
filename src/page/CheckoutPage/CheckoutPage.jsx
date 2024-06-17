@@ -164,12 +164,12 @@ const CheckoutPage = () => {
             </div>
             <div className=" mt-4 ">
               <div className="">
-                <button
-                  onClick={handleContinueShopping}
-                  className="btn-back-allProducts"
-                >
-                  Tiếp tục mua sắm
-                </button>
+                <p style={{ fontSize: "15px" }}>
+                  Bạn có muốn tiếp tục mua mua sắm?
+                  <Link style={{ textDecoration: "none" }} to={"/productsAll"}>
+                    Nhấn vào đây!
+                  </Link>
+                </p>
               </div>
               <hr />
               <div className="mt-2">

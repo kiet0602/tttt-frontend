@@ -272,7 +272,7 @@ const CartPage = () => {
                           }}
                         >
                           <input
-                            type="number"
+                            type="number1"
                             style={{
                               width: "50px",
                               textAlign: "center",

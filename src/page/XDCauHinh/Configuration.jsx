@@ -3,29 +3,14 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer";
 import axios from "axios";
+import Img1 from "../../assets/img/1.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faRotate } from "@fortawesome/free-solid-svg-icons";
 
 const Configuration = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [cartItems, setCartItems] = useState([]);
-  const [accessories, setAccessories] = useState([]);
-  const [products, setProducts] = useState([]); // Đổi tên từ product thành products để tránh xung đột với state khác
-  const [category, setCategory] = useState(null);
   const [id, setId] = useState(""); // Khởi tạo state id
-  const [selectedCategory, setSelectedCategory] = useState(null); // State để lưu trữ loại sản phẩm được chọn
-  const [modalOpen, setModalOpen] = useState(false); // State để điều khiển trạng thái mở/đóng modal
-
-  const getProductsCategory = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/api/category/${id}`
-      );
-      setProducts(response.data);
-      console.log(response.data);
-      setCategory(response.data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
 
   const fetchCartItems = async (userId) => {
     try {
@@ -38,214 +23,252 @@ const Configuration = () => {
     }
   };
 
-  const getAccessories = async () => {
-    try {
-      const { data } = await axios.get(`http://localhost:8000/api/accessory`);
-      setAccessories(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Hàm mở modal và đặt loại sản phẩm được chọn
-  const openModal = (category) => {
-    setSelectedCategory(category);
-    setModalOpen(true);
-  };
-
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo && userInfo._id) {
       fetchCartItems(userInfo._id);
     }
-    getAccessories();
-    getProductsCategory();
   }, [id, searchTerm]); // Thêm id và searchTerm vào dependency array để useEffect được gọi lại khi có thay đổi
 
   return (
-    <div className="container">
-      <Header
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        cartItemCount={cartItems.length}
-      />
+    <>
+      <div className="container">
+        <Header
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          cartItemCount={cartItems.length}
+        />
 
-      <HeadNavNoBanNer />
-      <div className="d-flex justify-content-between">
-        <div style={{ background: "red", padding: " 10px" }}>Xây dựng lại</div>
+        <HeadNavNoBanNer />
+        <div className="d-flex justify-content-between">
+          <div
+            style={{
+              background: "red",
+              padding: " 10px",
+              borderRadius: "10px",
+            }}
+          >
+            <FontAwesomeIcon icon={faRotate} style={{ color: "#ffffff" }} />
+            <span style={{ color: "white" }}> Xây dựng lại</span>
+          </div>
+          <div>
+            <span>Tiền tạm tính 0đ</span>
+          </div>
+        </div>
+        <div className="row m-4">
+          <div
+            className="col-2"
+            style={{
+              borderRight: "1px solid black",
+              borderBottom: "1px solid black",
+            }}
+          >
+            <span>1.Chọn main boarch</span>
+          </div>
+          <div
+            className="col-10 py-2"
+            style={{ borderBottom: "1px solid black" }}
+          >
+            <button
+              className="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              style={{
+                width: "100px",
+                borderRadius: "10px",
+                background: "red",
+                color: "white",
+              }}
+            >
+              <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff" }} />
+              Chọn
+            </button>
+            {/*   <div className="d-flex">
+            <div>
+              <img style={{ width: "150px" }} src={Img1} alt="" />
+            </div>
+            <div className="text-center">
+              <p>Tên</p>
+              <p>Mã</p>
+              <p>Giá</p>
+              <input type="number" /> <button>Xóa</button>
+            </div>
+          </div> */}
+          </div>
+        </div>
+        <div className="row m-4">
+          <div
+            className="col-2"
+            style={{
+              borderRight: "1px solid black",
+              borderBottom: "1px solid black",
+            }}
+          >
+            <span>1.Chọn main boarch</span>
+          </div>
+          <div
+            className="col-10 py-2"
+            style={{ borderBottom: "1px solid black" }}
+          >
+            <button
+              className="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              style={{
+                width: "100px",
+                borderRadius: "10px",
+                background: "red",
+                color: "white",
+              }}
+            >
+              <FontAwesomeIcon icon={faPlus} style={{ color: "#ffffff" }} />
+              Chọn
+            </button>
+            <div className="d-flex">
+              <div>
+                <img style={{ width: "150px" }} src={Img1} alt="" />
+              </div>
+              <div className="text-center">
+                <p>Tên</p>
+                <p>Mã</p>
+                <p>Giá</p>
+                <input
+                  className="text-center"
+                  style={{ width: "100px", borderRadius: "10px" }}
+                  type="Number"
+                />{" "}
+                <p className="my-1">
+                  {" "}
+                  <button
+                    style={{
+                      width: "100px",
+                      borderRadius: "10px",
+                      background: "red",
+                      color: "white",
+                    }}
+                  >
+                    Xóa
+                  </button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div>
-          <span>Tiền tạm tính 0đ</span>
-        </div>
-      </div>
-
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" className="col-4">
-              Category Name
-            </th>
-            <th scope="col" className="col-3">
-              Action
-            </th>
-            <th scope="col" className="col-5">
-              Products
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {accessories.map((accessory, index) => (
-            <tr key={index}>
-              <td className="align-middle col-4">
-                {accessory.categories.map((category, catIndex) => (
-                  <div key={catIndex} className="p-3">
-                    <span>{category.name}</span>
+          <div
+            className="modal fade"
+            id="exampleModal"
+            tabIndex={-1}
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog modal-xl">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="exampleModalLabel">
+                    Chọn linh kiện!
+                  </h1>
+                  {/*   <div>
+                    <input type="text" placeholder="Bạn muốn tìm gì ?" />
+                  </div> */}
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  />
+                </div>
+                <div className="modal-body">
+                  <div
+                    className="d-flex my-3 "
+                    style={{ borderBottom: "1px solid black" }}
+                  >
+                    <div className="py-2">
+                      {" "}
+                      <img style={{ width: "150px" }} src={Img1} alt="" />
+                    </div>
+                    <div className="py-2">
+                      <p>Tên</p>
+                      <p>Giá</p>
+                      <p>Mã sản phẩm</p>
+                      <button
+                        className=""
+                        style={{
+                          width: "100px",
+                          borderRadius: "10px",
+                          background: "red",
+                          color: "white",
+                        }}
+                      >
+                        Chọn
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </td>
-              <td className="align-middle col-3">
-                {accessory.categories.map((category, catIndex) => (
-                  <div key={catIndex} className="d-flex align-items-center">
-                    <button
-                      className="btn btn-primary me-2 m-2"
-                      onClick={() => openModal(category)}
-                    >
-                      Chọn {category.name}
-                    </button>
+                </div>
+                <div className="modal-body">
+                  <div
+                    className="d-flex my-3 "
+                    style={{ borderBottom: "1px solid black" }}
+                  >
+                    <div className="py-2">
+                      {" "}
+                      <img style={{ width: "150px" }} src={Img1} alt="" />
+                    </div>
+                    <div className="py-2">
+                      <p>Tên</p>
+                      <p>Giá</p>
+                      <p>Mã sản phẩm</p>
+                      <button
+                        className=""
+                        style={{
+                          width: "100px",
+                          borderRadius: "10px",
+                          background: "red",
+                          color: "white",
+                        }}
+                      >
+                        Chọn
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </td>
-              <td className="align-middle col-5">
-                {accessory.categories.map((category, catIndex) => (
-                  <div key={catIndex}>
-                    {/* Hiển thị sản phẩm tương ứng với category.name */}
+                </div>
+                <div className="modal-body">
+                  <div
+                    className="d-flex"
+                    style={{ borderBottom: "1px solid black" }}
+                  >
+                    <div className="py-1">
+                      {" "}
+                      <img style={{ width: "150px" }} src={Img1} alt="" />
+                    </div>
+                    <div className="py-1">
+                      <p>Tên</p>
+                      <p>Giá</p>
+                      <p>Mã sản phẩm</p>
+                      <button
+                        className=""
+                        style={{
+                          width: "100px",
+                          borderRadius: "10px",
+                          background: "red",
+                          color: "white",
+                        }}
+                      >
+                        Chọn
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <Footer />
-
-      {/* Modal 1 */}
-      <div
-        className={`modal ${modalOpen ? "show" : ""}`}
-        tabIndex="-1"
-        style={{ display: modalOpen ? "block" : "none" }}
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5">
-                {selectedCategory && `${selectedCategory.name} Products`}
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                aria-label="Close"
-                onClick={() => setModalOpen(false)}
-              ></button>
-            </div>
-            <div className="modal-body">
-              {selectedCategory &&
-                selectedCategory.products.map((product, index) => (
-                  <div key={index} className="mb-3">
-                    <h6>{product.name}</h6>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="img-fluid mb-2"
-                      style={{ maxHeight: "150px" }}
-                    />
-                    <p>{product.description}</p>
-                    <p>Quantity: {product.quantity}</p>
-                    <p>Price: {product.price}</p>
-                  </div>
-                ))}
+                </div>
+                <div className="modal-footer"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Modal 2 */}
-      <div
-        className="modal fade"
-        id="exampleModalToggle"
-        aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel"
-        tabIndex="-1"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalToggleLabel">
-                Modal 1
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              Show a second modal and hide this one with the button below.
-            </div>
-            <div className="modal-footer">
-              <button
-                className="btn btn-primary"
-                data-bs-target="#exampleModalToggle2"
-                data-bs-toggle="modal"
-              >
-                Open second modal
-              </button>
-            </div>
-          </div>
-        </div>
+        <Footer />
       </div>
-      <div
-        className="modal fade"
-        id="exampleModalToggle2"
-        aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel2"
-        tabIndex="-1"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalToggleLabel2">
-                Modal 2
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              Hide this modal and show the first with the button below.
-            </div>
-            <div className="modal-footer">
-              <button
-                className="btn btn-primary"
-                data-bs-target="#exampleModalToggle"
-                data-bs-toggle="modal"
-              >
-                Back to first
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button
-        className="btn btn-primary"
-        data-bs-target="#exampleModalToggle"
-        data-bs-toggle="modal"
-      >
-        Open first modal
-      </button>
-    </div>
+    </>
   );
 };
 

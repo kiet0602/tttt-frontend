@@ -5,6 +5,7 @@ import HeadNavNoBanNer from "../../components/HeaderNavNOBANNER/HeadNavNoBanNer"
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faRotate, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from "react-toastify";
 
 const Configuration = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -55,7 +56,6 @@ const Configuration = () => {
     );
     setSelectedProducts(updatedSelectedProducts);
   };
-  console.log(selectedProducts);
 
   const handleQuantityChange = (productId, newQuantity) => {
     const updatedSelectedProducts = selectedProducts.map((product) => {
@@ -76,7 +76,7 @@ const Configuration = () => {
           quantity: product.quantity,
         })),
       });
-      console.log(res);
+      toast.success("Thêm sản phẩm vào giỏ hàng thành công");
     } catch (error) {
       console.error("Error adding products to cart:", error);
     }
@@ -179,7 +179,7 @@ const Configuration = () => {
                                 alt={selectedProduct.name}
                               />
                             </div>
-                            <div className="col-10 py-2">
+                            <div className="col-10 px-5">
                               <p style={{ fontWeight: "bold" }}>
                                 Tên sản phẩm: {selectedProduct.name}
                               </p>
@@ -188,6 +188,7 @@ const Configuration = () => {
                               </p>
                               <p>Mã sản phẩm: {selectedProduct._id}</p>
                               <div className="d-flex align-items-center">
+                                Số lượng:
                                 <input
                                   type="number"
                                   value={selectedProduct.quantity}
@@ -198,7 +199,11 @@ const Configuration = () => {
                                     )
                                   }
                                   className="form-control text-center"
-                                  style={{ width: "80px", marginRight: "10px" }}
+                                  style={{
+                                    width: "60px",
+                                    marginRight: "10px",
+                                    height: "30px",
+                                  }}
                                   min={1}
                                 />
                                 <FontAwesomeIcon
@@ -307,9 +312,9 @@ const Configuration = () => {
             </div>
           </div>
         </div>
-
         <Footer />
       </div>
+      <ToastContainer />
     </>
   );
 };

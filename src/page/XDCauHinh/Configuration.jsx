@@ -38,6 +38,7 @@ const Configuration = () => {
     try {
       const response = await axios.get("http://localhost:8000/api/category");
       setCategory(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -143,6 +144,8 @@ const Configuration = () => {
     }
   }, [selectedBand, selectedCapacity, selectedColor]);
 
+  console.log(selectedProducts);
+
   return (
     <>
       <div className="container">
@@ -205,11 +208,11 @@ const Configuration = () => {
                 style={{ borderBottom: "1px solid black" }}
               >
                 {selectedProducts.some(
-                  (product) => product.category_id === categori._id
+                  (product) => product.category_id._id === categori._id
                 ) ? (
                   <div className="row m-4">
                     {selectedProducts.map((selectedProduct, idx) => {
-                      if (selectedProduct.category_id === categori._id) {
+                      if (selectedProduct.category_id._id === categori._id) {
                         return (
                           <div className="col-12 my-2" key={idx}>
                             <div className="row">

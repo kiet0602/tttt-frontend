@@ -1,0 +1,15 @@
+.imgLogo2 {
+  height: 350px;
+  width: 350px;
+  margin-bottom: 15px;
+}
+.text-logo2 {
+  font-size: 75px;
+  text-decoration: none;
+  font-family: fantasy;
+  color: #ff8200f2;
+  text-shadow: 2px 6px 6px black;
+}
+.text-logo2 span {
+  font-family: "Poppins";
+}

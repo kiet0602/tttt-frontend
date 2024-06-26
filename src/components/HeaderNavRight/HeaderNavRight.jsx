@@ -24,13 +24,13 @@ const HeaderNavRight = () => {
             </Link>
           </li>
           <li>
-            <Link className="text-Link-navRight">
+            <Link to="/Contact" className="text-Link-navRight">
               <FontAwesomeIcon className="pe-1" icon={faPhoneVolume} />
               Liên hệ
             </Link>
           </li>
           <li>
-            <Link className="text-Link-navRight">
+            <Link to="/gioithieu" className="text-Link-navRight">
               <FontAwesomeIcon className="pe-1" icon={faInfo} />
               Giới thiệu
             </Link>
@@ -42,7 +42,7 @@ const HeaderNavRight = () => {
             </Link>
           </li>
           <li>
-            <Link className="text-Link-navRight">
+            <Link to="/csbh" className="text-Link-navRight">
               <FontAwesomeIcon className="pe-1" icon={faUserShield} />
               Chính sách bảo hành
             </Link>

@@ -7,6 +7,7 @@ import {
   faMagnifyingGlass,
   faUser,
   faCartShopping,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Header.css";
 import axios from "axios";
@@ -106,17 +107,17 @@ const Header = ({ searchTerm, setSearchTerm, cartItemCount }) => {
             <>
               <div>
                 <Link to="/login" className="text-link-header">
-                  <FontAwesomeIcon className="text-dark" icon={faUser} /> Đăng
-                  nhập
+                  <FontAwesomeIcon icon={faUser} style={{ color: "#0c5fed" }} />
+                  Đăng nhập
                 </Link>
               </div>
               <div className="relative">
-                <Link to="/cart" className="text-link-header">
+                <Link to="/register" className="text-link-header">
                   <FontAwesomeIcon
-                    className="text-dark"
-                    icon={faCartShopping}
+                    icon={faUserPlus}
+                    style={{ color: "#0c5fed" }}
                   />
-                  (0) Giỏ hàng
+                  Đăng kí
                 </Link>
               </div>
             </>

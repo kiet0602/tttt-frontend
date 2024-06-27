@@ -122,7 +122,7 @@ const RegisterPage = () => {
           />
           <input
             type="file"
-            placeholder="Address"
+            placeholder="avatar"
             onChange={handleAvatarChange}
           />
         </form>

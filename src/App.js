@@ -15,18 +15,8 @@ import Configuration from "./page/XDCauHinh/Configuration";
 import ContactPage from "./page/ContactPage/ContactPage";
 import GioiThieuPage from "./page/GioiThieuPage/GioiThieuPage";
 import ChinhSachBH from "./page/ChinhSachBH/ChinhSachBH";
-import { useEffect, useState } from "react";
 
 function App() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (userInfo) {
-      setUser(userInfo?._id);
-    }
-  }, []);
-
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
@@ -42,10 +32,7 @@ function App() {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/gioithieu" element={<GioiThieuPage />} />
       <Route path="/csbh" element={<ChinhSachBH />} />
-      <Route
-        path="/cart"
-        element={user ? <CartPage /> : <Navigate to="/login" />}
-      />
+      <Route path="/cart" element={<CartPage />} />
       <Route path="/checkout/:id" element={<CheckoutPage />} />
     </Routes>
   );

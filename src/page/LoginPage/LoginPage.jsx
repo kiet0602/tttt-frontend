@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import avatar from "../../../src/assets/img/1.png";
+import logologin from "../../assets/img/LogoLogin.PNG";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -105,9 +106,9 @@ const LoginPage = () => {
         >
           <div className="featured-image mb-3">
             <img
-              src={avatar}
+              src={logologin}
               className="img-fluid"
-              style={{ width: 250 }}
+              style={{ width: 350, borderRadius: "20px" }}
               alt="avatar"
             />
           </div>

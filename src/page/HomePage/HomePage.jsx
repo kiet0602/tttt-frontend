@@ -46,7 +46,6 @@ const HomePage = () => {
         `http://localhost:8000/api/product/criteria?sortBy=sold_quantity&order=desc&limit=8`
       );
       setTopSellingProducts(topSellingResponse?.data?.data);
-      console.log(topSellingResponse?.data?.data);
 
       // Fetch top 8 products by average rating
       const highlyRatedResponse = await axios.get(

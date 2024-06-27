@@ -26,6 +26,11 @@ const ContactPage = () => {
 
   const handleSendMessage = async () => {
     try {
+      if (!userId) {
+        alert(
+          "Bạn cần phải đăng nhập để có thể gửi nội dung liên hệ với chúng tôi!"
+        );
+      }
       const response = await axios.post(
         "http://localhost:8000/api/conversation",
         {

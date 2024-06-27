@@ -38,7 +38,6 @@ const Configuration = () => {
     try {
       const response = await axios.get("http://localhost:8000/api/category");
       setCategory(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -76,6 +75,9 @@ const Configuration = () => {
 
   const handleAddProductCart = async () => {
     try {
+      if (!userId) {
+        alert("Vui lòng bạn đăng nhập để có thể thêm vào giỏ hàng!");
+      }
       await axios.post("http://localhost:8000/api/cart/products", {
         userId,
         products: selectedProducts.map((product) => ({
@@ -83,6 +85,7 @@ const Configuration = () => {
           quantity: product.quantity,
         })),
       });
+
       toast.success("Thêm sản phẩm vào giỏ hàng thành công");
     } catch (error) {
       console.error("Error adding products to cart:", error);
@@ -113,7 +116,7 @@ const Configuration = () => {
         return product.category_id._id === id; // Lọc sản phẩm có category_id trùng với id
       });
 
-      console.log(filteredProducts); // Kiểm tra filteredProducts
+      // Kiểm tra filteredProducts
       setCatProducts(filteredProducts); // Cập nhật danh sách sản phẩm đã lọc vào state
     } catch (error) {
       console.error("Error fetching filtered products:", error);
@@ -143,8 +146,6 @@ const Configuration = () => {
       fetchFilteredProducts();
     }
   }, [selectedBand, selectedCapacity, selectedColor]);
-
-  console.log(selectedProducts);
 
   return (
     <>
